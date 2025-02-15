@@ -1,0 +1,2 @@
+1. Why is syscall count zero in the perlbench benchmark?
+2. Benchmark the overhead of a successfully predicted jmp?
