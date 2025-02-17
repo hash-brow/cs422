@@ -56,16 +56,16 @@ void instructionAnalysis(ADDRINT addr, UINT32 size) {
 	// mostly should be starting address, and size
 	//
 	
-	OutFile << (VOID *)addr << " " << size << endl;
+	// OutFile << (VOID *)addr << " " << size << endl;
 
-	UINT32 start = static_cast<UINT32>(addr);
-	start = start >> 5;
-	UINT32 end = static_cast<UINT32>(addr + size - 1);
-	end = end >> 5;
+	// UINT32 start = static_cast<UINT32>(addr);
+	ADDRINT start = addr >> 5;
+	// UINT32 end = static_cast<UINT32>(addr + size - 1);
+	ADDRINT end = (addr + size - 1) >> 5;
 	
-	OutFile << "instruction " << start << " " << end << endl;
+	// OutFile << "instruction " << start << " " << end << endl;
 
-	for(UINT32 chunk = start; chunk <= end; chunk++)
+	for(ADDRINT chunk = start; chunk <= end; chunk++)
 		instructionChunk[chunk] = 1;
 }
 
@@ -73,16 +73,16 @@ void dataAnalysis(ADDRINT addr, UINT32 size) {
 	// TODO
 	// starting address and size
 	
-	OutFile << (VOID *)addr << " " << size << endl;
+	// OutFile << (VOID *)addr << " " << size << endl;
 	
-	UINT32 start = static_cast<UINT32>(addr);
-	start = start >> 5;
-	UINT32 end = static_cast<UINT32>(addr + size - 1);
-	end = end >> 5;
+	// UINT32 start = static_cast<UINT32>(addr);
+	ADDRINT start = addr >> 5;
+	// UINT32 end = static_cast<UINT32>(addr + size - 1);
+	ADDRINT end = (addr + size - 1) >> 5;
 		
-	OutFile << "data " << start << " " << end << endl;
+	// OutFile << "data " << start << " " << end << endl;
 
-	for(UINT32 chunk = start; chunk <= end; chunk++)
+	for(ADDRINT chunk = start; chunk <= end; chunk++)
 		dataChunk[chunk] = 1;
 }
 
