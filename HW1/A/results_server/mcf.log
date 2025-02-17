@@ -1,0 +1,23 @@
+Field               Value       Percentage
+---------------------------------------------
+ins_cnt             999999995   -
+load                415212714   27.45%
+store               97604942    6.45%
+nop                 1477639     0.10%
+call_drct           12556301    0.83%
+call_indrct         0           0.00%
+ret                 12556300    0.83%
+uncond_br           8314496     0.55%
+cond_br             178243015   11.78%
+logical             75119495    4.97%
+rotate_shift        3516416     0.23%
+flagop              0           0.00%
+vector              0           0.00%
+cmov                0           0.00%
+mmx_sse             0           0.00%
+syscall             0           0.00%
+alu                 0           0.00%
+misc                708216333   46.81%
+BBL counter: 2166
+Mean BBL sz (ins): 5.00
+CPI: 24.39

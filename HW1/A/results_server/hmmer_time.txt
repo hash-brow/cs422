@@ -1,0 +1,2 @@
+302.21user 1.82system 5:04.10elapsed 99%CPU (0avgtext+0avgdata 1533416maxresident)k
+26824inputs+8outputs (12major+478528minor)pagefaults 0swaps
