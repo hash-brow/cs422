@@ -73,12 +73,14 @@ void dataAnalysis(ADDRINT addr, UINT32 size) {
 	// TODO
 	// starting address and size
 	
+	OutFile << (VOID *)addr << " " << size << endl;
+	
 	UINT32 start = static_cast<UINT32>(addr);
 	start = start >> 5;
 	UINT32 end = static_cast<UINT32>(addr + size - 1);
 	end = end >> 5;
 		
-	// OutFile << "data " << start << " " << end << endl;
+	OutFile << "data " << start << " " << end << endl;
 
 	for(UINT32 chunk = start; chunk <= end; chunk++)
 		dataChunk[chunk] = 1;
@@ -114,6 +116,11 @@ VOID Fini(INT32 code, VOID* v)
     // Write to a file since cout and cerr maybe closed by the application
     OutFile.setf(ios::showbase);
     OutFile << "Count " << icount << endl;
+	UINT32 instruction_access = std::count(instructionChunk.begin(), instructionChunk.end(), 1);
+	UINT32 data_access = std::count(dataChunk.begin(), dataChunk.end(), 1);
+	
+	OutFile << "Instuction Chunks accessed: " << instruction_access << " Footprint: " << instruction_access * 32 << " bytes" << endl;
+	OutFile << "Data Chunks accessed: " << data_access << " Footprint: " << data_access * 32 << " bytes" << endl;
     OutFile.close();
 }
 
