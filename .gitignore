@@ -1,2 +1,4 @@
 HW1/A/spec_2006
 *.zip
+HW1/D/main/obj-ia32/*.o
+HW1/D/main/obj-ia32/*.so
