@@ -38,7 +38,7 @@ typedef struct _bbl_val {
     UINT64 cmov;
     UINT64 mmx_sse;
     UINT64 syscall;
-    UINT64 alu;
+    UINT64 alu;memset(bbl_cnt, 0, sizeof bbl_cnt);
     UINT64 misc;
 } bbl_val;
 
@@ -204,7 +204,7 @@ VOID analysis(INT32 idx) {
 
 VOID exit_routine() {
     bbl_val results;
-    memset(&results, 0, sizeof results);
+    memset(&results, 0, sizeof results); 
 
     INT64 ins_tot = 0;
 

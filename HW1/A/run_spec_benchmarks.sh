@@ -91,4 +91,3 @@ for pid in "${pids[@]}"; do
 done
 
 echo "All benchmarks finished."
-
