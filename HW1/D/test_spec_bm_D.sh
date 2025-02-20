@@ -3,7 +3,7 @@
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 PIN_TOOL_DIR="$SCRIPT_DIR/main/obj-ia32"
-PIN_SO="$PIN_TOOL_DIR/main.so"
+PIN_SO="$PIN_TOOL_DIR/D.so"
 
 SPEC_DIR="/home/noblepegasus/spec_2006"
 RESULTS_DIR="$SCRIPT_DIR/results"

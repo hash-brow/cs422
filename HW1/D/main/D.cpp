@@ -30,7 +30,7 @@ ofstream OutFile;
  typedef struct _bbl_val {
     UINT64 ins_cnt=0;
     UINT64 memOps=0;
-    UINT64 instr_length[16] = {0};  
+    UINT64 instr_length[20] = {0};  
     UINT64 op_count[10] = {0};  
     UINT64 reg_reads[10] = {0};      
     UINT64 reg_writes[10] = {0};     
@@ -57,8 +57,7 @@ KNOB<UINT64> KnobFastForward(KNOB_MODE_WRITEONCE, "pintool", "f", "0", "Skip ove
 KNOB<std::string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool", "o", "test.out", "Output file");
 
  VOID UpdateCounters(const bbl_val* src, UINT64 mul, UINT64 mem_mul)
- {
-     
+ {   
      stats.ins_cnt += src->ins_cnt*mul;
      
      for(UINT32 i=0;i<16;i++){
@@ -88,11 +87,9 @@ KNOB<std::string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool", "o", "test.out"
         stats.mem_writes[i] += src->mem_writes[i]*mem_mul; 
      }
      
-     if (src->memOps > 0) {
-         stats.total_mem_bytes += src->total_mem_bytes*mem_mul;
-         stats.mem_instr_count += src->mem_instr_count*mem_mul;
-         stats.max_mem_bytes = MY_MAX(stats.max_mem_bytes, src->max_mem_bytes);
-     }
+    stats.total_mem_bytes += src->total_mem_bytes*mem_mul;
+    stats.mem_instr_count += src->mem_instr_count*mem_mul;
+    stats.max_mem_bytes = MY_MAX(stats.max_mem_bytes, src->max_mem_bytes);
 
      if (src->found_imm) {
          if (!stats.found_imm) {
@@ -121,8 +118,19 @@ KNOB<std::string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool", "o", "test.out"
     bbl_cnt[idx]++;
 }
 
-VOID mem_analysis(INT32 idx) {
-    bbl_cnt_mem[idx]++;
+VOID mem_analysis(INT32 idx, bbl_val* data, UINT32 inst_memOp, UINT32 inst_memRead, UINT32 inst_memWrite, UINT32 inst_memBytes, ADDRINT max_disp , ADDRINT min_disp, ADDRINT found_disp) {
+    bbl_cnt_mem[idx]=1;
+    data->mem_ops[MY_MIN(inst_memOp,9)]++;
+    data->mem_reads[MY_MIN(inst_memRead,9)]++;
+    data->mem_writes[MY_MIN(inst_memWrite,9)]++;
+    data->total_mem_bytes += inst_memBytes;
+    if(inst_memBytes)data->mem_instr_count++;
+    if(inst_memBytes > data->max_mem_bytes) data->max_mem_bytes = inst_memBytes;
+    if(static_cast<bool>(found_disp)){
+        data->found_disp =true;
+        data->max_disp = MY_MAX(data->max_disp, static_cast<ADDRDELTA>(max_disp));
+        data->min_disp = MY_MIN(data->min_disp, static_cast<ADDRDELTA>(min_disp));
+    } 
 }
 
 VOID bbl_ins_count(INT32 idx) {
@@ -138,7 +146,6 @@ ADDRINT Terminate() {
 }
 
 VOID Fini(INT32 code, VOID *v) {
-    //OutFile.open(KnobOutputFile.Value().c_str());
     OutFile << "1. Instruction Length Distribution:\n";
     for(int i = 0; i < 16; i++) {
         OutFile << i << " bytes: " << stats.instr_length[i] << "\n";
@@ -157,29 +164,25 @@ VOID Fini(INT32 code, VOID *v) {
     }
     OutFile << "\n5. Memory Operands per Instruction:\n";
     for(int i = 0; i < 10; i++) {
-        if(i==0)OutFile << i << " operands: " << stats.mem_ops[i]+stats.ins_cnt-stats.mem_instr_count << "\n";
+        if(i==0)OutFile << i << " operands: " << stats.mem_ops[i] << "\n";
         else OutFile << i << " operands: " << stats.mem_ops[i] << "\n";
     }
     OutFile << "\n6. Memory Read Operands:\n";
     for(int i = 0; i < 10; i++) {
-        if(i==0)OutFile << i << " operands: " << stats.mem_reads[i]+stats.ins_cnt-stats.mem_instr_count << "\n";
+        if(i==0)OutFile << i << " operands: " << stats.mem_reads[i] << "\n";
         else OutFile << i << " operands: " << stats.mem_reads[i] << "\n";
     }
     OutFile << "\n7. Memory Write Operands:\n";
     for(int i = 0; i < 10; i++) {
-        if(i==0)OutFile << i << " operands: " << stats.mem_writes[i]+stats.ins_cnt-stats.mem_instr_count << "\n";
+        if(i==0)OutFile << i << " operands: " << stats.mem_writes[i] << "\n";
         else OutFile << i << " operands: " << stats.mem_writes[i] << "\n";
     }
     OutFile << "\n8. Memory Bytes Touched:\n";
     OutFile << "Max: " << stats.max_mem_bytes << " bytes\n";
-    if (stats.mem_instr_count > 0) {
+    double avgMemBytes = static_cast<double>(stats.total_mem_bytes) / stats.mem_instr_count;
+    OutFile << "Average: " << std::fixed << std::setprecision(5) 
+            << avgMemBytes << " bytes\n";
 
-        double avgMemBytes = static_cast<double>(stats.total_mem_bytes) / stats.mem_instr_count;
-        OutFile << "Average: " << std::fixed << std::setprecision(5) 
-                << avgMemBytes << " bytes\n";
-    } else {
-        OutFile << "Average: 0.00 bytes\n";
-    }
     OutFile << "\n9. Immediate Values:\n";
     OutFile << "Max: " << (stats.found_imm ? stats.max_imm : 0) << "\n";
     OutFile << "Min: " << (stats.found_imm ? stats.min_imm : 0) << "\n";
@@ -190,13 +193,13 @@ VOID Fini(INT32 code, VOID *v) {
 }
 
 VOID ExitRoutine(VOID* v) {
-    //stats = {};
    INT64 ins_tot = 0;
 
    for (UINT32 i = 0; i < bbl_counter; i++) {
        UpdateCounters(&bbl_data[i], bbl_cnt[i] , bbl_cnt_mem[i]);
        ins_tot += bbl_data[i].ins_cnt;
    }
+   stats.mem_ops[0]=stats.ins_cnt-stats.mem_instr_count;
    Fini(0,v);
    OutFile << "BBL counter: " << bbl_counter << "\n"; 
    OutFile << "Mean BBL sz (ins): " << static_cast<double>(ins_tot/bbl_counter) << "\n";
@@ -213,6 +216,7 @@ VOID ExitRoutine(VOID* v) {
         bbl_val* data= &bbl_data[bbl_counter];
         bbl_counter++;
         assert(bbl_counter<BBL_MAX);
+        data->max_mem_bytes=0;
 
         for (INS ins = BBL_InsHead(bbl); INS_Valid(ins); ins = INS_Next(ins)) {
             UINT32 size = INS_Size(ins);
@@ -237,33 +241,38 @@ VOID ExitRoutine(VOID* v) {
             UINT32 inst_memRead = 0;
             UINT32 inst_memWrite = 0;
             UINT32 inst_memBytes = 0;
+            ADDRDELTA max_disp = INT32_MIN;
+            ADDRDELTA min_disp = INT32_MAX;
+            bool found_disp = false;
+
             for (UINT32 i = 0; i < mcount; i++) {
                 bool isRead = INS_MemoryOperandIsRead(ins, i);
                 bool isWrite = INS_MemoryOperandIsWritten(ins, i);
                 UINT32 sz = INS_MemoryOperandSize(ins, i);
                 if (isRead) {
                     inst_memRead++;
-                    inst_memBytes += sz;
+                    inst_memOp++;
                 }
                 if (isWrite) {
                     inst_memWrite++;
+                    inst_memOp++;
+                }
+                if (isRead || isWrite){
                     inst_memBytes += sz;
                 }
-                if (isRead && isWrite)inst_memOp += 2;
-                else if (isRead || isWrite)inst_memOp += 1;
 
                 ADDRDELTA disp = INS_OperandMemoryDisplacement(ins, i);
-                if(disp>0)data->found_disp = true;
-                data->max_disp = MY_MAX(data->max_disp, disp);
-                data->min_disp = MY_MIN(data->min_disp, disp);
+                if(INS_OperandIsImmediate(ins,i))found_disp = true;
+                max_disp = MY_MAX(max_disp, disp);
+                min_disp = MY_MIN(min_disp, disp);
             }
-            if (data->memOps > 0) {
-                data->mem_ops[MY_MIN(inst_memOp,9)]++;
-                data->mem_reads[MY_MIN(inst_memRead,9)]++;
-                data->mem_writes[MY_MIN(inst_memWrite,9)]++;
-                data->total_mem_bytes += inst_memBytes;
-                data->max_mem_bytes = MY_MAX(data->max_mem_bytes,inst_memBytes);
-            }
+            // if(inst_memBytes>0)data->mem_instr_count++;
+            // data->mem_ops[MY_MIN(inst_memOp,9)]++;
+            // data->mem_reads[MY_MIN(inst_memRead,9)]++;
+            // data->mem_writes[MY_MIN(inst_memWrite,9)]++;
+            // data->total_mem_bytes += inst_memBytes;
+            // data->max_mem_bytes = MY_MAX(data->max_mem_bytes,inst_memBytes);
+
    
             for (UINT32 i = 0; i < opCount; i++) {
                 if (INS_OperandIsImmediate(ins, i)) {
@@ -278,16 +287,17 @@ VOID ExitRoutine(VOID* v) {
                     }
                 }
             }
+            if(mcount){
+                INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR)ff_valid, IARG_END);
+                INS_InsertThenPredicatedCall(ins, IPOINT_BEFORE, (AFUNPTR)mem_analysis, IARG_UINT32,bbl_counter-1, IARG_PTR, data, IARG_UINT32, inst_memOp, IARG_UINT32, inst_memRead, IARG_UINT32, inst_memWrite, IARG_UINT32, inst_memBytes, IARG_ADDRINT, max_disp , IARG_ADDRINT, min_disp, IARG_ADDRINT, static_cast<ADDRINT>(found_disp), IARG_END);
+            }
         }
 
         INS_InsertIfCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) Terminate, IARG_END);
         INS_InsertThenCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR)ExitRoutine, IARG_END);
 
         INS_InsertIfCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) ff_valid, IARG_END);
-        INS_InsertThenCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) analysis, IARG_UINT32, bbl_counter - 1, IARG_END);
-
-        INS_InsertIfCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) ff_valid, IARG_END);
-        INS_InsertThenPredicatedCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) mem_analysis, IARG_UINT32, bbl_counter - 1, IARG_END);
+        INS_InsertThenPredicatedCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) analysis, IARG_UINT32, bbl_counter - 1, IARG_END);
 
         BBL_InsertCall(bbl, IPOINT_BEFORE, (AFUNPTR) bbl_ins_count, IARG_UINT32, bbl_counter - 1, IARG_END);
     }
