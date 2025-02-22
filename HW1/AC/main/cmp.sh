@@ -1,1 +1,1 @@
-make PIN_ROOT="/home/windreaper/Documents/Courses/CS422/pin" TARGET=ia32
+make PIN_ROOT="/home/ubuntu/pin" TARGET=ia32
