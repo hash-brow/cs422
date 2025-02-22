@@ -179,8 +179,13 @@ void print_bbl_val(std::ostream &OutFile, const bbl_val& val) {
     }
     OutFile << "\n5. Memory Operands per Instruction:\n";
     for(int i = 0; i < 10; i++) {
-        // if(i==0)OutFile << i << " operands: " << val.mem_ops[i] << "\n";
-        OutFile << i << " operands: " << val.mem_ops[i] << "\n";
+        if(i == 0){
+		UINT32 tot = 0;
+		for (int j = 0; j < 10; j++) tot += val.mem_ops[j];
+
+		OutFile << i << " operands: " << val.ins_cnt - tot << "\n";
+	}
+	else OutFile << i << " operands: " << val.mem_ops[i] << "\n";
     }
     OutFile << "\n6. Memory Read Operands:\n";
     for(int i = 0; i < 10; i++) {
