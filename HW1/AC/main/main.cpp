@@ -167,18 +167,16 @@ static inline __attribute__((always_inline)) void touch(ADDRINT addr, uint32_t s
 
 }
 
-static inline __attribute__((always_inline)) void mem_analysis(INT32 idx, bbl_val* data, UINT32 inst_memOp, UINT32 inst_memRead, UINT32 inst_memWrite, UINT32 inst_memBytes, ADDRINT max_disp , ADDRINT min_disp, ADDRINT found_disp) {
+static inline __attribute__((always_inline)) void mem_analysis(INT32 idx, bbl_val* data, UINT32 inst_memOp, UINT32 inst_memRead, UINT32 inst_memWrite, UINT32 inst_memBytes, ADDRINT max_disp , ADDRINT min_disp) {
     data->mem_ops[std::min(inst_memOp, (UINT32)9)]++;
     data->mem_reads[std::min(inst_memRead, (UINT32)9)]++;
     data->mem_writes[std::min(inst_memWrite,(UINT32) 9)]++;
     data->total_mem_bytes += inst_memBytes;
     if(inst_memBytes)data->mem_instr_count++;
     if(inst_memBytes > data->max_mem_bytes) data->max_mem_bytes = inst_memBytes;
-    if(static_cast<bool>(found_disp)){
-        data->found_disp =true;
-        data->max_disp = std::max(data->max_disp, static_cast<ADDRDELTA>(max_disp));
-        data->min_disp = std::min(data->min_disp, static_cast<ADDRDELTA>(min_disp));
-    } 
+    data->max_disp = std::max(data->max_disp, static_cast<ADDRDELTA>(max_disp));
+    data->min_disp = std::min(data->min_disp, static_cast<ADDRDELTA>(min_disp));
+
 }
 
 VOID exit_routine() {
@@ -256,7 +254,6 @@ VOID Trace(TRACE trace, VOID* v)
             UINT32 inst_memBytes = 0;
             ADDRDELTA max_disp = INT32_MIN;
             ADDRDELTA min_disp = INT32_MAX;
-            bool found_disp = false;
 
             for (UINT32 i = 0; i < mcount; i++) {
                 bool isRead = INS_MemoryOperandIsRead(ins, i);
@@ -275,9 +272,6 @@ VOID Trace(TRACE trace, VOID* v)
                 }
 
                 ADDRDELTA disp = INS_OperandMemoryDisplacement(ins, i);
-
-                if(INS_OperandIsImmediate(ins,i)) found_disp = true;
-                
                 max_disp = std::max(max_disp, disp);
                 min_disp = std::min(min_disp, disp);
             }
@@ -298,7 +292,7 @@ VOID Trace(TRACE trace, VOID* v)
             
             if(mcount){
                 INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR)ff_valid, IARG_END);
-                INS_InsertThenPredicatedCall(ins, IPOINT_BEFORE, (AFUNPTR)mem_analysis, IARG_UINT32,bbl_counter-1, IARG_PTR, data, IARG_UINT32, inst_memOp, IARG_UINT32, inst_memRead, IARG_UINT32, inst_memWrite, IARG_UINT32, inst_memBytes, IARG_ADDRINT, max_disp , IARG_ADDRINT, min_disp, IARG_ADDRINT, static_cast<ADDRINT>(found_disp), IARG_END);
+                INS_InsertThenPredicatedCall(ins, IPOINT_BEFORE, (AFUNPTR)mem_analysis, IARG_UINT32,bbl_counter-1, IARG_PTR, data, IARG_UINT32, inst_memOp, IARG_UINT32, inst_memRead, IARG_UINT32, inst_memWrite, IARG_UINT32, inst_memBytes, IARG_ADDRINT, max_disp , IARG_ADDRINT, min_disp, IARG_END);
             }
 
             // Part C stuff

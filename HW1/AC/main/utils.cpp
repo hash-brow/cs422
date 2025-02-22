@@ -58,16 +58,8 @@ VOID accumulate_bbl_val(bbl_val* dest, const bbl_val* src, UINT64 mul) {
         }
     }
 
-    if(src->found_disp){
-        if(!dest->found_disp){
-            dest->max_disp = src->max_disp;
-            dest->min_disp = src->min_disp;
-            dest->found_disp = true;
-        } else {
-            dest->max_disp = std::max(dest->max_disp, src->max_disp);
-            dest->min_disp = std::min(dest->min_disp, src->min_disp);
-            }
-    }
+    dest->max_disp = std::max(dest->max_disp, src->max_disp);
+    dest->min_disp = std::min(dest->min_disp, src->min_disp);
 }
 
 void print_bbl_val(std::ostream &OutFile, const bbl_val& val) {
@@ -207,7 +199,7 @@ void print_bbl_val(std::ostream &OutFile, const bbl_val& val) {
     OutFile << "Max: " << (val.found_imm ? val.max_imm : 0) << "\n";
     OutFile << "Min: " << (val.found_imm ? val.min_imm : 0) << "\n";
     OutFile << "\n10. Displacement Values:\n";
-    OutFile << "Max: " << (val.found_disp ? val.max_disp : 0) << "\n";
-    OutFile << "Min: " << (val.found_disp ? val.min_disp : 0) << "\n";
+    OutFile << "Max: " << val.max_disp << "\n";
+    OutFile << "Min: " << val.min_disp << "\n";
 }
 

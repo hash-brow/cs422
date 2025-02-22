@@ -55,7 +55,6 @@ typedef struct _bbl_val {
     INT32 max_imm = INT32_MIN, min_imm = INT32_MAX;
     ADDRDELTA max_disp = INT32_MIN, min_disp = INT32_MAX;
     bool found_imm = false;
-    bool found_disp = false;
 } bbl_val;
 
 VOID accumulate_bbl_val(bbl_val* dest, const bbl_val* src, UINT64 mul);
