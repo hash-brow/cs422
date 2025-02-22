@@ -38,9 +38,9 @@ VOID accumulate_bbl_val(bbl_val* dest, const bbl_val* src, UINT64 mul) {
         dest->op_count[i] += src->op_count[i] * mul;
         dest->reg_reads[i] += src->reg_reads[i] * mul;
         dest->reg_writes[i] += src->reg_writes[i] * mul;
-        dest->mem_ops[i] += src->mem_ops[i] * mul;
-        dest->mem_reads[i] += src->mem_reads[i] * mul;
-        dest->mem_writes[i] += src->mem_writes[i] * mul;
+        dest->mem_ops[i] += src->mem_ops[i];
+        dest->mem_reads[i] += src->mem_reads[i];
+        dest->mem_writes[i] += src->mem_writes[i];
     }
     
     dest->total_mem_bytes += src->total_mem_bytes * mul;
