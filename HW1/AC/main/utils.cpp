@@ -29,6 +29,45 @@ VOID accumulate_bbl_val(bbl_val* dest, const bbl_val* src, UINT64 mul) {
     dest->syscall += src->syscall * mul;
     dest->alu += src->alu * mul;
     dest->misc += src->misc * mul;
+
+    for(UINT32 i = 0; i < 20; i++){
+        dest->instr_length[i] += src->instr_length[i] * mul;
+    }
+
+    for(UINT32 i = 0; i < 10; i++){
+        dest->op_count[i] += src->op_count[i] * mul;
+        dest->reg_reads[i] += src->reg_reads[i] * mul;
+        dest->reg_writes[i] += src->reg_writes[i] * mul;
+        dest->mem_ops[i] += src->mem_ops[i] * mul;
+        dest->mem_reads[i] += src->mem_reads[i] * mul;
+        dest->mem_writes[i] += src->mem_writes[i] * mul;
+    }
+    
+    dest->total_mem_bytes += src->total_mem_bytes * mul;
+    dest->mem_instr_count += src->mem_instr_count * mul;
+    dest->max_mem_bytes = std::max(dest->max_mem_bytes, src->max_mem_bytes);
+
+    if(src->found_imm){
+        if(!dest->found_imm){
+            dest->max_imm = src->max_imm;
+            dest->min_imm = src->min_imm;
+            dest->found_imm = true;
+        } else {
+            dest->max_imm = std::max(dest->max_imm, src->max_imm);
+            dest->min_imm = std::min(dest->min_imm, src->min_imm);
+        }
+    }
+
+    if(src->found_disp){
+        if(!dest->found_disp){
+            dest->max_disp = src->max_disp;
+            dest->min_disp = src->min_disp;
+            dest->found_disp = true;
+        } else {
+            dest->max_disp = std::max(dest->max_disp, src->max_disp);
+            dest->min_disp = std::min(dest->min_disp, src->min_disp);
+            }
+    }
 }
 
 void print_bbl_val(std::ostream &OutFile, const bbl_val& val) {
@@ -121,5 +160,49 @@ void print_bbl_val(std::ostream &OutFile, const bbl_val& val) {
     OutFile << std::left << std::setw(20) << "misc"
             << std::setw(12) << val.misc
             << (val.misc / divisor) * 100 << "%\n";
+
+    OutFile << "1. Instruction Length Distribution:\n";
+    for(int i = 0; i < 16; i++) {
+        OutFile << i << " bytes: " << val.instr_length[i] << "\n";
+    }
+    OutFile << "\n2. Operands per Instruction:\n";
+    for(int i = 0; i < 10; i++) {
+        OutFile << i << " operands: " << val.op_count[i] << "\n";
+    }
+    OutFile << "\n3. Register Read Operands:\n";
+    for(int i = 0; i < 10; i++) {
+        OutFile << i << " reads: " << val.reg_reads[i] << "\n";
+    }
+    OutFile << "\n4. Register Write Operands:\n";
+    for(int i = 0; i < 10; i++) {
+        OutFile << i << " writes: " << val.reg_writes[i] << "\n";
+    }
+    OutFile << "\n5. Memory Operands per Instruction:\n";
+    for(int i = 0; i < 10; i++) {
+        // if(i==0)OutFile << i << " operands: " << val.mem_ops[i] << "\n";
+        OutFile << i << " operands: " << val.mem_ops[i] << "\n";
+    }
+    OutFile << "\n6. Memory Read Operands:\n";
+    for(int i = 0; i < 10; i++) {
+        // if(i==0)OutFile << i << " operands: " << val.mem_reads[i] << "\n";
+        OutFile << i << " operands: " << val.mem_reads[i] << "\n";
+    }
+    OutFile << "\n7. Memory Write Operands:\n";
+    for(int i = 0; i < 10; i++) {
+        // if(i==0)OutFile << i << " operands: " << stats.mem_writes[i] << "\n";
+        OutFile << i << " operands: " << val.mem_writes[i] << "\n";
+    }
+    OutFile << "\n8. Memory Bytes Touched:\n";
+    OutFile << "Max: " << val.max_mem_bytes << " bytes\n";
+    double avgMemBytes = static_cast<double>(val.total_mem_bytes) / val.mem_instr_count;
+    OutFile << "Average: " << std::fixed << std::setw(5) 
+            << avgMemBytes << " bytes\n";
+
+    OutFile << "\n9. Immediate Values:\n";
+    OutFile << "Max: " << (val.found_imm ? val.max_imm : 0) << "\n";
+    OutFile << "Min: " << (val.found_imm ? val.min_imm : 0) << "\n";
+    OutFile << "\n10. Displacement Values:\n";
+    OutFile << "Max: " << (val.found_disp ? val.max_disp : 0) << "\n";
+    OutFile << "Min: " << (val.found_disp ? val.min_disp : 0) << "\n";
 }
 

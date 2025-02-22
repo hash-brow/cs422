@@ -9,8 +9,8 @@
 
 #include <iostream>
 #include <fstream>
-#include <vector>
 #include <assert.h>
+#include <set>
 #include "pin.H"
 using std::cerr;
 using std::endl;
@@ -18,143 +18,13 @@ using std::ios;
 using std::ofstream;
 using std::string;
 
+#include "paging.h"
+#include "utils.h"
+
+// NOTE: comment this for final timing runs
+#define ASSERTS 
+
 ofstream OutFile;
-
-typedef struct _bbl_val {
-    UINT64 ins_cnt;
-
-    UINT64 load;
-    UINT64 store;
-
-    UINT64 nop;
-    UINT64 call_drct;
-    UINT64 call_indrct;
-    UINT64 ret;
-    UINT64 uncond_br;
-    UINT64 cond_br;
-    UINT64 logical;
-    UINT64 rotate_shift; 
-    UINT64 flagop;
-    UINT64 vector;
-    UINT64 cmov;
-    UINT64 mmx_sse;
-    UINT64 syscall;
-    UINT64 alu;
-    UINT64 misc;
-} bbl_val;
-
-VOID accumulate_bbl_val(bbl_val* dest, const bbl_val* src, UINT64 mul) {
-    dest->ins_cnt += src->ins_cnt * mul;
-    dest->load += src->load * mul;
-    dest->store += src->store * mul;
-    dest->nop += src->nop * mul;
-    dest->call_drct += src->call_drct * mul;
-    dest->call_indrct += src->call_indrct * mul;
-    dest->ret += src->ret * mul;
-    dest->uncond_br += src->uncond_br * mul;
-    dest->cond_br += src->cond_br * mul;
-    dest->logical += src->logical * mul;
-    dest->rotate_shift += src->rotate_shift * mul;
-    dest->flagop += src->flagop * mul;
-    dest->vector += src->vector * mul;
-    dest->cmov += src->cmov * mul;
-    dest->mmx_sse += src->mmx_sse * mul;
-    dest->syscall += src->syscall * mul;
-    dest->alu += src->alu * mul;
-    dest->misc += src->misc * mul;
-}
-
-void print_bbl_val(const bbl_val& val) {
-    // Compute the sum of all fields except ins_cnt
-    INT64 sum_other_fields = val.load + val.store + val.nop + val.call_drct + val.call_indrct +
-                             val.ret + val.uncond_br + val.cond_br + val.logical + val.rotate_shift +
-                             val.flagop + val.vector + val.cmov + val.mmx_sse + val.syscall +
-                             val.alu + val.misc;
-
-    double divisor = (sum_other_fields != 0) ? static_cast<double>(sum_other_fields) : 1.0; // Prevent division by zero
-
-    // Print header
-    OutFile << std::left << std::setw(20) << "Field"
-            << std::setw(12) << "Value"
-            << "Percentage\n";
-
-    OutFile << std::string(45, '-') << "\n";
-
-    // Print data
-    OutFile << std::left << std::setw(20) << "ins_cnt"
-            << std::setw(12) << val.ins_cnt
-            << "-\n";
-
-    OutFile << std::fixed << std::setprecision(2);
-
-    OutFile << std::left << std::setw(20) << "load"
-            << std::setw(12) << val.load
-            << (val.load / divisor) * 100 << "%\n";
-
-    OutFile << std::left << std::setw(20) << "store"
-            << std::setw(12) << val.store
-            << (val.store / divisor) * 100 << "%\n";
-
-    OutFile << std::left << std::setw(20) << "nop"
-            << std::setw(12) << val.nop
-            << (val.nop / divisor) * 100 << "%\n";
-
-    OutFile << std::left << std::setw(20) << "call_drct"
-            << std::setw(12) << val.call_drct
-            << (val.call_drct / divisor) * 100 << "%\n";
-
-    OutFile << std::left << std::setw(20) << "call_indrct"
-            << std::setw(12) << val.call_indrct
-            << (val.call_indrct / divisor) * 100 << "%\n";
-
-    OutFile << std::left << std::setw(20) << "ret"
-            << std::setw(12) << val.ret
-            << (val.ret / divisor) * 100 << "%\n";
-
-    OutFile << std::left << std::setw(20) << "uncond_br"
-            << std::setw(12) << val.uncond_br
-            << (val.uncond_br / divisor) * 100 << "%\n";
-
-    OutFile << std::left << std::setw(20) << "cond_br"
-            << std::setw(12) << val.cond_br
-            << (val.cond_br / divisor) * 100 << "%\n";
-
-    OutFile << std::left << std::setw(20) << "logical"
-            << std::setw(12) << val.logical
-            << (val.logical / divisor) * 100 << "%\n";
-
-    OutFile << std::left << std::setw(20) << "rotate_shift"
-            << std::setw(12) << val.rotate_shift
-            << (val.rotate_shift / divisor) * 100 << "%\n";
-
-    OutFile << std::left << std::setw(20) << "flagop"
-            << std::setw(12) << val.flagop
-            << (val.flagop / divisor) * 100 << "%\n";
-
-    OutFile << std::left << std::setw(20) << "vector"
-            << std::setw(12) << val.vector
-            << (val.vector / divisor) * 100 << "%\n";
-
-    OutFile << std::left << std::setw(20) << "cmov"
-            << std::setw(12) << val.cmov
-            << (val.cmov / divisor) * 100 << "%\n";
-
-    OutFile << std::left << std::setw(20) << "mmx_sse"
-            << std::setw(12) << val.mmx_sse
-            << (val.mmx_sse / divisor) * 100 << "%\n";
-
-    OutFile << std::left << std::setw(20) << "syscall"
-            << std::setw(12) << val.syscall
-            << (val.syscall / divisor) * 100 << "%\n";
-
-    OutFile << std::left << std::setw(20) << "alu"
-            << std::setw(12) << val.alu
-            << (val.alu / divisor) * 100 << "%\n";
-
-    OutFile << std::left << std::setw(20) << "misc"
-            << std::setw(12) << val.misc
-            << (val.misc / divisor) * 100 << "%\n";
-}
 
 double calc_cpi(const bbl_val& val) {
     // Sum all fields except ins_cnt
@@ -190,8 +60,9 @@ VOID bbl_ins_count(INT32 idx) {
 
 // check if we are doing with fast forwarding
 const UINT64 range_len = 1e9;
+static uint32_t ff_flag = 0;
 ADDRINT ff_valid() {
-    return icount >= ff_cnt;
+    return (ff_flag = (icount >= ff_cnt));
 }
 
 ADDRINT terminate() {
@@ -203,72 +74,171 @@ VOID analysis(INT32 idx) {
     bbl_cnt[idx]++;
 }
 
-std::vector<bool> instructionChunk(1 << 27), dataChunk(1 << 27); 
+// returns the argument to be passed
+// for use in InsertIf, should ideally be inlined by PIN
+ADDRINT return_arg(uint32_t arg) {
+    return arg;
+}
+
+// a nice multiple of PG_SZ * PG_TABLE_SZ pls
+//#define MAX_MEM (1 << 27)
+
+// 16 MB
+#define MEM_CHUNK (1 << 24)
+uint64_t PT_CHUNK = (MEM_CHUNK / PG_SZ);
+uint64_t PG_CHUNK = (MEM_CHUNK / GRAN);
+#define BUF (1 << 10) // 1 KB
+
+
+// Reallocs are fairly costly, and can probably be optimized further by only
+// using mallocs and some slightly diff. jugaadu structure
+// However, perlbench runs in only 5 mins so is the effort even worth it?
+// Maybe for ones like xalancbmk (or whatever) which take up a lot of memory, yeah
+//
+// I'm implementing some diff. jugaad rn, I'm just gonna double PT_CHUNK
+// and PG_CHUNK every time I use them
+// That way more the memory which is being used, bigger the chunks
+// so smaller no. of calls to realloc (yay?)
+
+static pde_t pgdir[PG_DIR_SZ];
+static pte_t *ptables;
+static bool *pages; 
+
+static uint32_t ptables_sz = 0; 
+static uint32_t pages_sz = 0;
+
+static uint32_t ptable_counter = 0;
+static uint32_t pg_counter = 0;
+
+// returns 1 on success
+// yeah yeah, the name I know xD
+static inline __attribute__((always_inline)) ADDRINT pgdir_addr_exists_not(ADDRINT addr) {
+    return ((pgdir[PDX(addr)] & PDE_P) == 0);
+}
+
+static inline __attribute__((always_inline)) ADDRINT ptable_addr_exists_not(ADDRINT addr) {
+    pte_t pte = pgdir[PDX(addr)] & ~(PDE_P);
+    return ((ptables[pte + PTX(addr)] & PTE_P) == 0);
+}
+
+static inline __attribute__((always_inline)) void pgdir_addr_create(ADDRINT addr) {
+    if (ptable_counter >= ptables_sz) {
+        ptables_sz += PT_CHUNK;
+        ptables = (pte_t*)realloc(ptables, (ptables_sz * sizeof(pte_t)) + BUF);
+        memset(ptables + ptables_sz - PT_CHUNK, 0, (PT_CHUNK * sizeof(pte_t)) + BUF);
+        PT_CHUNK *= 2;
+    }
+
+    pgdir[PDX(addr)] = ptable_counter | PDE_P;
+    ptable_counter += PG_TABLE_SZ;
+}
+
+static inline __attribute__((always_inline)) void ptable_addr_create(ADDRINT addr) {
+    if (pg_counter >= pages_sz) {
+        pages_sz += PG_CHUNK;
+        pages = (bool*)realloc(pages, (pages_sz * sizeof(bool)) + BUF);
+        memset(pages + pages_sz - PG_CHUNK, 0, (PG_CHUNK * sizeof(bool)) + BUF);
+        PG_CHUNK *= 2;
+    }
+
+    pte_t pte = pgdir[PDX(addr)] & ~(PDE_P);
+    ptables[pte + PTX(addr)] = pg_counter | PTE_P;
+    pg_counter += (PG_SZ / GRAN);
+}
+
+static inline __attribute__((always_inline)) void touch(ADDRINT addr, uint32_t sz) {
+    ADDRINT saddr = PGDOWN(addr);
+    ADDRINT eaddr = PGDOWN(addr + sz - 1); 
+
+    for (ADDRINT i = saddr; i <= eaddr; i += GRAN) {
+        if (pgdir_addr_exists_not(i)) {
+            pgdir_addr_create(i);
+            ptable_addr_create(i);
+        } else if (ptable_addr_exists_not(i)) {
+            ptable_addr_create(i);
+        }
+
+        pte_t pte = pgdir[PDX(i)] & ~(PDE_P);
+        uint32_t pg = ptables[pte + PTX(i)] & ~(PTE_P);
+        pages[pg + PGX(i)] = 1;
+    }
+}
 
 VOID exit_routine() {
     bbl_val results;
-    memset(&results, 0, sizeof results);
+    memset(&results.ins_cnt, 0, sizeof(results) - sizeof(std::vector<uint32_t>));
 
     INT64 ins_tot = 0;
 
+    std::set<uint32_t> instr_accesses;
+
     for (UINT32 i = 0; i < bbl_counter; i++) {
+        if (bbl_cnt[i]) {
+            for (auto &addr: bbl_data[i].static_addr) instr_accesses.insert(addr);
+        }
+
         accumulate_bbl_val(&results, &bbl_data[i], bbl_cnt[i]);
         ins_tot += bbl_data[i].ins_cnt;
     }
-    print_bbl_val(results);
+    print_bbl_val(static_cast<std::ostream&>(OutFile), results);
 
     OutFile << "BBL counter: " << bbl_counter << "\n"; 
     OutFile << "Mean BBL sz (ins): " << static_cast<double>(ins_tot/bbl_counter) << "\n";
     OutFile << "CPI: " << calc_cpi(results) << "\n";
 
-    int instructionAccess = std::count(instructionChunk.begin(), instructionChunk.end(), 1);
-    int dataAccess = std::count(dataChunk.begin(), dataChunk.end(), 1);
+    uint32_t data_accesses = 0;
+    for (uint32_t i = 0; i < pages_sz; i++) 
+        data_accesses += pages[i];
 
-    OutFile << "Instruction blocks accessed: " << instructionAccess << "\n";
-    OutFile << "Data blocks accessed: " << dataAccess << "\n";
+    OutFile << "Data Chunk Accesses: " << data_accesses << "\n";
+    OutFile << "Instr Chunk Accesses: " << instr_accesses.size() << "\n";
 
     exit(0);
-}
-
-void instructionAnalysis(ADDRINT addr, UINT32 size) {
-	ADDRINT start = addr >> 5;
-	ADDRINT end = (addr + size - 1) >> 5;
-
-	for(ADDRINT chunk = start; chunk <= end; chunk++)
-		instructionChunk[chunk] = 1;
-}
-
-void dataAnalysis(ADDRINT addr, UINT32 size) {
-	ADDRINT start = addr >> 5;
-	ADDRINT end = (addr + size - 1) >> 5;
-
-	for(ADDRINT chunk = start; chunk <= end; chunk++)
-		dataChunk[chunk] = 1;
 }
 
 // Pin calls this function every time a new basic block is encountered
 VOID Trace(TRACE trace, VOID* v)
 {
+    // TODO:
+    // can a mem op be both load & store? I think so, for eg. inc 0x69
+    // but in Part A Type B I have put an ELSE?
+    // So thats a bug? But counts still match with the reference given??? 
+
     // Visit every basic block  in the trace
     for (BBL bbl = TRACE_BblHead(trace); BBL_Valid(bbl); bbl = BBL_Next(bbl))
     {
         bbl_val* data = &bbl_data[bbl_counter];
         bbl_counter++;
+
+#ifdef ASSERTS
         assert(bbl_counter < BBL_MAX);
-        //if (bbl_counter == BBL_MAX) bbl_counter = 1;
+#endif
+
+        // your avg instruction is prolly aligned to word sz, so this
+        // resize should be good enough in like >90% of cases?
+        data->static_addr.resize((BBL_Size(bbl) >> 5) + 1);
 
         for (INS ins = BBL_InsHead(bbl); INS_Valid(ins); ins = INS_Next(ins)) {
-            // Type B stuff
+            // Part C stuff
+            ADDRINT start_addr = INS_Address(ins);
+            ADDRINT end_addr = start_addr + INS_Size(ins) - 1;
+            start_addr >>= 5; end_addr >>= 5;
+
+            for (ADDRINT chnk = start_addr; chnk <= end_addr; chnk++)  
+                data->static_addr.push_back(chnk);
+
+            // Part A Type B stuff
             UINT32 mem_op_cnt = INS_MemoryOperandCount(ins);
             for (UINT32 mem_op = 0; mem_op < mem_op_cnt; ++mem_op) {
                 if (INS_MemoryOperandIsRead(ins, mem_op)) {
                     data->load += (INS_MemoryOperandSize(ins, mem_op) + 3) / 4;
-                } else if (INS_MemoryOperandIsWritten(ins, mem_op)) {
+                } 
+                if (INS_MemoryOperandIsWritten(ins, mem_op)) {
                     data->store += (INS_MemoryOperandSize(ins, mem_op) + 3) / 4;
                 }
             }
 
-            // Type A stuff
+            // Part A Type A stuff
             switch (INS_Category(ins)) {
                 case XED_CATEGORY_NOP:
                     data->nop++;
@@ -329,17 +299,15 @@ VOID Trace(TRACE trace, VOID* v)
         INS_InsertThenPredicatedCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) analysis, IARG_UINT32, bbl_counter - 1, IARG_END);
 
         for (INS ins = BBL_InsHead(bbl); INS_Valid(ins); ins = INS_Next(ins)) {
-		INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR)ff_valid, IARG_END);
-		INS_InsertThenCall(ins, IPOINT_BEFORE, (AFUNPTR)instructionAnalysis, IARG_INST_PTR, IARG_UINT32, INS_Size(ins), IARG_END);
-		
-		UINT32 memOps = INS_MemoryOperandCount(ins);
-		for(UINT32 memOp = 0; memOp < memOps; memOp++) {
-			if(INS_MemoryOperandIsRead(ins, memOp) || INS_MemoryOperandIsWritten(ins, memOp)){
-				INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR)ff_valid, IARG_END);
-				INS_InsertThenPredicatedCall(ins, IPOINT_BEFORE, (AFUNPTR)dataAnalysis, IARG_MEMORYOP_EA, memOp, IARG_MEMORYOP_SIZE, memOp, IARG_END);
-			}
-		}
-	}
+            UINT32 mem_op_cnt = INS_MemoryOperandCount(ins);
+
+            for (UINT32 j = 0; j < mem_op_cnt; ++j) {
+                // TODO: replace this if with a call to return_arg(ff_flag)
+                // issue is race conditions at first ins of bbl
+                INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR) ff_valid, IARG_END);
+                INS_InsertThenPredicatedCall(ins, IPOINT_BEFORE, (AFUNPTR) touch, IARG_MEMORYOP_EA, j, IARG_MEMORYOP_SIZE, j, IARG_END);
+            }
+        }
 
         BBL_InsertCall(bbl, IPOINT_BEFORE, (AFUNPTR) bbl_ins_count, IARG_UINT32, bbl_counter - 1, IARG_END);
     }
@@ -351,10 +319,8 @@ KNOB< string > KnobFastForward(KNOB_MODE_WRITEONCE, "pintool", "f", "0", "Skip o
 // This function is called when the application exits
 VOID Fini(INT32 code, VOID* v)
 {
-    // Write to a file since cout and cerr maybe closed by the application
-    OutFile.setf(ios::showbase);
-    OutFile << "Count " << icount << endl;
-    OutFile.close();
+    OutFile << "WARNING: Fini called!" << "\n";
+    exit_routine();
 }
 
 /* ===================================================================== */
@@ -374,8 +340,21 @@ INT32 Usage()
 
 int main(int argc, char* argv[])
 {
-    memset(bbl_data, 0, sizeof bbl_data);
+    for (int i = 0; i < BBL_MAX; ++i) {
+        memset(&bbl_data[i].ins_cnt, 0, sizeof(bbl_data[i]) - sizeof(std::vector<uint32_t>));
+    }
+
     memset(bbl_cnt, 0, sizeof bbl_cnt);
+
+    memset(pgdir, 0, sizeof pgdir);
+
+    ptables = (pte_t*)malloc((sizeof(pte_t) * PT_CHUNK) + BUF); 
+    memset(ptables, 0, (sizeof(pte_t) * PT_CHUNK) + BUF);
+    ptables_sz += PT_CHUNK;
+
+    pages = (bool*)malloc((sizeof(bool) * PG_CHUNK) + BUF);
+    memset(pages, 0, (sizeof(bool) * PG_CHUNK) + BUF);
+    pages_sz += PG_CHUNK;
 
     // Initialize pin
     if (PIN_Init(argc, argv)) return Usage();

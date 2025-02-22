@@ -12,6 +12,7 @@
 #include <assert.h>
 #include <set>
 #include "pin.H"
+
 using std::cerr;
 using std::endl;
 using std::ios;
@@ -22,7 +23,7 @@ using std::string;
 #include "utils.h"
 
 // NOTE: comment this for final timing runs
-#define ASSERTS 
+// #define ASSERTS 
 
 ofstream OutFile;
 
@@ -45,7 +46,7 @@ double calc_cpi(const bbl_val& val) {
 
 static UINT32 bbl_counter = 0;
 
-#define BBL_MAX 10000000
+#define BBL_MAX 1000000
 static bbl_val bbl_data[BBL_MAX];
 static UINT64 bbl_cnt[BBL_MAX]; // how many times has each BBL been run
 
@@ -162,6 +163,22 @@ static inline __attribute__((always_inline)) void touch(ADDRINT addr, uint32_t s
         uint32_t pg = ptables[pte + PTX(i)] & ~(PTE_P);
         pages[pg + PGX(i)] = 1;
     }
+
+
+}
+
+static inline __attribute__((always_inline)) void mem_analysis(INT32 idx, bbl_val* data, UINT32 inst_memOp, UINT32 inst_memRead, UINT32 inst_memWrite, UINT32 inst_memBytes, ADDRINT max_disp , ADDRINT min_disp, ADDRINT found_disp) {
+    data->mem_ops[std::min(inst_memOp, (UINT32)9)]++;
+    data->mem_reads[std::min(inst_memRead, (UINT32)9)]++;
+    data->mem_writes[std::min(inst_memWrite,(UINT32) 9)]++;
+    data->total_mem_bytes += inst_memBytes;
+    if(inst_memBytes)data->mem_instr_count++;
+    if(inst_memBytes > data->max_mem_bytes) data->max_mem_bytes = inst_memBytes;
+    if(static_cast<bool>(found_disp)){
+        data->found_disp =true;
+        data->max_disp = std::max(data->max_disp, static_cast<ADDRDELTA>(max_disp));
+        data->min_disp = std::min(data->min_disp, static_cast<ADDRDELTA>(min_disp));
+    } 
 }
 
 VOID exit_routine() {
@@ -219,6 +236,71 @@ VOID Trace(TRACE trace, VOID* v)
         data->static_addr.resize((BBL_Size(bbl) >> 5) + 1);
 
         for (INS ins = BBL_InsHead(bbl); INS_Valid(ins); ins = INS_Next(ins)) {
+            // Part D stuff
+            UINT32 size = INS_Size(ins);
+            if(size < 20) data->instr_length[size]++;
+
+            UINT32 opCount = INS_OperandCount(ins);
+            if(opCount < 10) data->op_count[opCount]++;
+
+            UINT32 rRegs = INS_MaxNumRRegs(ins);
+            if(rRegs < 10) data->reg_reads[rRegs]++;
+
+            UINT32 wRegs = INS_MaxNumWRegs(ins);
+            if(wRegs < 10) data->reg_writes[wRegs]++;
+
+            UINT32 mcount = INS_MemoryOperandCount(ins);
+            UINT32 inst_memOp = 0;
+            UINT32 inst_memRead = 0;
+            UINT32 inst_memWrite = 0;
+            UINT32 inst_memBytes = 0;
+            ADDRDELTA max_disp = INT32_MIN;
+            ADDRDELTA min_disp = INT32_MAX;
+            bool found_disp = false;
+
+            for (UINT32 i = 0; i < mcount; i++) {
+                bool isRead = INS_MemoryOperandIsRead(ins, i);
+                bool isWrite = INS_MemoryOperandIsWritten(ins, i);
+                UINT32 sz = INS_MemoryOperandSize(ins, i);
+                if (isRead) {
+                    inst_memRead++;
+                    inst_memOp++;
+                }
+                if (isWrite) {
+                    inst_memWrite++;
+                    inst_memOp++;
+                }
+                if (isRead || isWrite){
+                    inst_memBytes += sz;
+                }
+
+                ADDRDELTA disp = INS_OperandMemoryDisplacement(ins, i);
+
+                if(INS_OperandIsImmediate(ins,i)) found_disp = true;
+                
+                max_disp = std::max(max_disp, disp);
+                min_disp = std::min(min_disp, disp);
+            }
+
+            for(UINT32 i = 0; i < opCount; i++){
+                if(INS_OperandIsImmediate(ins,i)){
+                    INT32 imm = static_cast<INT32>(INS_OperandImmediate(ins, i));
+                    if(!data->found_imm){
+                        data->max_imm = imm;
+                        data->min_imm = imm;
+                        data->found_imm = true;
+                    } else {
+                        data->max_imm = std::max(data->max_imm, imm);
+                        data->min_imm = std::min(data->min_imm, imm);
+                    }
+                }
+            }
+            
+            if(mcount){
+                INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR)ff_valid, IARG_END);
+                INS_InsertThenPredicatedCall(ins, IPOINT_BEFORE, (AFUNPTR)mem_analysis, IARG_UINT32,bbl_counter-1, IARG_PTR, data, IARG_UINT32, inst_memOp, IARG_UINT32, inst_memRead, IARG_UINT32, inst_memWrite, IARG_UINT32, inst_memBytes, IARG_ADDRINT, max_disp , IARG_ADDRINT, min_disp, IARG_ADDRINT, static_cast<ADDRINT>(found_disp), IARG_END);
+            }
+
             // Part C stuff
             ADDRINT start_addr = INS_Address(ins);
             ADDRINT end_addr = start_addr + INS_Size(ins) - 1;
@@ -307,6 +389,8 @@ VOID Trace(TRACE trace, VOID* v)
                 INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR) ff_valid, IARG_END);
                 INS_InsertThenPredicatedCall(ins, IPOINT_BEFORE, (AFUNPTR) touch, IARG_MEMORYOP_EA, j, IARG_MEMORYOP_SIZE, j, IARG_END);
             }
+
+            
         }
 
         BBL_InsertCall(bbl, IPOINT_BEFORE, (AFUNPTR) bbl_ins_count, IARG_UINT32, bbl_counter - 1, IARG_END);
