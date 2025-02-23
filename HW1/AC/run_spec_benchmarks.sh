@@ -45,9 +45,7 @@ run_benchmark() {
   # Build the full command line as a string.
   # We use double-quotes around MAIN_SO so that its absolute path is used.
   local full_cmd
-  touch "/home/ubuntu/cs422/HW1/AC/results/${bench}_time.txt"
-  touch "/home/ubuntu/cs422/HW1/AC/results/${bench}.log"
-  full_cmd="/usr/bin/time -o "/home/ubuntu/cs422/HW1/AC/results/${bench}_time.txt" pin -t \"$MAIN_SO\" -f \"$fast_forward\" -o \"/home/ubuntu/cs422/HW1/AC/results/${bench}.log\" -- $modified_cmd"
+  full_cmd="/usr/bin/time -o ../../results/${bench}_time.txt pin -t \"$MAIN_SO\" -f \"$fast_forward\" -o \"../../results/${bench}.log\" -- $modified_cmd"
   
   # (Optional) Print the full command for debugging.
   echo "Running command: $full_cmd"
@@ -61,18 +59,18 @@ run_benchmark() {
 
 # List of benchmarks to run (excluding sphinx3).
 # Each entry is a semicolon-separated string:
-	# Directory;BenchmarkName;FastForward (in billions, e.g. 207);Original commandline
+# Directory;BenchmarkName;FastForward (in billions, e.g. 207);Original commandline
 benchmarks=(
   #"spec_2006/400.perlbench;perlbench;207;./perlbench_base.i386 -I./lib diffmail.pl 4 800 10 17 19 300 > perlbench.ref.diffmail.out 2> perlbench.ref.diffmail.err"
   #"spec_2006/401.bzip2;bzip2;301;./bzip2_base.i386 input.source 280 > bzip2.ref.source.out 2> bzip2.ref.source.err"
   #"spec_2006/403.gcc;gcc;107;./gcc_base.i386 cp-decl.i -o cp-decl.s > gcc.ref.cp-decl.out 2> gcc.ref.cp-decl.err"
   #"spec_2006/429.mcf;mcf;377;./mcf_base.i386 inp.in > mcf.ref.out 2> mcf.ref.err"
-  "spec_2006/436.cactusADM;cactusADM;584;./cactusADM_base.i386 benchADM.par > cactusADM.ref.out 2> cactusADM.ref.err"
-  "spec_2006/437.leslie3d;leslie3d;2346;./leslie3d_base.i386 < leslie3d.in > leslie3d.ref.out 2> leslie3d.ref.err"
-  #"spec_2006/450.soplex;soplex;364;./soplex_base.i386 -m3500 ref.mps > soplex.ref.ref.out 2> soplex.ref.ref.err"
+  #"spec_2006/436.cactusADM;cactusADM;584;./cactusADM_base.i386 benchADM.par > cactusADM.ref.out 2> cactusADM.ref.err"
+  #"spec_2006/437.leslie3d;leslie3d;2346;./leslie3d_base.i386 < leslie3d.in > leslie3d.ref.out 2> leslie3d.ref.err"
+  "spec_2006/450.soplex;soplex;364;./soplex_base.i386 -m3500 ref.mps > soplex.ref.ref.out 2> soplex.ref.ref.err"
   #"spec_2006/456.hmmer;hmmer;264;./hmmer_base.i386 nph3.hmm swiss41 > hmmer.ref.nph3.out 2> hmmer.ref.nph3.err"
-  "spec_2006/462.libquantum;libquantum;3605;./libquantum_base.i386 1397 8 > libquantum.ref.out 2> libquantum.ref.err"
-  "spec_2006/470.lbm;lbm;830;./lbm_base.i386 3000 reference.dat 0 0 100_100_130_ldc.of > lbm.ref.out 2> lbm.ref.err"
+  #"spec_2006/462.libquantum;libquantum;3605;./libquantum_base.i386 1397 8 > libquantum.ref.out 2> libquantum.ref.err"
+  #"spec_2006/470.lbm;lbm;830;./lbm_base.i386 3000 reference.dat 0 0 100_100_130_ldc.of > lbm.ref.out 2> lbm.ref.err"
   #"spec_2006/471.omnetpp;omnetpp;43;./omnetpp_base.i386 omnetpp.ini > omnetpp.ref.log 2> omnetpp.ref.err"
   #"spec_2006/483.xalancbmk;xalancbmk;1331;./xalancbmk_base.i386 -v t5.xml xalanc.xsl > xalancbmk.ref.out 2> xalancbmk.ref.err"
 )

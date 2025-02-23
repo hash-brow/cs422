@@ -55,6 +55,9 @@ static UINT64 bbl_cnt[BBL_MAX]; // how many times has each BBL been run
 static UINT64 icount = 0;
 static UINT64 ff_cnt;
 
+static UINT64 cmov_cnt = 0;
+static UINT64 cset_cnt = 0;
+
 VOID bbl_ins_count(INT32 idx) {
     icount += bbl_data[idx].ins_cnt;
 }
@@ -195,6 +198,8 @@ VOID exit_routine() {
         accumulate_bbl_val(&results, &bbl_data[i], bbl_cnt[i]);
         ins_tot += bbl_data[i].ins_cnt;
     }
+    results.cmov += cmov_cnt;
+    results.misc += cset_cnt;
     print_bbl_val(static_cast<std::ostream&>(OutFile), results);
 
     OutFile << "BBL counter: " << bbl_counter << "\n"; 
@@ -211,6 +216,9 @@ VOID exit_routine() {
     exit(0);
 }
 
+VOID increment_cmov() { cmov_cnt++; }
+VOID increment_setcc() { cset_cnt++; }
+
 // Pin calls this function every time a new basic block is encountered
 VOID Trace(TRACE trace, VOID* v)
 {
@@ -222,6 +230,9 @@ VOID Trace(TRACE trace, VOID* v)
     // Visit every basic block  in the trace
     for (BBL bbl = TRACE_BblHead(trace); BBL_Valid(bbl); bbl = BBL_Next(bbl))
     {
+        INS_InsertIfCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) terminate, IARG_END);
+        INS_InsertThenCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) exit_routine, IARG_END);
+
         bbl_val* data = &bbl_data[bbl_counter];
         bbl_counter++;
 
@@ -314,6 +325,18 @@ VOID Trace(TRACE trace, VOID* v)
                 }
             }
 
+            if (INS_Category(ins) == XED_CATEGORY_CMOV) {
+                INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR) ff_valid, IARG_END);
+                INS_InsertThenPredicatedCall(ins, IPOINT_BEFORE, (AFUNPTR) increment_cmov, IARG_END);
+                continue;
+            }
+
+            if (INS_Category(ins) == XED_CATEGORY_SETCC) {
+                INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR) ff_valid, IARG_END);
+                INS_InsertThenPredicatedCall(ins, IPOINT_BEFORE, (AFUNPTR) increment_setcc, IARG_END);
+                continue;
+            }
+
             // Part A Type A stuff
             switch (INS_Category(ins)) {
                 case XED_CATEGORY_NOP:
@@ -348,9 +371,6 @@ VOID Trace(TRACE trace, VOID* v)
                 case XED_CATEGORY_AVX512:
                     data->vector++;
                     break;
-                case XED_CATEGORY_CMOV:
-                    data->cmov++;
-                    break;
                 case XED_CATEGORY_MMX:
                 case XED_CATEGORY_SSE:
                     data->mmx_sse++;
@@ -368,11 +388,8 @@ VOID Trace(TRACE trace, VOID* v)
 
         data->ins_cnt = BBL_NumIns(bbl);
 
-        INS_InsertIfCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) terminate, IARG_END);
-        INS_InsertThenCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) exit_routine, IARG_END);
-
         INS_InsertIfCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) ff_valid, IARG_END);
-        INS_InsertThenPredicatedCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) analysis, IARG_UINT32, bbl_counter - 1, IARG_END);
+        INS_InsertThenCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) analysis, IARG_UINT32, bbl_counter - 1, IARG_END);
 
         for (INS ins = BBL_InsHead(bbl); INS_Valid(ins); ins = INS_Next(ins)) {
             UINT32 mem_op_cnt = INS_MemoryOperandCount(ins);
@@ -383,8 +400,6 @@ VOID Trace(TRACE trace, VOID* v)
                 INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR) ff_valid, IARG_END);
                 INS_InsertThenPredicatedCall(ins, IPOINT_BEFORE, (AFUNPTR) touch, IARG_MEMORYOP_EA, j, IARG_MEMORYOP_SIZE, j, IARG_END);
             }
-
-            
         }
 
         BBL_InsertCall(bbl, IPOINT_BEFORE, (AFUNPTR) bbl_ins_count, IARG_UINT32, bbl_counter - 1, IARG_END);

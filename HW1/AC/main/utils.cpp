@@ -24,7 +24,6 @@ VOID accumulate_bbl_val(bbl_val* dest, const bbl_val* src, UINT64 mul) {
     dest->rotate_shift += src->rotate_shift * mul;
     dest->flagop += src->flagop * mul;
     dest->vector += src->vector * mul;
-    dest->cmov += src->cmov * mul;
     dest->mmx_sse += src->mmx_sse * mul;
     dest->syscall += src->syscall * mul;
     dest->alu += src->alu * mul;
