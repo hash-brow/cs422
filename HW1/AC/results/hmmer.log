@@ -114,7 +114,7 @@ Average: 4.00  bytes
 
 9. Immediate Values:
 Max: 2147483647
-Min: -2147483648
+Min: -987654321
 
 10. Displacement Values:
 Max: 135294312

@@ -113,8 +113,8 @@ Max: 4 bytes
 Average: 3.51  bytes
 
 9. Immediate Values:
-Max: 1685382481
-Min: -2147483648
+Max: 124
+Min: -1
 
 10. Displacement Values:
 Max: 134982404
@@ -122,5 +122,5 @@ Min: -64
 BBL counter: 1401
 Mean BBL sz (ins): 5.00
 CPI: 21.03
-Data Chunk Accesses: 1048594
+Data Chunk Accesses: 1048592
 Instr Chunk Accesses: 68
