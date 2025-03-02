@@ -43,8 +43,8 @@ VOID accumulate_bbl_val(bbl_val* dest, const bbl_val* src, UINT64 mul) {
         if(mul) dest->mem_writes[i] += src->mem_writes[i];
     }
     
-    dest->total_mem_bytes += src->total_mem_bytes * mul;
-    dest->mem_instr_count += src->mem_instr_count * mul;
+    if(mul) dest->total_mem_bytes += src->total_mem_bytes;
+    if(mul) dest->mem_instr_count += src->mem_instr_count;
     if(mul) dest->max_mem_bytes = std::max(dest->max_mem_bytes, src->max_mem_bytes);
 
     if(mul) dest->min_imm = std::min(dest->min_imm, src->min_imm);
@@ -184,7 +184,7 @@ void print_bbl_val(std::ostream &OutFile, const bbl_val& val) {
     OutFile << "\n8. Memory Bytes Touched:\n";
     OutFile << "Max: " << val.max_mem_bytes << " bytes\n";
     double avgMemBytes = static_cast<double>(val.total_mem_bytes) / val.mem_instr_count;
-    OutFile << "Average: " << std::fixed << std::setw(5) 
+    OutFile << "Average: " << std::fixed << std::setprecision(5) 
             << avgMemBytes << " bytes\n";
 
     OutFile << "\n9. Immediate Values:\n";
