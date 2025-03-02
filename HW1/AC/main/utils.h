@@ -43,18 +43,17 @@ typedef struct _bbl_val {
     UINT64 alu;
     UINT64 misc;
 
-    UINT64 memOps=0;
-    UINT64 instr_length[20] = {0};
-    UINT64 op_count[10] = {0};
-    UINT64 reg_reads[10] = {0};
-    UINT64 reg_writes[10] = {0};
-    UINT64 mem_ops[10] = {0};
-    UINT64 mem_reads[10] = {0};
-    UINT64 mem_writes[10] = {0};
-    UINT64 max_mem_bytes = 0, total_mem_bytes = 0, mem_instr_count = 0;
-    INT32 max_imm = INT32_MIN, min_imm = INT32_MAX;
-    ADDRDELTA max_disp = INT32_MIN, min_disp = INT32_MAX;
-    bool found_imm = false;
+    UINT64 memOps;
+    UINT64 instr_length[20];
+    UINT64 op_count[10];
+    UINT64 reg_reads[10];
+    UINT64 reg_writes[10];
+    UINT64 mem_ops[10];
+    UINT64 mem_reads[10];
+    UINT64 mem_writes[10];
+    UINT64 max_mem_bytes, total_mem_bytes, mem_instr_count;
+    ADDRDELTA max_imm, min_imm;
+    ADDRDELTA max_disp, min_disp;
 } bbl_val;
 
 VOID accumulate_bbl_val(bbl_val* dest, const bbl_val* src, UINT64 mul);

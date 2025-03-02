@@ -186,6 +186,11 @@ VOID exit_routine() {
     bbl_val results;
     memset(&results.ins_cnt, 0, sizeof(results) - sizeof(std::vector<uint32_t>));
 
+    results.min_imm = INT_MAX;
+    results.max_imm = INT_MIN;
+    results.min_disp = INT_MAX;
+    results.max_disp = INT_MIN;
+    
     INT64 ins_tot = 0;
 
     std::set<uint32_t> instr_accesses;
@@ -219,6 +224,13 @@ VOID exit_routine() {
 VOID increment_cmov() { cmov_cnt++; }
 VOID increment_setcc() { cset_cnt++; }
 
+VOID GetOperSigned(INS ins, INT32 i, bool& is_signed)
+{
+    xed_decoded_inst_t* xedd = INS_XedDec(ins);
+    is_signed   = xed_decoded_inst_get_immediate_is_signed(xedd);
+}
+
+
 // Pin calls this function every time a new basic block is encountered
 VOID Trace(TRACE trace, VOID* v)
 {
@@ -243,6 +255,8 @@ VOID Trace(TRACE trace, VOID* v)
         // your avg instruction is prolly aligned to word sz, so this
         // resize should be good enough in like >90% of cases?
         data->static_addr.resize((BBL_Size(bbl) >> 5) + 1);
+	data->min_imm = INT_MAX;
+	data->max_imm = INT_MIN;
 
         for (INS ins = BBL_InsHead(bbl); INS_Valid(ins); ins = INS_Next(ins)) {
             // Part D stuff
@@ -289,16 +303,10 @@ VOID Trace(TRACE trace, VOID* v)
 
             for(UINT32 i = 0; i < opCount; i++){
                 if(INS_OperandIsImmediate(ins,i)){
-                    INT32 imm = static_cast<INT32>(INS_OperandImmediate(ins, i));
-                    if(!data->found_imm){
-                        data->max_imm = imm;
-                        data->min_imm = imm;
-                        data->found_imm = true;
-                    } else {
-                        data->max_imm = std::max(data->max_imm, imm);
-                        data->min_imm = std::min(data->min_imm, imm);
-                    }
-                }
+			ADDRINT value     = INS_OperandImmediate(ins, i);	
+			data->min_imm = std::min(data->min_imm, (ADDRDELTA) value);
+			data->max_imm = std::max(data->max_imm, (ADDRDELTA) value);
+	    	}
             }
             
             if(mcount){

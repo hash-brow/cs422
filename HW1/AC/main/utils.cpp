@@ -45,17 +45,9 @@ VOID accumulate_bbl_val(bbl_val* dest, const bbl_val* src, UINT64 mul) {
     dest->total_mem_bytes += src->total_mem_bytes * mul;
     dest->mem_instr_count += src->mem_instr_count * mul;
     dest->max_mem_bytes = std::max(dest->max_mem_bytes, src->max_mem_bytes);
-
-    if(src->found_imm){
-        if(!dest->found_imm){
-            dest->max_imm = src->max_imm;
-            dest->min_imm = src->min_imm;
-            dest->found_imm = true;
-        } else {
-            dest->max_imm = std::max(dest->max_imm, src->max_imm);
-            dest->min_imm = std::min(dest->min_imm, src->min_imm);
-        }
-    }
+	
+    dest->min_imm = std::min(dest->min_imm, src->min_imm);
+    dest->max_imm = std::max(dest->max_imm, src->max_imm);
 
     dest->max_disp = std::max(dest->max_disp, src->max_disp);
     dest->min_disp = std::min(dest->min_disp, src->min_disp);
@@ -195,8 +187,8 @@ void print_bbl_val(std::ostream &OutFile, const bbl_val& val) {
             << avgMemBytes << " bytes\n";
 
     OutFile << "\n9. Immediate Values:\n";
-    OutFile << "Max: " << (val.found_imm ? val.max_imm : 0) << "\n";
-    OutFile << "Min: " << (val.found_imm ? val.min_imm : 0) << "\n";
+    OutFile << "Max: " << val.max_imm << "\n";
+    OutFile << "Min: " << val.min_imm << "\n";
     OutFile << "\n10. Displacement Values:\n";
     OutFile << "Max: " << val.max_disp << "\n";
     OutFile << "Min: " << val.min_disp << "\n";
