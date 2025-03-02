@@ -37,20 +37,21 @@ VOID accumulate_bbl_val(bbl_val* dest, const bbl_val* src, UINT64 mul) {
         dest->op_count[i] += src->op_count[i] * mul;
         dest->reg_reads[i] += src->reg_reads[i] * mul;
         dest->reg_writes[i] += src->reg_writes[i] * mul;
-        dest->mem_ops[i] += src->mem_ops[i];
-        dest->mem_reads[i] += src->mem_reads[i];
-        dest->mem_writes[i] += src->mem_writes[i];
+        
+	if(mul) dest->mem_ops[i] += src->mem_ops[i];
+        if(mul) dest->mem_reads[i] += src->mem_reads[i];
+        if(mul) dest->mem_writes[i] += src->mem_writes[i];
     }
     
     dest->total_mem_bytes += src->total_mem_bytes * mul;
     dest->mem_instr_count += src->mem_instr_count * mul;
-    dest->max_mem_bytes = std::max(dest->max_mem_bytes, src->max_mem_bytes);
-	
-    dest->min_imm = std::min(dest->min_imm, src->min_imm);
-    dest->max_imm = std::max(dest->max_imm, src->max_imm);
+    if(mul) dest->max_mem_bytes = std::max(dest->max_mem_bytes, src->max_mem_bytes);
 
-    dest->max_disp = std::max(dest->max_disp, src->max_disp);
-    dest->min_disp = std::min(dest->min_disp, src->min_disp);
+    if(mul) dest->min_imm = std::min(dest->min_imm, src->min_imm);
+    if(mul) dest->max_imm = std::max(dest->max_imm, src->max_imm);
+
+    if(mul) dest->max_disp = std::max(dest->max_disp, src->max_disp);
+    if(mul) dest->min_disp = std::min(dest->min_disp, src->min_disp);
 }
 
 void print_bbl_val(std::ostream &OutFile, const bbl_val& val) {
