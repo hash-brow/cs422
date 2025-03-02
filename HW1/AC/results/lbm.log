@@ -73,8 +73,8 @@ misc                16962553    0.86%
 9 writes: 0
 
 5. Memory Operands per Instruction:
-0 operands: 510666321
-1 operands: 489308327
+0 operands: 510666322
+1 operands: 489308326
 2 operands: 25351
 3 operands: 0
 4 operands: 0
@@ -86,7 +86,7 @@ misc                16962553    0.86%
 
 6. Memory Read Operands:
 0 operands: 131821462
-1 operands: 357512216
+1 operands: 357512215
 2 operands: 0
 3 operands: 0
 4 operands: 0
@@ -97,7 +97,7 @@ misc                16962553    0.86%
 9 operands: 0
 
 7. Memory Write Operands:
-0 operands: 357486865
+0 operands: 357486864
 1 operands: 131846813
 2 operands: 0
 3 operands: 0

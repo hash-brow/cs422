@@ -73,8 +73,8 @@ misc                708216333   46.43%
 9 writes: 0
 
 5. Memory Operands per Instruction:
-0 operands: 487182328
-1 operands: 500382456
+0 operands: 487182329
+1 operands: 500382455
 2 operands: 12435211
 3 operands: 0
 4 operands: 0
@@ -85,7 +85,7 @@ misc                708216333   46.43%
 9 operands: 0
 
 6. Memory Read Operands:
-0 operands: 97604947
+0 operands: 97604946
 1 operands: 415212720
 2 operands: 0
 3 operands: 0
@@ -98,7 +98,7 @@ misc                708216333   46.43%
 
 7. Memory Write Operands:
 0 operands: 402777509
-1 operands: 110040158
+1 operands: 110040157
 2 operands: 0
 3 operands: 0
 4 operands: 0
@@ -122,5 +122,5 @@ Min: -76
 BBL counter: 2160
 Mean BBL sz (ins): 5.00
 CPI: 24.76
-Data Chunk Accesses: 11672844
+Data Chunk Accesses: 11672843
 Instr Chunk Accesses: 66

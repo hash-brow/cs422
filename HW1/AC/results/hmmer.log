@@ -1,8 +1,8 @@
 Field               Value       Percentage
 ---------------------------------------------
-ins_cnt             999999038   -
-load                547670759   33.74%
-store               75698747    4.66%
+ins_cnt             1000000001  -
+load                547671722   33.74%
+store               75699710    4.66%
 nop                 34317       0.00%
 call_drct           144622      0.01%
 call_indrct         959         0.00%
@@ -17,11 +17,11 @@ cmov                0           0.00%
 mmx_sse             0           0.00%
 syscall             0           0.00%
 alu                 40212       0.00%
-misc                853607582   52.58%
+misc                853608545   52.58%
 1. Instruction Length Distribution:
 0 bytes: 0
 1 bytes: 25078459
-2 bytes: 302859589
+2 bytes: 302860552
 3 bytes: 296150918
 4 bytes: 270388796
 5 bytes: 24861234
@@ -43,7 +43,7 @@ misc                853607582   52.58%
 3 operands: 432938365
 4 operands: 713115
 5 operands: 159551
-6 operands: 22845
+6 operands: 23808
 7 operands: 0
 8 operands: 0
 9 operands: 0
@@ -55,7 +55,7 @@ misc                853607582   52.58%
 3 reads: 281425794
 4 reads: 79905538
 5 reads: 14929
-6 reads: 22845
+6 reads: 23808
 7 reads: 0
 8 reads: 0
 9 reads: 0
@@ -64,7 +64,7 @@ misc                853607582   52.58%
 0 writes: 75149179
 1 writes: 755279998
 2 writes: 169547016
-3 writes: 22845
+3 writes: 23808
 4 writes: 0
 5 writes: 0
 6 writes: 0
@@ -73,8 +73,8 @@ misc                853607582   52.58%
 9 writes: 0
 
 5. Memory Operands per Instruction:
-0 operands: 376808153
-1 operands: 623024776
+0 operands: 376809117
+1 operands: 623024775
 2 operands: 166109
 3 operands: 0
 4 operands: 0
@@ -86,7 +86,7 @@ misc                853607582   52.58%
 
 6. Memory Read Operands:
 0 operands: 75528003
-1 operands: 547662882
+1 operands: 547662881
 2 operands: 0
 3 operands: 0
 4 operands: 0
@@ -97,7 +97,7 @@ misc                853607582   52.58%
 9 operands: 0
 
 7. Memory Write Operands:
-0 operands: 547496773
+0 operands: 547496772
 1 operands: 75694112
 2 operands: 0
 3 operands: 0

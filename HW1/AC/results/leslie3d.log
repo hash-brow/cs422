@@ -1,31 +1,31 @@
 Field               Value       Percentage
 ---------------------------------------------
-ins_cnt             999999996   -
-load                736425894   38.01%
-store               201007376   10.37%
+ins_cnt             1000000021  -
+load                736425931   38.01%
+store               201007388   10.37%
 nop                 83321       0.00%
 call_drct           913         0.00%
 call_indrct         17          0.00%
 ret                 930         0.00%
 uncond_br           169181      0.01%
-cond_br             41549283    2.14%
+cond_br             41549284    2.14%
 logical             435798      0.02%
-rotate_shift        5168472     0.27%
+rotate_shift        5168470     0.27%
 flagop              32          0.00%
 vector              0           0.00%
 cmov                0           0.00%
 mmx_sse             0           0.00%
 syscall             0           0.00%
-alu                 394808043   20.38%
-misc                557784006   28.79%
+alu                 394808056   20.38%
+misc                557784019   28.79%
 1. Instruction Length Distribution:
 0 bytes: 0
 1 bytes: 34716289
-2 bytes: 503707177
-3 bytes: 58913142
+2 bytes: 503707194
+3 bytes: 58913136
 4 bytes: 82555
 5 bytes: 412264
-6 bytes: 400346773
+6 bytes: 400346787
 7 bytes: 1821778
 8 bytes: 0
 9 bytes: 0
@@ -39,10 +39,10 @@ misc                557784006   28.79%
 2. Operands per Instruction:
 0 operands: 83321
 1 operands: 33
-2 operands: 317860987
-3 operands: 492867763
-4 operands: 189186858
-5 operands: 990
+2 operands: 317860991
+3 operands: 492867784
+4 operands: 189186856
+5 operands: 992
 6 operands: 44
 7 operands: 0
 8 operands: 0
@@ -50,11 +50,11 @@ misc                557784006   28.79%
 
 3. Register Read Operands:
 0 reads: 357048
-1 reads: 58705870
-2 reads: 653895085
-3 reads: 270599939
-4 reads: 16441940
-5 reads: 70
+1 reads: 58705868
+2 reads: 653895095
+3 reads: 270599956
+4 reads: 16441938
+5 reads: 72
 6 reads: 44
 7 reads: 0
 8 reads: 0
@@ -62,7 +62,7 @@ misc                557784006   28.79%
 
 4. Register Write Operands:
 0 writes: 68909640
-1 writes: 735959862
+1 writes: 735959887
 2 writes: 195130336
 3 writes: 158
 4 writes: 0
@@ -73,9 +73,9 @@ misc                557784006   28.79%
 9 writes: 0
 
 5. Memory Operands per Instruction:
-0 operands: 378021930
-1 operands: 548828591
-2 operands: 73149475
+0 operands: 378021929
+1 operands: 548828609
+2 operands: 73149483
 3 operands: 0
 4 operands: 0
 5 operands: 0
@@ -86,7 +86,7 @@ misc                557784006   28.79%
 
 6. Memory Read Operands:
 0 operands: 68829601
-1 operands: 553148465
+1 operands: 553148491
 2 operands: 0
 3 operands: 0
 4 operands: 0
@@ -97,8 +97,8 @@ misc                557784006   28.79%
 9 operands: 0
 
 7. Memory Write Operands:
-0 operands: 479998990
-1 operands: 141979076
+0 operands: 479999008
+1 operands: 141979084
 2 operands: 0
 3 operands: 0
 4 operands: 0
@@ -122,5 +122,5 @@ Min: -1760
 BBL counter: 5669
 Mean BBL sz (ins): 8.00
 CPI: 34.39
-Data Chunk Accesses: 2476189
+Data Chunk Accesses: 2455852
 Instr Chunk Accesses: 2632

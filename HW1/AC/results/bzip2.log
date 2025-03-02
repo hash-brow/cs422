@@ -1,8 +1,8 @@
 Field               Value       Percentage
 ---------------------------------------------
-ins_cnt             999995915   -
-load                452706146   26.88%
-store               231174061   13.73%
+ins_cnt             1000000000  -
+load                452710229   26.88%
+store               231178146   13.73%
 nop                 36514       0.00%
 call_drct           791604      0.05%
 call_indrct         13          0.00%
@@ -17,11 +17,11 @@ cmov                0           0.00%
 mmx_sse             0           0.00%
 syscall             0           0.00%
 alu                 0           0.00%
-misc                714315041   42.42%
+misc                714319126   42.42%
 1. Instruction Length Distribution:
 0 bytes: 0
 1 bytes: 38611261
-2 bytes: 219197373
+2 bytes: 219201458
 3 bytes: 436965530
 4 bytes: 75327011
 5 bytes: 22047524
@@ -42,8 +42,8 @@ misc                714315041   42.42%
 2 operands: 597647448
 3 operands: 382870411
 4 operands: 2693869
-5 operands: 14191401
-6 operands: 2550125
+5 operands: 14191403
+6 operands: 2554208
 7 operands: 0
 8 operands: 0
 9 operands: 0
@@ -54,8 +54,8 @@ misc                714315041   42.42%
 2 reads: 533608125
 3 reads: 215105844
 4 reads: 46791304
-5 reads: 13399797
-6 reads: 2550125
+5 reads: 13399799
+6 reads: 2554208
 7 reads: 0
 8 reads: 0
 9 reads: 0
@@ -63,8 +63,8 @@ misc                714315041   42.42%
 4. Register Write Operands:
 0 writes: 132331400
 1 writes: 712782483
-2 writes: 152331890
-3 writes: 2550142
+2 writes: 152331892
+3 writes: 2554225
 4 writes: 0
 5 writes: 0
 6 writes: 0
@@ -73,8 +73,8 @@ misc                714315041   42.42%
 9 writes: 0
 
 5. Memory Operands per Instruction:
-0 operands: 399852496
-1 operands: 516406618
+0 operands: 399856582
+1 operands: 516406617
 2 operands: 83736801
 3 operands: 0
 4 operands: 0
@@ -86,7 +86,7 @@ misc                714315041   42.42%
 
 6. Memory Read Operands:
 0 operands: 147437265
-1 operands: 452706154
+1 operands: 452706153
 2 operands: 0
 3 operands: 0
 4 operands: 0
@@ -97,7 +97,7 @@ misc                714315041   42.42%
 9 operands: 0
 
 7. Memory Write Operands:
-0 operands: 368969353
+0 operands: 368969352
 1 operands: 231174066
 2 operands: 0
 3 operands: 0

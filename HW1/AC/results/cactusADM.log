@@ -119,8 +119,8 @@ Min: -2147483648
 10. Displacement Values:
 Max: 135701372
 Min: -2620
-BBL counter: 9495
+BBL counter: 9494
 Mean BBL sz (ins): 6.00
 CPI: 40.91
-Data Chunk Accesses: 4378243
+Data Chunk Accesses: 4378244
 Instr Chunk Accesses: 1225
