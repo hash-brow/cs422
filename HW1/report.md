@@ -20,6 +20,7 @@ This scheme comes with the advantage of a low memory footprint, while being fast
 The overall pin tool takes about 5-6 mins to run on perlbench.
 
 The final results are reported on a server with 8 threads, and 32 GB RAM. The processor used is - AMD EPYC-Milan Processor
+<div style="page-break-after: always;"></div>
 
 ## Benchmark Results
 
@@ -164,6 +165,7 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 **Minimum value of immediate:** -2147483648\
 **Maximum value of displacement used in memory addressing:** 135918104\
 **Minimum value of displacement used in memory addressing:** -1408
+<div style="page-break-after: always;"></div>
 
 ### 401.bzip2 input.source
 #### Part A
@@ -306,6 +308,7 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 **Minimum value of immediate:** -858993459 \
 **Maximum value of displacement used in memory addressing:** 135000192 \
 **Minimum value of displacement used in memory addressing:** -4848
+<div style="page-break-after: always;"></div>
 
 ### 403.gcc cp-decl.i
 #### Part A
@@ -450,6 +453,7 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 **Minimum value of immediate:** -2147483587 \
 **Maximum value of displacement used in memory addressing:** 138634432 \
 **Minimum value of displacement used in memory addressing:** -1744
+<div style="page-break-after: always;"></div>
 
 ### 429.mcf
 #### Part A
@@ -592,6 +596,7 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 **Minimum value of immediate:** -100000000 \
 **Maximum value of displacement used in memory addressing:** 134957120 \
 **Minimum value of displacement used in memory addressing:** -76 
+<div style="page-break-after: always;"></div>
 
 ### 450.soplex ref.mps
 
@@ -735,6 +740,7 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 **Minimum value of immediate:** -640172613 \
 **Maximum value of displacement used in memory addressing:** 135855532 \
 **Minimum value of displacement used in memory addressing:** -344 
+<div style="page-break-after: always;"></div>
 
 ### 456.hmmer nph3.hmm
 #### Part A
@@ -877,6 +883,7 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 **Minimum value of immediate:** -987654321 \
 **Maximum value of displacement used in memory addressing:** 135294312 \
 **Minimum value of displacement used in memory addressing:** -580
+<div style="page-break-after: always;"></div>
 
 ### 471.omnetpp
 #### Part A
@@ -1019,6 +1026,7 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 **Minimum value of immediate:** -2092037281 \
 **Maximum value of displacement used in memory addressing:** 136090116 \
 **Minimum value of displacement used in memory addressing:** -104
+<div style="page-break-after: always;"></div>
 
 ### 483.xalancbmk
 #### Part A
@@ -1161,6 +1169,7 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 **Minimum value of immediate:** -1431655765 \
 **Maximum value of displacement used in memory addressing:** 139657912 \
 **Minimum value of displacement used in memory addressing:** -1392 
+<div style="page-break-after: always;"></div>
 
 ## Optional Benchmarks
 
@@ -1305,6 +1314,7 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 **Minimum value of immediate:** -2147483648 \
 **Maximum value of displacement used in memory addressing:** 135701372 \
 **Minimum value of displacement used in memory addressing:** -2620
+<div style="page-break-after: always;"></div>
 
 ### 437.leslie3d
 #### Part A
@@ -1447,6 +1457,7 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 **Minimum value of immediate:** -2147483648 \
 **Maximum value of displacement used in memory addressing:** 135182404 \
 **Minimum value of displacement used in memory addressing:** -1760
+<div style="page-break-after: always;"></div>
 
 ### 462.libquantum
 #### Part A
@@ -1589,6 +1600,7 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 **Minimum value of immediate:** -1 \
 **Maximum value of displacement used in memory addressing:** 134982404 \
 **Minimum value of displacement used in memory addressing:** -64
+<div style="page-break-after: always;"></div>
 
 ### 470.lbm
 #### Part A
@@ -1731,6 +1743,7 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 **Minimum value of immediate:** -1672357186 \
 **Maximum value of displacement used in memory addressing:** 3216104 \
 **Minimum value of displacement used in memory addressing:** -16080
+<div style="page-break-after: always;"></div>
 
 ### 482.sphinx3
 #### Part A
