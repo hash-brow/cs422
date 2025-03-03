@@ -110,7 +110,7 @@ misc                625366134   39.06%
 
 8. Memory Bytes Touched:
 Max: 8 bytes
-Average: 4.25  bytes
+Average: 4.22175 bytes
 
 9. Immediate Values:
 Max: 2147483647
@@ -120,7 +120,7 @@ Min: -2092037281
 Max: 136090116
 Min: -104
 BBL counter: 13605
-Mean BBL sz (ins): 4.00
-CPI: 26.90
-Data Chunk Accesses: 528737
+Mean BBL sz (ins): 4.00000
+CPI: 26.90264
+Data Chunk Accesses: 528736
 Instr Chunk Accesses: 891
