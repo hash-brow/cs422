@@ -1,0 +1,2 @@
+3263.04user 9.10system 54:32.39elapsed 99%CPU (0avgtext+0avgdata 1014620maxresident)k
+1488inputs+152outputs (15major+1980786minor)pagefaults 0swaps

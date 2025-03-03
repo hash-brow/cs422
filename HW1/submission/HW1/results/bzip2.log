@@ -1,0 +1,126 @@
+Field               Value       Percentage
+---------------------------------------------
+ins_cnt             1000000000  -
+load                452710229   26.88%
+store               231178146   13.73%
+nop                 36514       0.00%
+call_drct           791604      0.05%
+call_indrct         13          0.00%
+ret                 791614      0.05%
+uncond_br           21299210    1.26%
+cond_br             129923144   7.72%
+logical             71000704    4.22%
+rotate_shift        61831941    3.67%
+flagop              6130        0.00%
+vector              0           0.00%
+cmov                0           0.00%
+mmx_sse             0           0.00%
+syscall             0           0.00%
+alu                 0           0.00%
+misc                714319126   42.42%
+1. Instruction Length Distribution:
+0 bytes: 0
+1 bytes: 38611261
+2 bytes: 219201458
+3 bytes: 436965530
+4 bytes: 75327011
+5 bytes: 22047524
+6 bytes: 141357374
+7 bytes: 51341600
+8 bytes: 15085632
+9 bytes: 0
+10 bytes: 62610
+11 bytes: 0
+12 bytes: 0
+13 bytes: 0
+14 bytes: 0
+15 bytes: 0
+
+2. Operands per Instruction:
+0 operands: 36514
+1 operands: 6147
+2 operands: 597647448
+3 operands: 382870411
+4 operands: 2693869
+5 operands: 14191403
+6 operands: 2554208
+7 operands: 0
+8 operands: 0
+9 operands: 0
+
+3. Register Read Operands:
+0 reads: 5189068
+1 reads: 183351652
+2 reads: 533608125
+3 reads: 215105844
+4 reads: 46791304
+5 reads: 13399799
+6 reads: 2554208
+7 reads: 0
+8 reads: 0
+9 reads: 0
+
+4. Register Write Operands:
+0 writes: 132331400
+1 writes: 712782483
+2 writes: 152331892
+3 writes: 2554225
+4 writes: 0
+5 writes: 0
+6 writes: 0
+7 writes: 0
+8 writes: 0
+9 writes: 0
+
+5. Memory Operands per Instruction:
+0 operands: 399856582
+1 operands: 516406617
+2 operands: 83736801
+3 operands: 0
+4 operands: 0
+5 operands: 0
+6 operands: 0
+7 operands: 0
+8 operands: 0
+9 operands: 0
+
+6. Memory Read Operands:
+0 operands: 147437265
+1 operands: 452706153
+2 operands: 0
+3 operands: 0
+4 operands: 0
+5 operands: 0
+6 operands: 0
+7 operands: 0
+8 operands: 0
+9 operands: 0
+
+7. Memory Write Operands:
+0 operands: 368969352
+1 operands: 231174066
+2 operands: 0
+3 operands: 0
+4 operands: 0
+5 operands: 0
+6 operands: 0
+7 operands: 0
+8 operands: 0
+9 operands: 0
+
+8. Memory Bytes Touched:
+Max: 8 bytes
+Average: 3.48541 bytes
+
+9. Immediate Values:
+Max: 1431655766
+Min: -858993459
+
+10. Displacement Values:
+Max: 135000192
+Min: -4848
+BBL counter: 3198
+Mean BBL sz (ins): 6.00000
+CPI: 29.02341
+Data Chunk Accesses: 2441019
+Instr Chunk Accesses: 754
