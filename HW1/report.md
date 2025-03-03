@@ -334,7 +334,7 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 **CPI:** 23.92563
 
 #### Part C
-**Data Chunk Accesses:** 138634432 \
+**Data Chunk Accesses:** 1140752 \
 **Instruction Chunk Accesses:** 2953
 
 #### Part D
@@ -462,7 +462,7 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 | Direct Calls   | 12556301  | 0.82%      |
 | Indirect Calls  | 0   | 0.00%      |
 | Returns          | 12556300  | 0.82%      |
-| Unconditional Branches    | 831446  | 0.55%      |
+| Unconditional Branches    | 8314496  | 0.55%      |
 | Conditional Branches      | 178243015 | 11.69%      |
 | Logical operations      | 75119495 | 4.93%      |
 | Rotate and Shift | 3516416   | 0.23%      |
@@ -475,7 +475,7 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 | The rest         | 708216333 | 46.43%     |
 
 #### Part B
-**CPI:** 24376160
+**CPI:** 24.76160
 
 #### Part C
 **Data Chunk Accesses:** 11672843 \
@@ -1155,12 +1155,12 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 | 8        | 0          |
 | 9        | 0          |
 
-**Maximum number of bytes touched by an instruction:** 8 \ 
+**Maximum number of bytes touched by an instruction:** 8 \
 **Average number of bytes touched by an instruction:** 4.15831 \
 **Maximum value of immediate:** 2147483647 \
 **Minimum value of immediate:** -1431655765 \
 **Maximum value of displacement used in memory addressing:** 139657912 \
-**Minimum value of displacement used in memory addressing:** -1392 \
+**Minimum value of displacement used in memory addressing:** -1392 
 
 ## Optional Benchmarks
 
@@ -1191,7 +1191,7 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 **CPI:** 40.91289
 
 #### Part C
-**Data Chunk Accesses:** 4378243
+**Data Chunk Accesses:** 4378243 \
 **Instruction Chunk Accesses:** 1225
 
 #### Part D
@@ -1356,6 +1356,7 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 | 13    | 0          |
 | 14    | 0          |
 | 15    | 0          |
+
 **Distribution of the number of operands in an instruction**
 | Operands | Count       |
 |----------|------------|
@@ -1582,7 +1583,7 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 | 8        | 0          |
 | 9        | 0          |
 
-**Maximum number of bytes touched by an instruction:** 4 \ 
+**Maximum number of bytes touched by an instruction:** 4 \
 **Average number of bytes touched by an instruction:** 3.60445 \
 **Maximum value of immediate:** 124 \
 **Minimum value of immediate:** -1 \
@@ -1617,7 +1618,7 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 
 #### Part C
 **Data Chunk Accesses:** 13121299 \
-**Instruction Chunk Accesses:** 381 \
+**Instruction Chunk Accesses:** 381 
 
 #### Part D
 **Distribution of Instruction Length**
@@ -1759,7 +1760,7 @@ The final results are reported on a server with 8 threads, and 32 GB RAM. The pr
 
 #### Part C
 **Data Chunk Accesses:** 154004 \
-**Instruction Chunk Accesses:** 1173 \
+**Instruction Chunk Accesses:** 1173 
 
 #### Part D
 **Distribution of Instruction Length**
