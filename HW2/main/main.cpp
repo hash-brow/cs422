@@ -18,6 +18,9 @@ using std::string;
 
 ofstream OutFile;
 
+BTB btb;
+HASHBTB hashbtb;
+
 // The running count of instructions is kept here
 // make it static to help the compiler optimize docount
 static UINT64 icount = 0;
@@ -41,18 +44,39 @@ VOID exit_routine() {
 	exit(0);
 }
 
+VOID direct_flow() {
+	// TODO: add ghr for HASHBTB
+}
+
+VOID indirect_flow(INS ins) {
+	UINT32 ins_size = INS_Size(ins);
+
+	INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR)ff_valid, IARG_END);
+	INS_InsertThenCall(ins, IPOINT_BEFORE, (AFUNPTR)BTB.btb_fill, IARG_INST_PTR, IARG_BRANCH_TARGET_ADDR, IARG_BRANCH_TAKEN, IARG_UINT32, ins_size, IARG_END);
+
+	INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR)ff_valid, IARG_END);
+	INS_InsertThenCall(ins, IPOINT_BEFORE, (AFUNPTR)HASHBTB.btb_fill, IARG_INST_PTR, IARG_BRANCH_TARGET_ADDR, IARG_BRANCH_TAKEN, IARG_UINT32, ins_size, IARG_END);
+}
+
 // Pin calls this function every time a new basic block is encountered
 // It inserts a call to docount
 VOID Trace(TRACE trace, VOID* v)
 {
-	// Visit every basic block	in the trace
+	// Visit every basic block in the trace
 	for (BBL bbl = TRACE_BblHead(trace); BBL_Valid(bbl); bbl = BBL_Next(bbl))
 	{
 		INS_InsertIfCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) terminate, IARG_END);
-        INS_InsertThenCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) exit_routine, IARG_END);
+        	INS_InsertThenCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) exit_routine, IARG_END);
 		
 		for(INS ins = BBL_InsHead(bbl); INS_valid(ins); ins = INS_next(ins)){
-			// TODO: Write functions here
+			// TODO: Condition for branch instructions missing
+			// TODO: Add ghr for HASHBTB
+			// TODO: direct_flow() needs to be completed
+			if() {
+			}
+			else if(INS_IsIndirectControlFlow(ins))
+				indirect_flow(ins);
+
 		}
 
 		// Insert a call to docount before every bbl, passing the number of instructions
