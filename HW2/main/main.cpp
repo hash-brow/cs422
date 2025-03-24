@@ -13,8 +13,8 @@ using std::ofstream;
 using std::string;
 
 
-#include "btb.h"
-#include "hashbtb.h"
+#include "include/btb.h"
+#include "include/hashbtb.h"
 
 ofstream OutFile;
 
@@ -52,10 +52,10 @@ VOID indirect_flow(INS ins) {
 	UINT32 ins_size = INS_Size(ins);
 
 	INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR)ff_valid, IARG_END);
-	INS_InsertThenCall(ins, IPOINT_BEFORE, (AFUNPTR)BTB.btb_fill, IARG_INST_PTR, IARG_BRANCH_TARGET_ADDR, IARG_BRANCH_TAKEN, IARG_UINT32, ins_size, IARG_END);
+	INS_InsertThenCall(ins, IPOINT_BEFORE, (AFUNPTR)BTB::btb_fill, IARG_PTR, &btb, IARG_INST_PTR, IARG_BRANCH_TARGET_ADDR, IARG_BRANCH_TAKEN, IARG_UINT32, ins_size, IARG_END);
 
 	INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR)ff_valid, IARG_END);
-	INS_InsertThenCall(ins, IPOINT_BEFORE, (AFUNPTR)HASHBTB.btb_fill, IARG_INST_PTR, IARG_BRANCH_TARGET_ADDR, IARG_BRANCH_TAKEN, IARG_UINT32, ins_size, IARG_END);
+	INS_InsertThenCall(ins, IPOINT_BEFORE, (AFUNPTR)HASHBTB::btb_fill, IARG_PTR, &hashbtb, IARG_INST_PTR, IARG_BRANCH_TARGET_ADDR, IARG_BRANCH_TAKEN, IARG_UINT32, ins_size, IARG_END);
 }
 
 // Pin calls this function every time a new basic block is encountered
@@ -68,11 +68,11 @@ VOID Trace(TRACE trace, VOID* v)
 		INS_InsertIfCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) terminate, IARG_END);
         	INS_InsertThenCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) exit_routine, IARG_END);
 		
-		for(INS ins = BBL_InsHead(bbl); INS_valid(ins); ins = INS_next(ins)){
+		for(INS ins = BBL_InsHead(bbl); INS_Valid(ins); ins = INS_Next(ins)){
 			// TODO: Condition for branch instructions missing
 			// TODO: Add ghr for HASHBTB
 			// TODO: direct_flow() needs to be completed
-			if() {
+			if(false) {
 			}
 			else if(INS_IsIndirectControlFlow(ins))
 				indirect_flow(ins);

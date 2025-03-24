@@ -19,9 +19,9 @@
 
 ###### Place all generic definitions here ######
 
-override SOURCES := main.cpp src/fnbt.cpp src/bimodal.cpp src/sag.cpp src/gag.cpp src/gshare.cpp src/hyb.cpp src/maj.cpp src/tour.cpp src/btb.cpp src/hashbtb.cpp
+override SOURCES := main.cpp src/fnbt.cpp src/bimodal.cpp src/sag.cpp src/gag.cpp src/gshare.cpp src/hybrid.cpp src/maj.cpp src/tour.cpp src/btb.cpp src/hashbtb.cpp
 
-$(OBJDIR)main$(PINTOOL_SUFFIX): $(OBJDIR)main$(OBJ_SUFFIX) $(OBJDIR)utils$(OBJ_SUFFIX)
+$(OBJDIR)main$(PINTOOL_SUFFIX): $(OBJDIR)main$(OBJ_SUFFIX) $(OBJDIR)src/fnbt$(OBJ_SUFFIX) $(OBJDIR)src/bimodal$(OBJ_SUFFIX) $(OBJDIR)src/sag$(OBJ_SUFFIX) $(OBJDIR)src/gag$(OBJ_SUFFIX) $(OBJDIR)src/gshare$(OBJ_SUFFIX) $(OBJDIR)src/hybrid$(OBJ_SUFFIX) $(OBJDIR)src/maj$(OBJ_SUFFIX) $(OBJDIR)src/tour$(OBJ_SUFFIX) $(OBJDIR)src/btb$(OBJ_SUFFIX) $(OBJDIR)src/hashbtb$(OBJ_SUFFIX)
 	$(LINKER) $(TOOL_LDFLAGS) $(LINK_EXE)$@ $^ $(TOOL_LPATHS) $(TOOL_LIBS)
 
 # This defines tests which run tools of the same name.  This is simply for convenience to avoid

@@ -23,7 +23,7 @@ class BTB {
 		void update_lru(int setIndex, int wayIndex);
 	public:
 		BTB();
-		void btb_fill(ADDRINT insAddr, ADDRINT branchAddr, BOOL taken, UINT32 insSize);
+		static void btb_fill(BTB* self, ADDRINT insAddr, ADDRINT branchAddr, BOOL taken, UINT32 insSize);
 };
 
 #endif

@@ -1,4 +1,4 @@
-#include "btb.h"
+#include "../include/btb.h"
 
 BTB::BTB(){
 	cache.resize(BTB_SETS, std::vector<BTB_ENTRY>(BTB_WAYS, {false, 0, 0, 0}));
@@ -14,8 +14,8 @@ void BTB::update_lru(int setIndex, int wayIndex){
 	cache[setIndex][wayIndex].lru_state = 0;
 }
 
-void BTB::btb_fill(ADDRINT insAddr, ADDRINT branchAddr, BOOL taken, UINT32 insSize){
-	UINT32 btbIdx = insAddr & MASK_128;
+void BTB::btb_fill(BTB* self, ADDRINT insAddr, ADDRINT branchAddr, BOOL taken, UINT32 insSize){
+	UINT32 btbIdx = insAddr & 127;
 	ADDRINT tag = insAddr >> 7;
 	ADDRINT nextIns = insAddr + insSize;
 	BOOL found = false;
@@ -25,45 +25,45 @@ void BTB::btb_fill(ADDRINT insAddr, ADDRINT branchAddr, BOOL taken, UINT32 insSi
 	int colIdx = 0;
 
 	for(int i = 0; i < BTB_WAYS; i++){
-		if(cache[btbIdx][i].valid && cache[btbIdx][i].tag == tag){
+		if(self->cache[btbIdx][i].valid && self->cache[btbIdx][i].tag == tag){
 			found = true;
-			target = cache[btbIdx][i].target;
+			target = self->cache[btbIdx][i].target;
 			colIdx = i;
 			break;
 		}
 	}
 
-	preds++;
+	self->preds++;
 
 	if(taken){
-		fails += (target != branchAddr);
+		self->fails += (target != branchAddr);
 		
 		if(found && (branchAddr != target))
-			cache[btbIdx][colIdx].target = branchAddr;
+			self->cache[btbIdx][colIdx].target = branchAddr;
 
 		if(!found && (branchAddr != target)){
 			int lruIdx = 0;
 
 			for(int i = 0; i < BTB_WAYS; i++){
-				if(!cache[btbIdx][i].valid){
+				if(!self->cache[btbIdx][i].valid){
 					lruIdx = i;
 					break;
 				}
 
-				if(cache[btbIdx][i].lru_state > cache[btbIdx][lru_index].lru_state){
+				if(self->cache[btbIdx][i].lru_state > self->cache[btbIdx][lruIdx].lru_state){
 					lruIdx = i;
 				}
 			}
 
-			update_lru(btbIdx, lruIdx)
-			cache[btbIdx][lruIdx] = {true, insAddr, 0, branchAddr};
+			self->update_lru(btbIdx, lruIdx);
+			self->cache[btbIdx][lruIdx] = {true, insAddr, 0, branchAddr};
 		}
 	} else {
-		fails += (target != nextIns);
+		self->fails += (target != nextIns);
 		if(found)
-			cache[btbIdx][colIdx].valid = false;
+			self->cache[btbIdx][colIdx].valid = false;
 	}
 
-	if(found) update_lru(btbIdx, colIdx);
-	else misses++;
+	if(found) self->update_lru(btbIdx, colIdx);
+	else self->misses++;
 }
