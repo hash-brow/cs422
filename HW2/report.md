@@ -1,5 +1,5 @@
 # CS422: Computer Architecture
-# Homework 1
+# Homework 2
 
 ## Implementation Details
 
