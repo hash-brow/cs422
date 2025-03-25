@@ -21,7 +21,7 @@ All the fractions have been listed as percentages.
 | gshare              | 130101783 | 10.0557% | 10.1364% | 9.73105% |
 | Hybrid-1            | 130101783 | 3.09021% | 3.17035% | 2.7679% |
 | Hybrid-2 Majority   | 130101783 | 4.9575%  | 5.01487% | 4.72681% |
-| Hybrid-2 Tournament | 130101783 | 3.9031%  | 4.12987% | 2.172842909
+| Hybrid-2 Tournament | 130101783 | 3.9031%  | 4.12987% | 2.99119% |
 #### Part B
 | BTB Type | BTB Predictions | BTB Miss Rate | BTB Missprediction |
 |--------------|-----------|------------|------------|
