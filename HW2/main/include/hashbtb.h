@@ -18,8 +18,11 @@ class HASHBTB {
 		static const int BTB_SETS = 128;
 		static const int BTB_WAYS = 4;
 		std::vector<std::vector<HASHBTB_ENTRY>> cache;
+		
 		UINT32 preds, misses, fails;
 		UINT32 ghr;
+
+		UINT32 lru_timer;
 
 		void update_lru(int setIndex, int wayIndex);
 	public:

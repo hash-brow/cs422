@@ -7,4 +7,4 @@ Combined2 : Accesses 103219361, Mispredictions 3700407 (0.0358499), Forward Bran
 Combined3Majority : Accesses 103219361, Mispredictions 3914110 (0.0379203), Forward Branches 33762855, Forward Mispredictions 276792 (0.00819812), Backward Branches 69456506, Backward Mispredictions 3637318 (0.0523683)
 Combined3 : Accesses 103219361, Mispredictions 3785606 (0.0366753), Forward Branches 33762855, Forward Mispredictions 228894 (0.00677946), Backward Branches 69456506, Backward Mispredictions 3556712 (0.0512078)
 BTB1 : Accesses 6315969, Misses 94 (0.000014882910), Mispredictions 338 (0.000053515145)
-BTB2 : Accesses 6315969, Misses 297 (0.000047023663), Mispredictions 617 (0.000097688890)
+BTB2 : Accesses 6315969, Misses 341 (0.000053990132), Mispredictions 661 (0.000104655359)

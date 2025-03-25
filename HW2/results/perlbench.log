@@ -6,5 +6,5 @@ gshare : Accesses 130101783, Mispredictions 13082637 (0.100557), Forward Branche
 Combined2 : Accesses 130101783, Mispredictions 4020414 (0.0309021), Forward Branches 104192287, Forward Mispredictions 3303265 (0.0317035), Backward Branches 25909496, Backward Mispredictions 717149 (0.027679)
 Combined3Majority : Accesses 130101783, Mispredictions 6449797 (0.049575), Forward Branches 104192287, Forward Mispredictions 5225105 (0.0501487), Backward Branches 25909496, Backward Mispredictions 1224692 (0.0472681)
 Combined3 : Accesses 130101783, Mispredictions 5078009 (0.039031), Forward Branches 104192287, Forward Mispredictions 4303006 (0.0412987), Backward Branches 25909496, Backward Mispredictions 775003 (0.0299119)
-BTB1 : Accesses 28134124, Misses 2678 (0.000095186898), Mispredictions 9755493 (0.346749484718)
-BTB2 : Accesses 28134124, Misses 1441112 (0.051222920607), Mispredictions 3814430 (0.135580194358)
+BTB1 : Accesses 28134124, Misses 3401 (0.000120885228), Mispredictions 9756284 (0.346777600042)
+BTB2 : Accesses 28134124, Misses 500821 (0.017801194023), Mispredictions 2877357 (0.102272848446)

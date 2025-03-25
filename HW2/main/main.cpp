@@ -95,6 +95,8 @@ VOID StatDump(void)
 }
 
 void analysis(ADDRINT addr_ins, ADDRINT addr_branch, bool taken) {
+	// std::cout << "analysis" << std::endl;
+
 	data_t data { addr_ins, addr_branch, taken };
 	result_t result { };
 
@@ -114,6 +116,8 @@ void analysis(ADDRINT addr_ins, ADDRINT addr_branch, bool taken) {
 }
 
 VOID indirect_flow(INS ins) {
+	// OutFile << "indirect" << std::endl;
+	
 	UINT32 ins_size = INS_Size(ins);
 
 	INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR)IsFastForwardDone, IARG_END);
@@ -134,12 +138,12 @@ VOID Trace(TRACE trace, VOID *v)
 		BBL_InsertThenCall(bbl, IPOINT_BEFORE, (AFUNPTR) FastForwardDone, IARG_END);
 
 		for (INS ins = BBL_InsHead(bbl); ; ins = INS_Next(ins)) {
-                        if (INS_IsBranch(ins) && INS_HasFallThrough(ins)) { 
-                                INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR) IsFastForwardDone, IARG_END);
-                                INS_InsertThenCall(ins, IPOINT_BEFORE, (AFUNPTR) analysis, 
-                                                IARG_INST_PTR, IARG_BRANCH_TARGET_ADDR,
-                                                IARG_BRANCH_TAKEN, IARG_END);
-                        } else if (INS_IsIndirectControlFlow(ins)) {
+            if (INS_IsBranch(ins) && INS_HasFallThrough(ins)) { 
+				INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR) IsFastForwardDone, IARG_END);
+				INS_InsertThenCall(ins, IPOINT_BEFORE, (AFUNPTR) analysis, 
+								IARG_INST_PTR, IARG_BRANCH_TARGET_ADDR,
+								IARG_BRANCH_TAKEN, IARG_END);
+			} else if (INS_IsIndirectControlFlow(ins)) {
 				indirect_flow(ins);
 			}
 
