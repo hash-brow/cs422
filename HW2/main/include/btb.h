@@ -24,6 +24,7 @@ class BTB {
 	public:
 		BTB();
 		static void btb_fill(BTB* self, ADDRINT insAddr, ADDRINT branchAddr, BOOL taken, UINT32 insSize);
+		void print(std::ostream& OutFile);
 };
 
 #endif

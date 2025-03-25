@@ -56,7 +56,7 @@ void BTB::btb_fill(BTB* self, ADDRINT insAddr, ADDRINT branchAddr, BOOL taken, U
 			}
 
 			self->update_lru(btbIdx, lruIdx);
-			self->cache[btbIdx][lruIdx] = {true, insAddr, 0, branchAddr};
+			self->cache[btbIdx][lruIdx] = {true, tag, 0, branchAddr};
 		}
 	} else {
 		self->fails += (target != nextIns);
@@ -66,4 +66,10 @@ void BTB::btb_fill(BTB* self, ADDRINT insAddr, ADDRINT branchAddr, BOOL taken, U
 
 	if(found) self->update_lru(btbIdx, colIdx);
 	else self->misses++;
+}
+
+void BTB::print(std::ostream& OutFile){
+	OutFile << std::fixed << std::setprecision(12) << "Accesses " << preds;
+	OutFile << ", Misses " << misses << " (" << (double) misses / preds << ")";
+	OutFile << ", Mispredictions " << fails << " (" << (double) fails / preds << ")\n";
 }

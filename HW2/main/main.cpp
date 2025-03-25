@@ -1,72 +1,96 @@
-/*
- * Copyright (C) 2004-2021 Intel Corporation.
- * SPDX-License-Identifier: MIT
- */
-
 #include <iostream>
 #include <fstream>
+#include <set>
 #include "pin.H"
 #include <cstdlib>
-#include <set>
-using std::cerr;
-using std::endl;
-using std::ios;
-using std::ofstream;
-using std::string;
+
+/* Macro and type definitions */
+#define BILLION 1000000000
 
 using namespace std;
 
-#define BILLION 1000000000
-
+#include "include/predictor.h"
 #include "include/btb.h"
 #include "include/hashbtb.h"
-#include "include/predictor.h"
 
-ofstream OutFile;
+/* Global variables */
+//std::ostream * out = &cerr;
+std::ofstream OutFile;
+
+UINT64 insFootPrint = 0;
+UINT64 memFootPrint = 0;
+
+ADDRINT fastForwardDone = 0;
+UINT64 icount = 0; //number of dynamically executed instructions
+
+UINT64 fastForwardIns; // number of instruction to fast forward
+UINT64 maxIns; // maximum number of instructions to simulate
+
+/* Command line switches */
+KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool", "o", "", "specify file name for HW1 output");
+KNOB<UINT64> KnobFastForward(KNOB_MODE_WRITEONCE, "pintool", "f", "0", "number of instructions to fast forward in billions");
+
+/* Print out help message. */
+INT32 Usage()
+{
+	cerr << "CS422 Homework 2" << endl;
+	cerr << KNOB_BASE::StringKnobSummary() << endl;
+	return -1;
+}
+
+VOID InsCount(UINT32 c)
+{
+	icount += c;
+}
+
+ADDRINT FastForward(void)
+{
+	return (icount >= fastForwardIns && icount < maxIns);
+}
+
+VOID FastForwardDone(void)
+{
+	fastForwardDone = 1;
+}
+
+ADDRINT IsFastForwardDone(void)
+{
+	return fastForwardDone;
+}
+
+ADDRINT Terminate(void)
+{
+        return (icount >= maxIns);
+}
+
+namespace Predictors {
+        FNBT fnbt { };
+        Bimodal bimodal { };
+        GAg gag { };
+        SAg sag { };
+        Gshare gshare { };
+        Hybrid hybrid { };
+        Hybrid_majority hybrid_majority { };
+        Hybrid_tournament hybrid_tournament { };
+}
 
 BTB btb;
 HASHBTB hashbtb;
 
-namespace Predictors {
-	FNBT fnbt { };
-	Bimodal bimodal { };
-	GAg gag { };
-	SAg sag { };
-	Gshare gshare { };
-	Hybrid hybrid { };
-	Hybrid_majority hybrid_majority { };
-	Hybrid_tournament hybrid_tournament { };
-}
-
-// The running count of instructions is kept here
-// make it static to help the compiler optimize docount
-static UINT64 icount = 0;
-static UINT64 ff_cnt;
-static UINT64 maxIns;
-
-// This function is called before every block
-VOID docount(UINT32 c) { icount += c; }
-
-const UINT64 range_len = 1e9;
-static uint32_t ff_flag = 0;
-ADDRINT ff_valid() {
-	return (ff_flag = (icount >= ff_cnt  && icount <= maxIns));
-}
-
-ADDRINT terminate() {
-	return icount >= ff_cnt + range_len;
-}
-
 VOID StatDump(void)
 {
-        OutFile << "FNBT : " << Predictors::fnbt << "\n";
-        OutFile << "Bimodal : " << Predictors::bimodal << "\n";
-        OutFile << "SAg : " << Predictors::sag << "\n";
-        OutFile << "GAg : " << Predictors::gag << "\n";
-        OutFile << "gshare : " << Predictors::gshare << "\n";
-        OutFile << "Combined2 : " << Predictors::hybrid << "\n";
-        OutFile << "Combined3Majority : " << Predictors::hybrid_majority << "\n";
-        OutFile << "Combined3 : " << Predictors::hybrid_tournament << "\n";
+	OutFile << "FNBT : " << Predictors::fnbt << "\n";
+	OutFile << "Bimodal : " << Predictors::bimodal << "\n";
+	OutFile << "SAg : " << Predictors::sag << "\n";
+	OutFile << "GAg : " << Predictors::gag << "\n";
+	OutFile << "gshare : " << Predictors::gshare << "\n";
+	OutFile << "Combined2 : " << Predictors::hybrid << "\n";
+	OutFile << "Combined3Majority : " << Predictors::hybrid_majority << "\n";
+	OutFile << "Combined3 : " << Predictors::hybrid_tournament << "\n";
+	
+	OutFile << "BTB1 : "; btb.print(OutFile);
+	OutFile << "BTB2 : "; hashbtb.print(OutFile);	
+	
 	exit(0);
 }
 
@@ -85,93 +109,71 @@ void analysis(ADDRINT addr_ins, ADDRINT addr_branch, bool taken) {
 	Predictors::hybrid + data;
 	Predictors::hybrid_majority + data;
 	Predictors::hybrid_tournament + data;
-}
 
-VOID direct_flow() {
-	// TODO: add ghr for HASHBTB
+	hashbtb.update_ghr(taken);
 }
 
 VOID indirect_flow(INS ins) {
 	UINT32 ins_size = INS_Size(ins);
 
-	INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR)ff_valid, IARG_END);
+	INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR)IsFastForwardDone, IARG_END);
 	INS_InsertThenCall(ins, IPOINT_BEFORE, (AFUNPTR)BTB::btb_fill, IARG_PTR, &btb, IARG_INST_PTR, IARG_BRANCH_TARGET_ADDR, IARG_BRANCH_TAKEN, IARG_UINT32, ins_size, IARG_END);
 
-	INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR)ff_valid, IARG_END);
+	INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR)IsFastForwardDone, IARG_END);
 	INS_InsertThenCall(ins, IPOINT_BEFORE, (AFUNPTR)HASHBTB::btb_fill, IARG_PTR, &hashbtb, IARG_INST_PTR, IARG_BRANCH_TARGET_ADDR, IARG_BRANCH_TAKEN, IARG_UINT32, ins_size, IARG_END);
 }
 
-// Pin calls this function every time a new basic block is encountered
-// It inserts a call to docount
-VOID Trace(TRACE trace, VOID* v)
-{	
-	
-	// Visit every basic block in the trace
-	for (BBL bbl = TRACE_BblHead(trace); BBL_Valid(bbl); bbl = BBL_Next(bbl))
-	{
-		INS_InsertIfCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) terminate, IARG_END);
-        	INS_InsertThenCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) StatDump, IARG_END);
-		
-		for(INS ins = BBL_InsHead(bbl); INS_Valid(ins); ins = INS_Next(ins)){
-			// TODO: Add ghr for HASHBTB
-			// TODO: direct_flow() needs to be completed
-			if (INS_IsBranch(ins) && INS_HasFallThrough(ins)) { 
-					INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR) ff_valid, IARG_END);
-					INS_InsertThenCall(ins, IPOINT_BEFORE, (AFUNPTR) analysis, 
-									IARG_INST_PTR, IARG_BRANCH_TARGET_ADDR,
-									IARG_BRANCH_TAKEN, IARG_END);
-			}
-			else if(INS_IsIndirectControlFlow(ins))
+/* Instruction instrumentation routine */
+VOID Trace(TRACE trace, VOID *v)
+{
+	for (BBL bbl = TRACE_BblHead(trace); BBL_Valid(bbl); bbl = BBL_Next(bbl)) {
+		BBL_InsertIfCall(bbl, IPOINT_BEFORE, (AFUNPTR) Terminate, IARG_END);
+        	BBL_InsertThenCall(bbl, IPOINT_BEFORE, (AFUNPTR) StatDump, IARG_END);
+
+		BBL_InsertIfCall(bbl, IPOINT_BEFORE, (AFUNPTR) FastForward, IARG_END);
+		BBL_InsertThenCall(bbl, IPOINT_BEFORE, (AFUNPTR) FastForwardDone, IARG_END);
+
+		for (INS ins = BBL_InsHead(bbl); ; ins = INS_Next(ins)) {
+                        if (INS_IsBranch(ins) && INS_HasFallThrough(ins)) { 
+                                INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR) IsFastForwardDone, IARG_END);
+                                INS_InsertThenCall(ins, IPOINT_BEFORE, (AFUNPTR) analysis, 
+                                                IARG_INST_PTR, IARG_BRANCH_TARGET_ADDR,
+                                                IARG_BRANCH_TAKEN, IARG_END);
+                        } else if (INS_IsIndirectControlFlow(ins)) {
 				indirect_flow(ins);
+			}
+
 			if (ins == BBL_InsTail(bbl)) break;
 		}
 
-		// Insert a call to docount before every bbl, passing the number of instructions
-		BBL_InsertCall(bbl, IPOINT_BEFORE, (AFUNPTR)docount, IARG_UINT32, BBL_NumIns(bbl), IARG_END);
+		/* Called for each BBL */
+        	BBL_InsertCall(bbl, IPOINT_BEFORE, (AFUNPTR) InsCount, IARG_UINT32, BBL_NumIns(bbl), IARG_END);
 	}
 }
 
-KNOB< string > KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool", "o", "inscount.out", "specify output file name");
-KNOB< string > KnobFastForward(KNOB_MODE_WRITEONCE, "pintool", "f", "0", "Skip over f billion instructions : default (0)");
-
-// This function is called when the application exits
-VOID Fini(INT32 code, VOID* v)
+/* Fini routine */
+VOID Fini(INT32 code, VOID * v)
 {
-	// Write to a file since cout and cerr maybe closed by the application
-	OutFile.setf(ios::showbase);
-	OutFile << "Count " << icount << endl;
-	OutFile << "Terminated with some error" << endl;
-	OutFile.close();
+        assert(6 > 7);
 }
 
-/* ===================================================================== */
-/* Print Help Message													 */
-/* ===================================================================== */
-
-INT32 Usage()
+int main(int argc, char *argv[])
 {
-	cerr << "This tool counts the number of dynamic instructions executed" << endl;
-	cerr << endl << KNOB_BASE::StringKnobSummary() << endl;
-	return -1;
-}
+	// Initialize PIN library. Print help message if -h(elp) is specified
+	// in the command line or the command line is invalid 
+	if (PIN_Init(argc, argv))
+		return Usage();
 
-/* ===================================================================== */
-/* Main																	 */
-/* ===================================================================== */
+	/* Set number of instructions to fast forward and simulate */
+	fastForwardIns = KnobFastForward.Value() * BILLION;
+	maxIns = fastForwardIns + BILLION;
 
-int main(int argc, char* argv[])
-{
-	// Initialize pin
-	if (PIN_Init(argc, argv)) return Usage();
+        OutFile.open(KnobOutputFile.Value().c_str());
 
-	OutFile.open(KnobOutputFile.Value().c_str());
-	ff_cnt = std::stoi(KnobFastForward.Value()) * 1e9;
-	maxIns = ff_cnt + BILLION;
-
-	// Register Instruction to be called to instrument instructions
+	// Register function to be called to instrument instructions
 	TRACE_AddInstrumentFunction(Trace, 0);
 
-	// Register Fini to be called when the application exits
+	// Register function to be called when the application exits
 	PIN_AddFiniFunction(Fini, 0);
 
 	cerr << "===============================================" << endl;
@@ -185,3 +187,8 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
+
+/* ===================================================================== */
+/* eof */
+/* ===================================================================== */
+

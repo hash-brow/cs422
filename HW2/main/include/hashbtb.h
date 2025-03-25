@@ -25,6 +25,9 @@ class HASHBTB {
 	public:
 		HASHBTB();
 		static void btb_fill(HASHBTB *self, ADDRINT insAddr, ADDRINT branchAddr, BOOL taken, UINT32 insSize);
+		void print(std::ostream& OutFile);
+		void update_ghr(BOOL taken);
+	
 };
 
 #endif

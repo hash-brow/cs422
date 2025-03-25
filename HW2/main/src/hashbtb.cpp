@@ -16,7 +16,7 @@ void HASHBTB::update_lru(int setIndex, int wayIndex){
 
 void HASHBTB::btb_fill(HASHBTB* self, ADDRINT insAddr, ADDRINT branchAddr, BOOL taken, UINT32 insSize){
 	UINT32 btbIdx = (insAddr & 127) ^ self->ghr;
-	ADDRINT tag = insAddr >> 7;
+	ADDRINT tag = insAddr;
 	ADDRINT nextIns = insAddr + insSize;
 	BOOL found = false;
 
@@ -66,4 +66,15 @@ void HASHBTB::btb_fill(HASHBTB* self, ADDRINT insAddr, ADDRINT branchAddr, BOOL 
 
 	if(found) self->update_lru(btbIdx, colIdx);
 	else self->misses++;
+}
+
+void HASHBTB::print(std::ostream& OutFile){
+	OutFile << std::fixed << std::setprecision(12) << "Accesses " << preds;
+	OutFile << ", Misses " << misses << " (" << (double) misses / preds << ")";
+	OutFile << ", Mispredictions " << fails << " (" << (double) fails / preds << ")\n";
+}
+
+void HASHBTB::update_ghr(BOOL taken){
+	if(taken) ghr = ((ghr << 1) | 1) & 127;
+	else ghr = ((ghr << 1) | 0) & 127;
 }
