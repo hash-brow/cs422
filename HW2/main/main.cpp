@@ -6,25 +6,43 @@
 #include <iostream>
 #include <fstream>
 #include "pin.H"
+#include <cstdlib>
+#include <set>
 using std::cerr;
 using std::endl;
 using std::ios;
 using std::ofstream;
 using std::string;
 
+using namespace std;
+
+#define BILLION 1000000000
 
 #include "include/btb.h"
 #include "include/hashbtb.h"
+#include "include/predictor.h"
 
 ofstream OutFile;
 
 BTB btb;
 HASHBTB hashbtb;
 
+namespace Predictors {
+	FNBT fnbt { };
+	Bimodal bimodal { };
+	GAg gag { };
+	SAg sag { };
+	Gshare gshare { };
+	Hybrid hybrid { };
+	Hybrid_majority hybrid_majority { };
+	Hybrid_tournament hybrid_tournament { };
+}
+
 // The running count of instructions is kept here
 // make it static to help the compiler optimize docount
 static UINT64 icount = 0;
 static UINT64 ff_cnt;
+static UINT64 maxIns;
 
 // This function is called before every block
 VOID docount(UINT32 c) { icount += c; }
@@ -32,16 +50,41 @@ VOID docount(UINT32 c) { icount += c; }
 const UINT64 range_len = 1e9;
 static uint32_t ff_flag = 0;
 ADDRINT ff_valid() {
-	return (ff_flag = (icount >= ff_cnt));
+	return (ff_flag = (icount >= ff_cnt  && icount <= maxIns));
 }
 
 ADDRINT terminate() {
 	return icount >= ff_cnt + range_len;
 }
 
-VOID exit_routine() {
-	// TODO: Add exit routine here
+VOID StatDump(void)
+{
+        OutFile << "FNBT : " << Predictors::fnbt << "\n";
+        OutFile << "Bimodal : " << Predictors::bimodal << "\n";
+        OutFile << "SAg : " << Predictors::sag << "\n";
+        OutFile << "GAg : " << Predictors::gag << "\n";
+        OutFile << "gshare : " << Predictors::gshare << "\n";
+        OutFile << "Combined2 : " << Predictors::hybrid << "\n";
+        OutFile << "Combined3Majority : " << Predictors::hybrid_majority << "\n";
+        OutFile << "Combined3 : " << Predictors::hybrid_tournament << "\n";
 	exit(0);
+}
+
+void analysis(ADDRINT addr_ins, ADDRINT addr_branch, bool taken) {
+	data_t data { addr_ins, addr_branch, taken };
+	result_t result { };
+
+	Predictors::fnbt + data;
+	Predictors::bimodal + data;
+
+	result.GAg = Predictors::gag + data; 
+	result.SAg = Predictors::sag + data;
+	result.gshare = Predictors::gshare + data;
+
+	data.result = result;
+	Predictors::hybrid + data;
+	Predictors::hybrid_majority + data;
+	Predictors::hybrid_tournament + data;
 }
 
 VOID direct_flow() {
@@ -61,22 +104,26 @@ VOID indirect_flow(INS ins) {
 // Pin calls this function every time a new basic block is encountered
 // It inserts a call to docount
 VOID Trace(TRACE trace, VOID* v)
-{
+{	
+	
 	// Visit every basic block in the trace
 	for (BBL bbl = TRACE_BblHead(trace); BBL_Valid(bbl); bbl = BBL_Next(bbl))
 	{
 		INS_InsertIfCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) terminate, IARG_END);
-        	INS_InsertThenCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) exit_routine, IARG_END);
+        	INS_InsertThenCall(BBL_InsHead(bbl), IPOINT_BEFORE, (AFUNPTR) StatDump, IARG_END);
 		
 		for(INS ins = BBL_InsHead(bbl); INS_Valid(ins); ins = INS_Next(ins)){
-			// TODO: Condition for branch instructions missing
 			// TODO: Add ghr for HASHBTB
 			// TODO: direct_flow() needs to be completed
-			if(false) {
+			if (INS_IsBranch(ins) && INS_HasFallThrough(ins)) { 
+					INS_InsertIfCall(ins, IPOINT_BEFORE, (AFUNPTR) ff_valid, IARG_END);
+					INS_InsertThenCall(ins, IPOINT_BEFORE, (AFUNPTR) analysis, 
+									IARG_INST_PTR, IARG_BRANCH_TARGET_ADDR,
+									IARG_BRANCH_TAKEN, IARG_END);
 			}
 			else if(INS_IsIndirectControlFlow(ins))
 				indirect_flow(ins);
-
+			if (ins == BBL_InsTail(bbl)) break;
 		}
 
 		// Insert a call to docount before every bbl, passing the number of instructions
@@ -119,12 +166,19 @@ int main(int argc, char* argv[])
 
 	OutFile.open(KnobOutputFile.Value().c_str());
 	ff_cnt = std::stoi(KnobFastForward.Value()) * 1e9;
+	maxIns = ff_cnt + BILLION;
 
 	// Register Instruction to be called to instrument instructions
 	TRACE_AddInstrumentFunction(Trace, 0);
 
 	// Register Fini to be called when the application exits
 	PIN_AddFiniFunction(Fini, 0);
+
+	cerr << "===============================================" << endl;
+	cerr << "This application is instrumented by HW1" << endl;
+	if (!KnobOutputFile.Value().empty())
+		cerr << "See file " << KnobOutputFile.Value() << " for analysis results" << endl;
+	cerr << "===============================================" << endl;
 
 	// Start the program, never returns
 	PIN_StartProgram();

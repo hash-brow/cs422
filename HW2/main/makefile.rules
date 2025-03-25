@@ -19,7 +19,7 @@
 
 ###### Place all generic definitions here ######
 
-override SOURCES := main.cpp src/fnbt.cpp src/bimodal.cpp src/sag.cpp src/gag.cpp src/gshare.cpp src/hybrid.cpp src/maj.cpp src/tour.cpp src/btb.cpp src/hashbtb.cpp
+override SOURCES := main.cpp src/predictor.cpp src/btb.cpp src/hashbtb.cpp
 
 $(OBJDIR)main$(PINTOOL_SUFFIX): $(OBJDIR)main$(OBJ_SUFFIX) $(OBJDIR)src/predictor$(OBJ_SUFFIX) $(OBJDIR)src/btb$(OBJ_SUFFIX) $(OBJDIR)src/hashbtb$(OBJ_SUFFIX)
 	$(LINKER) $(TOOL_LDFLAGS) $(LINK_EXE)$@ $^ $(TOOL_LPATHS) $(TOOL_LIBS)
