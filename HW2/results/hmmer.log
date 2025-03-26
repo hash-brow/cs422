@@ -1,5 +1,5 @@
 FNBT : Accesses 144361424, Mispredictions 92268043 (0.639146), Forward Branches 120193666, Forward Mispredictions 92106162 (0.766315), Backward Branches 24167758, Backward Mispredictions 161881 (0.00669822)
-Bimodal : Accesses 144361424, Mispredictions 12617074 (0.0873992), Forward Branches 120193666, Forward Mispredictions 12532446 (0.104269), Backward Branches 24167758, Backward Mispredictions 84628 (0.00350169)
+Bimodal : Accesses 144361424, Mispredictions 12350186 (0.0855505), Forward Branches 120193666, Forward Mispredictions 12264669 (0.102041), Backward Branches 24167758, Backward Mispredictions 85517 (0.00353847)
 SAg : Accesses 144361424, Mispredictions 13173590 (0.0912542), Forward Branches 120193666, Forward Mispredictions 13057501 (0.108637), Backward Branches 24167758, Backward Mispredictions 116089 (0.00480347)
 GAg : Accesses 144361424, Mispredictions 16989690 (0.117689), Forward Branches 120193666, Forward Mispredictions 16369607 (0.136194), Backward Branches 24167758, Backward Mispredictions 620083 (0.0256574)
 gshare : Accesses 144361424, Mispredictions 14831836 (0.102741), Forward Branches 120193666, Forward Mispredictions 14177802 (0.117958), Backward Branches 24167758, Backward Mispredictions 654034 (0.0270623)
