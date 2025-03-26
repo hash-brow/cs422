@@ -3,10 +3,36 @@
 
 ## Implementation Details
 
+Part A code is contained in `predictor.cpp` and `predictor.h`. All predictors are derived from the base class `Predictor` and the actual prediction logic is implemented in an overloaded `operator+`. SAg, GAg and gshare results are passed to the hybrid predictors as a `std::optional` in the `data_t` struct. To reconfigure the sizes of the tables and/or the counters, relevant constants in `predictor.h` should be modified.
+
 The final results are reported on a server with 8 threads, and 32 GB RAM. The processor used is - AMD EPYC-Milan Processor
 
 All the fractions have been listed as percentages.
 <div style="page-break-after: always;"></div>
+
+## Results Explanation - Part A
+
+We will have a brief look at the various predictors, starting from worst to best.
+
+The overall worst is of course FNBT, as it does not really learn anything - it can only be successful in certain specific scenarios. One would expect the majority of branches in a program to be from loops, and if the loops have a large iterations/exits ratio and the conditional branch is backward FNBT can work decently well. For eg., the backward misprediction rate for FNBT + 456.hmmer is <1% despite a significant number of backward branches. Obviously generating such code is a huge constraint and is generally not feasible from the compiler's standpoint.
+
+The next worst predictors are GAg, gshare and the bimodal predictor. Which one works better depends on the specific benchmark. It is clear why bimodal is not such a good predictor, as it can only predict branches which have a high degree of certainty towards a certain outcome. Even then, for example in a loop which exits after 5 iterations, the bimodal predictor will have a misprediction every 5'th time, whereas any history-based predictor will not. 
+
+Obviously using global history will help certain kind of branches, whereas there will be branches which will highly correlate with their local history instead of the global one. The usual trend of misprediction rates is `GAg > gshare >> SAg`. From this, we hypothesize that most branches correlate more with their local histories than global ones. GAg and gshare have similar misprediction rates - however as gshare avoids aliasing, i.e because of the XOR it can differentiate b/w branches with the same history, it is slightly better than GAg on average.
+
+SAg maintains the local history of branches in a table which allows for an accurate record of the local histories with very low aliasing. This combined with our hypothesis explains why SAg is clearly better than GAg and gshare.
+
+The hybrid predictors are the most accurate, as one would expect. The majority predictor is the worst amongst the three, and is sometimes even worse than SAg - this is expected as gshare and GAg will produce somewhat similar results. What was surprising to us is that the majority predictor still works fairly well, which would mean that gshare and GAg mispredictions are often on different kind of branches. 
+
+As an example, we can look at 403.gcc. The misprediction rates are `SAg = 5%, GAg = 15%, gshare = 9%, majority = 5.4%`. This is an extreme example, but nevertheless we can see that gshare performs much better than GAg, which shows that aliasing is a big issue for certain applications, and that also explains why a simple majority works pretty well despite GAg and gshare having the same fundamental idea.
+
+The hybrid b/w SAg and GAg and the tournament predictor have similar results. For the former, we update the meta-table only when SAg and GAg have different outcomes. This seems the obvious way to us.
+
+However, upon doing this with the tournament predictor, i.e updating all 3 meta-tables simulatenously but updating a table only when the two predictors it is comparing have unequal predictions, we achieved results better than the given reference output. To match with the reference output, we have changed our implementation to update all 3 tables irrespective of whether the predictors a meta-table is comparing have equal results.
+
+This has given slightly worse results. As the logic b/w the SAG + GAg hybrid and the tournament predictor is now fundamentally different, there is not much point trying to compare their mostly similar results. They both work better than a simple majority as they are able to learn the most suitable predictor for every branch.
+
+## Results Explanation - Part B
 
 ## Benchmark Results
 
