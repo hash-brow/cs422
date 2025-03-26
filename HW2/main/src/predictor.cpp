@@ -224,20 +224,18 @@ bool Bimodal::operator+(const data_t data) {
         if (is_fwd) fwd_branches++;
         else bwd_branches++;
 
-        int pht_idx = static_cast<int>(static_cast<long long>(data.addr_ins) % (PHT_SZ - 1));
+        int pht_idx = static_cast<int>(static_cast<long long>(data.addr_ins) % (PHT_SZ));
 
-        bool pred = pht[pht_idx] >= (PHT_MAX/2);
+        bool pred = pht[pht_idx] > (PHT_MAX/2);
 
         if (pred != data.taken) {
-                if (pred) pht[pht_idx]--;
-                else pht[pht_idx]++;
-
                 if (is_fwd) fwd_mispred++;
                 else bwd_mispred++;
-        } else {
-                if (pred && pht[pht_idx] < PHT_MAX) pht[pht_idx]++;
-                else if (!pred && pht[pht_idx]) pht[pht_idx]--;
         }
+        if (data.taken && pht[pht_idx] < PHT_MAX)
+                pht[pht_idx]++;
+        else if (!data.taken && pht[pht_idx])
+                pht[pht_idx]--;
 
         return pred;
 }
