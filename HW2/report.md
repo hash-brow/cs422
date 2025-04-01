@@ -5,7 +5,9 @@
 
 Part A code is contained in `predictor.cpp` and `predictor.h`. All predictors are derived from the base class `Predictor` and the actual prediction logic is implemented in an overloaded `operator+`. SAg, GAg and gshare results are passed to the hybrid predictors as a `std::optional` in the `data_t` struct. To reconfigure the sizes of the tables and/or the counters, relevant constants in `predictor.h` should be modified.
 
-The final results are reported on a server with 8 threads, and 32 GB RAM. The processor used is - AMD EPYC-Milan Processor
+Part B code is contained in `btb.cpp`, `hashbtb.cpp`, `btb.h` and `hashbtb.h`. The cache is filled by calling `btb_fill`, and LRU replacement is used. LRU is tracked using a timer, and the entry with the lowest value is the LRU entry.
+
+The final results are reported on a server with 16 threads, and 16 GB RAM. The processor used is - 11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz
 
 All the fractions have been listed as percentages.
 <div style="page-break-after: always;"></div>
@@ -34,6 +36,14 @@ This has given slightly worse results. As the logic b/w the SAG + GAg hybrid and
 
 ## Results Explanation - Part B
 
+From the results, it is evident that the BTB indexed solely with the PC of the instruction has a lower miss rate, but the BTB indexed with the hash of the PC and the GHR has a lower misprediction rate in general.
+
+Indexing the BTB with the PC of the instruction leads to a lower miss rate, since every time the program looks up the instruction, it is found in the same place. However, this leads to a higher misprediction rate, since the BTB is not really adapting to the dynamic conditions dictated by the program.
+
+Indexing the BTB with the hash of the PC and the GHR of the last n conditional branches leads to a higher miss rate, since every time an instruction is encountered, it is possible that the index we are looking for it in, has not been touched. This does contribute to a lower misprediction rate, since the BTB is learning from the program, and adapting its indexing accordingly.
+
+The best example for demonstrating this is `gcc`, where the miss rate for the second BTB is almost `400` times the miss rate for the normal BTB, but the misprediction rate is half. Given that the miss rate for `gcc` is extremely low (0.0001%) for the normal BTB, but the misprediction rate is 70%, the penalty in the miss rate for the second BTB is insignificant compared to the improvement in prediction.
+
 ## Benchmark Results
 
 ### 400.perlbench diffmail.pl
@@ -49,7 +59,7 @@ This has given slightly worse results. As the logic b/w the SAG + GAg hybrid and
 | Hybrid-2 Majority   | 130101783 | 4.9575%  | 5.01487% | 4.72681% |
 | Hybrid-2 Tournament | 130101783 | 3.9031%  | 4.12987% | 2.99119% |
 #### Part B
-| BTB Type | BTB Predictions | BTB Miss Rate | BTB Missprediction |
+| BTB Type | BTB Predictions | BTB Miss Rate | BTB Misprediction |
 |--------------|-----------|------------|------------|
 | BTB indexed with PC                            | 28134124 | 0.01209% | 34.67776% |
 | BTB indexed with hash of PC and global history | 28134124 | 1.78012% | 10.22728% |
@@ -68,7 +78,7 @@ This has given slightly worse results. As the logic b/w the SAG + GAg hybrid and
 | Hybrid-2 Tournament | 129923039 | 9.5726%  | 10.6397% | 8.56253% |
 
 #### Part B
-| BTB Type | BTB Predictions | BTB Miss Rate | BTB Missprediction |
+| BTB Type | BTB Predictions | BTB Miss Rate | BTB Misprediction |
 |--------------|-----------|------------|------------|
 | BTB indexed with PC                            | 791909 | 0.00745% | 48.29393% |
 | BTB indexed with hash of PC and global history | 791909 | 0.02702% | 47.52377% |
@@ -87,7 +97,7 @@ This has given slightly worse results. As the logic b/w the SAG + GAg hybrid and
 | Hybrid-2 Tournament | 145814336 | 4.71379% | 4.79988% | 4.39832% |
 
 #### Part B
-| BTB Type | BTB Predictions | BTB Miss Rate | BTB Missprediction |
+| BTB Type | BTB Predictions | BTB Miss Rate | BTB Misprediction |
 |--------------|-----------|------------|------------|
 | BTB indexed with PC                            | 34737233 | 0.000106% | 70.62674% |
 | BTB indexed with hash of PC and global history | 34737233 | 0.045139% | 31.76835% |
@@ -105,7 +115,7 @@ This has given slightly worse results. As the logic b/w the SAG + GAg hybrid and
 | Hybrid-2 Majority   | 172842909 | 8.68154% | 8.7609%  | 8.60217% |
 | Hybrid-2 Tournament | 172842909 | 8.88845% | 9.08998% | 8.68689% |
 #### Part B
-| BTB Type | BTB Predictions | BTB Miss Rate | BTB Missprediction |
+| BTB Type | BTB Predictions | BTB Miss Rate | BTB Misprediction |
 |--------------|-----------|------------|------------|
 | BTB indexed with PC                            | 12556349 | 0.000072% | 0.61349% |
 | BTB indexed with hash of PC and global history | 12556349 | 0.0008362% | 0.40991% |
@@ -123,7 +133,7 @@ This has given slightly worse results. As the logic b/w the SAG + GAg hybrid and
 | Hybrid-2 Majority   | 103219361 | 3.79203% | 0.819812% | 5.23683% |
 | Hybrid-2 Tournament | 103219361 | 3.66753% | 0.677946% | 5.12078% |
 #### Part B
-| BTB Type | BTB Predictions | BTB Miss Rate | BTB Missprediction |
+| BTB Type | BTB Predictions | BTB Miss Rate | BTB Misprediction |
 |--------------|-----------|------------|------------|
 | BTB indexed with PC                            | 6315969 | 0.0014883% | 0.005351% |
 | BTB indexed with hash of PC and global history | 6315969 | 0.0053990% | 0.010465% |
@@ -141,7 +151,7 @@ This has given slightly worse results. As the logic b/w the SAG + GAg hybrid and
 | Hybrid-2 Majority   | 144361424 | 8.68884% | 10.3102% | 0.625552% |
 | Hybrid-2 Tournament | 144361424 | 8.68196% | 10.3029% | 0.620389% |
 #### Part B
-| BTB Type | BTB Predictions | BTB Miss Rate | BTB Missprediction |
+| BTB Type | BTB Predictions | BTB Miss Rate | BTB Misprediction |
 |--------------|-----------|------------|------------|
 | BTB indexed with PC                            | 201570 | 0.056556% | 6.385375% |
 | BTB indexed with hash of PC and global history | 201570 | 0.4216897% | 2.64077% |
@@ -159,7 +169,7 @@ This has given slightly worse results. As the logic b/w the SAG + GAg hybrid and
 | Hybrid-2 Majority   | 117335288 | 5.48414% | 4.76363% | 9.22605% |
 | Hybrid-2 Tournament | 117335288 | 5.02242% | 4.3817%  | 8.34993% |
 #### Part B
-| BTB Type | BTB Predictions | BTB Miss Rate | BTB Missprediction |
+| BTB Type | BTB Predictions | BTB Miss Rate | BTB Misprediction |
 |--------------|-----------|------------|------------|
 | BTB indexed with PC                            | 30294701 | 0.018828% | 29.360996% |
 | BTB indexed with hash of PC and global history | 30294701 | 0.878609% | 11.637649% |
@@ -177,7 +187,7 @@ This has given slightly worse results. As the logic b/w the SAG + GAg hybrid and
 | Hybrid-2 Majority   | 181215584 | 2.12208% | 2.29935% | 1.61585% |
 | Hybrid-2 Tournament | 181215584 | 1.70337% | 1.90671% | 1.12271% |
 #### Part B
-| BTB Type | BTB Predictions | BTB Miss Rate | BTB Missprediction |
+| BTB Type | BTB Predictions | BTB Miss Rate | BTB Misprediction |
 |--------------|-----------|------------|------------|
 | BTB indexed with PC                            | 32447858 | 2.356661% | 27.51067% |
 | BTB indexed with hash of PC and global history | 32447858 | 15.440501% | 27.94729% |
