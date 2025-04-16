@@ -27,6 +27,37 @@ typedef unsigned Bool;
 
 //#define MIPC_DEBUG 1
 
+typedef struct _pipe_reg {
+   Bool _valid;
+
+   signed int	_decodedSRC1, _decodedSRC2;	// Reg fetch output (source values)
+   unsigned	_decodedDST;			// Decoder output (dest reg no)
+   unsigned 	_subregOperand;			// Needed for lwl and lwr
+   unsigned	_memory_addr_reg;				// Memory address register
+   unsigned	_opResultHi, _opResultLo;	// Result of operation
+   Bool 	_memControl;			// Memory instruction?
+   Bool		_writeREG, _writeFREG;		// WB control
+   signed int	_branchOffset;
+   Bool 	_hiWPort, _loWPort;		// WB control
+   unsigned	_decodedShiftAmt;		// Shift amount
+
+   unsigned int _hi, _lo; 			// mult, div destination
+   unsigned int	_pc;				// Program counter
+   unsigned int _lastbdslot;			// branch delay state
+   unsigned int _boot;				// boot code loaded?
+
+   int 		_btaken; 			// taken branch (1 if taken, 0 if fall-through)
+   int 		_bdslot;				// 1 if the next ins is delay slot
+   unsigned int	_btgt;				// branch target
+
+   Bool		_isSyscall;			// 1 if system call
+   Bool		_isIllegalOp;			// 1 if illegal opcode 
+
+   void (*_opControl)(Mipc*, unsigned, struct _pipe_reg*, struct _pipe_reg*);
+   void (*_memOp)(Mipc*, struct _pipe_reg*, struct _pipe_reg*);
+} pipe_reg_t;
+
+
 class Mipc : public SimObject {
 public:
    Mipc (Mem *m);
@@ -48,7 +79,13 @@ public:
    void fake_syscall (unsigned int ins);	// System call interface
 
    /* processor state */
-   unsigned int _ins;   // instruction register
+
+   // fetch/decode, decode/execute, execute/memory, memory/write back
+   pipe_reg_t *_fd, *_de, *_em, *_mw;
+
+   /*
+   //unsigned int _ins;   // instruction register
+
    Bool         _insValid;      // Needed for unpipelined design
    Bool         _decodeValid;   // Needed for unpipelined design
    Bool		_execValid;	// Needed for unpipelined design
@@ -65,7 +102,7 @@ public:
    signed int	_branchOffset;
    Bool 	_hiWPort, _loWPort;		// WB control
    unsigned	_decodedShiftAmt;		// Shift amount
-
+    */
    unsigned int 	_gpr[32];		// general-purpose integer registers
 
    union {
@@ -74,8 +111,11 @@ public:
       double d;
    } _fpr[16];					// floating-point registers (paired)
 
+   /*
    unsigned int _hi, _lo; 			// mult, div destination
+                                 */
    unsigned int	_pc;				// Program counter
+                                 /*
    unsigned int _lastbdslot;			// branch delay state
    unsigned int _boot;				// boot code loaded?
 
@@ -85,6 +125,7 @@ public:
 
    Bool		_isSyscall;			// 1 if system call
    Bool		_isIllegalOp;			// 1 if illegal opcode
+                                  */
 
    // Simulation statistics counters
 
@@ -101,89 +142,91 @@ public:
    Log	_l;
    int  _sim_exit;		// 1 on normal termination
 
-   void (*_opControl)(Mipc*, unsigned);
-   void (*_memOp)(Mipc*);
+   /*
+   void (*_opControl)(Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   void (*_memOp)(Mipc*, pipe_reg_t*, pipe_reg_t*);
+   */
 
    FILE *_debugLog;
 
    // EXE stage definitions
 
-   static void func_add_addu (Mipc*, unsigned);
-   static void func_and (Mipc*, unsigned);
-   static void func_nor (Mipc*, unsigned);
-   static void func_or (Mipc*, unsigned);
-   static void func_sll (Mipc*, unsigned);
-   static void func_sllv (Mipc*, unsigned);
-   static void func_slt (Mipc*, unsigned);
-   static void func_sltu (Mipc*, unsigned);
-   static void func_sra (Mipc*, unsigned);
-   static void func_srav (Mipc*, unsigned);
-   static void func_srl (Mipc*, unsigned);
-   static void func_srlv (Mipc*, unsigned);
-   static void func_sub_subu (Mipc*, unsigned);
-   static void func_xor (Mipc*, unsigned);
-   static void func_div (Mipc*, unsigned);
-   static void func_divu (Mipc*, unsigned);
-   static void func_mfhi (Mipc*, unsigned);
-   static void func_mflo (Mipc*, unsigned);
-   static void func_mthi (Mipc*, unsigned);
-   static void func_mtlo (Mipc*, unsigned);
-   static void func_mult (Mipc*, unsigned);
-   static void func_multu (Mipc*, unsigned);
-   static void func_jalr (Mipc*, unsigned);
-   static void func_jr (Mipc*, unsigned);
-   static void func_await_break (Mipc*, unsigned);
-   static void func_syscall (Mipc*, unsigned);
-   static void func_addi_addiu (Mipc*, unsigned);
-   static void func_andi (Mipc*, unsigned);
-   static void func_lui (Mipc*, unsigned);
-   static void func_ori (Mipc*, unsigned);
-   static void func_slti (Mipc*, unsigned);
-   static void func_sltiu (Mipc*, unsigned);
-   static void func_xori (Mipc*, unsigned);
-   static void func_beq (Mipc*, unsigned);
-   static void func_bgez (Mipc*, unsigned);
-   static void func_bgezal (Mipc*, unsigned);
-   static void func_bltzal (Mipc*, unsigned);
-   static void func_bltz (Mipc*, unsigned);
-   static void func_bgtz (Mipc*, unsigned);
-   static void func_blez (Mipc*, unsigned);
-   static void func_bne (Mipc*, unsigned);
-   static void func_j (Mipc*, unsigned);
-   static void func_jal (Mipc*, unsigned);
-   static void func_lb (Mipc*, unsigned);
-   static void func_lbu (Mipc*, unsigned);
-   static void func_lh (Mipc*, unsigned);
-   static void func_lhu (Mipc*, unsigned);
-   static void func_lwl (Mipc*, unsigned);
-   static void func_lw (Mipc*, unsigned);
-   static void func_lwr (Mipc*, unsigned);
-   static void func_lwc1 (Mipc*, unsigned);
-   static void func_swc1 (Mipc*, unsigned);
-   static void func_sb (Mipc*, unsigned);
-   static void func_sh (Mipc*, unsigned);
-   static void func_swl (Mipc*, unsigned);
-   static void func_sw (Mipc*, unsigned);
-   static void func_swr (Mipc*, unsigned);
-   static void func_mtc1 (Mipc*, unsigned);
-   static void func_mfc1 (Mipc*, unsigned);
+   static void func_add_addu (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_and (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_nor (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_or (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_sll (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_sllv (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_slt (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_sltu (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_sra (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_srav (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_srl (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_srlv (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_sub_subu (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_xor (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_div (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_divu (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_mfhi (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_mflo (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_mthi (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_mtlo (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_mult (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_multu (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_jalr (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_jr (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_await_break (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_syscall (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_addi_addiu (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_andi (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_lui (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_ori (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_slti (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_sltiu (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_xori (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_beq (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_bgez (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_bgezal (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_bltzal (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_bltz (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_bgtz (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_blez (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_bne (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_j (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_jal (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_lb (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_lbu (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_lh (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_lhu (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_lwl (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_lw (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_lwr (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_lwc1 (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_swc1 (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_sb (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_sh (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_swl (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_sw (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_swr (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_mtc1 (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
+   static void func_mfc1 (Mipc*, unsigned, pipe_reg_t*, pipe_reg_t*);
 
    // MEM stage definitions
 
-   static void mem_lb (Mipc*);
-   static void mem_lbu (Mipc*);
-   static void mem_lh (Mipc*);
-   static void mem_lhu (Mipc*);
-   static void mem_lwl (Mipc*);
-   static void mem_lw (Mipc*);
-   static void mem_lwr (Mipc*);
-   static void mem_lwc1 (Mipc*);
-   static void mem_swc1 (Mipc*);
-   static void mem_sb (Mipc*);
-   static void mem_sh (Mipc*);
-   static void mem_swl (Mipc*);
-   static void mem_sw (Mipc*);
-   static void mem_swr (Mipc*);
+   static void mem_lb (Mipc*, pipe_reg_t*, pipe_reg_t*);
+   static void mem_lbu (Mipc*, pipe_reg_t*, pipe_reg_t*);
+   static void mem_lh (Mipc*, pipe_reg_t*, pipe_reg_t*);
+   static void mem_lhu (Mipc*, pipe_reg_t*, pipe_reg_t*);
+   static void mem_lwl (Mipc*, pipe_reg_t*, pipe_reg_t*);
+   static void mem_lw (Mipc*, pipe_reg_t*, pipe_reg_t*);
+   static void mem_lwr (Mipc*, pipe_reg_t*, pipe_reg_t*);
+   static void mem_lwc1 (Mipc*, pipe_reg_t*, pipe_reg_t*);
+   static void mem_swc1 (Mipc*, pipe_reg_t*, pipe_reg_t*);
+   static void mem_sb (Mipc*, pipe_reg_t*, pipe_reg_t*);
+   static void mem_sh (Mipc*, pipe_reg_t*, pipe_reg_t*);
+   static void mem_swl (Mipc*, pipe_reg_t*, pipe_reg_t*);
+   static void mem_sw (Mipc*, pipe_reg_t*, pipe_reg_t*);
+   static void mem_swr (Mipc*, pipe_reg_t*, pipe_reg_t*);
 };
 
 
@@ -218,3 +261,4 @@ private:
    Mipc *_ms;
 };
 #endif /* __MIPS_H__ */
+

@@ -14,31 +14,27 @@ Exe::MainLoop (void)
    Bool isSyscall, isIllegalOp;
 
    while (1) {
-      AWAIT_P_PHI0;	// @posedge
-      if (_mc->_decodeValid) {
-         ins = _mc->_ins;
-         isSyscall = _mc->_isSyscall;
-         isIllegalOp = _mc->_isIllegalOp;
-         AWAIT_P_PHI1;	// @negedge
-         if (!isSyscall && !isIllegalOp) {
-            _mc->_opControl(_mc,ins);
+      AWAIT_P_PHI1; // @negedge
+      pipe_reg_t *de = new pipe_reg_t(_mc->de);
+      if (de->_valid) {
+         AWAIT_P_PHI0; // @posedge
+         if (!de->isSyscall && !de->isIllegalOp) {
+            _mc->opControl(_mc, de->_ins, de, _mc->_em);
 #ifdef MIPC_DEBUG
-            fprintf(_mc->_debugLog, "<%llu> Executed ins %#x\n", SIM_TIME, ins);
+            fprintf(_mc->_debugLog, "<%llu> Executed ins %#x\n", SIM_TIME, de->_ins);
+#endif
+         } else if (de->isSyscall) {
+#ifdef MIPC_DEBUG
+            fprintf(_mc->_debugLog, "<%llu> Deferring execution of syscall ins %#x\n", SIM_TIME, de->_ins);
+#endif
+         } else {
+#ifdef MIPC_DEBUG
+            fprintf(_mc->_debugLog, "<%llu> Illegal ins %#x in execution stage at PC %#x\n", SIM_TIME, de->_ins, de->_pc);
 #endif
          }
-         else if (isSyscall) {
-#ifdef MIPC_DEBUG
-            fprintf(_mc->_debugLog, "<%llu> Deferring execution of syscall ins %#x\n", SIM_TIME, ins);
-#endif
-         }
-         else {
-#ifdef MIPC_DEBUG
-            fprintf(_mc->_debugLog, "<%llu> Illegal ins %#x in execution stage at PC %#x\n", SIM_TIME, ins, _mc->_pc);
-#endif
-         }
-         _mc->_decodeValid = FALSE;
-         _mc->_execValid = TRUE;
+         _mc->_em->_valid = TRUE;
 
+         /*
          if (!isIllegalOp && !isSyscall) {
             if (_mc->_lastbdslot && _mc->_btaken)
             {
@@ -50,9 +46,11 @@ Exe::MainLoop (void)
             }
             _mc->_lastbdslot = _mc->_bdslot;
          }
+         */
       }
       else {
-         PAUSE(1);
+         AWAIT_P_PHI0; // @posedge
+         _mc->_em->_valid = FALSE;
       }
    }
 }
