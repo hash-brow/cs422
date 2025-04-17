@@ -13,7 +13,7 @@ Decode::MainLoop (void)
    unsigned int ins;
    while (1) {
       AWAIT_P_PHI1; // @negedge
-      pipe_reg_t* fd = new pipe_reg_t(_mc->fd);
+      pipe_reg_t* fd = new pipe_reg_t(_mc->_fd);
 
       if (fd->_valid) {
          AWAIT_P_PHI0; // @posedge
