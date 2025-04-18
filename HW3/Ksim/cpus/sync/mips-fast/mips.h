@@ -45,6 +45,9 @@ typedef struct _pipe_reg {
 #define LO 1729
    unsigned int _src_reg[2];
    unsigned int _src_freg;
+   unsigned int _has_float_src { 0 };
+
+   Bool _is_bubble { FALSE };
 
    signed int	_decodedSRC1, _decodedSRC2;	// Reg fetch output (source values)
    unsigned	_decodedDST;			// Decoder output (dest reg no)
@@ -65,7 +68,7 @@ typedef struct _pipe_reg {
    int 		_bdslot;				// 1 if the next ins is delay slot
    unsigned int	_btgt;				// branch target
 
-   Bool		_isSyscall;			// 1 if system call
+   Bool		_isSyscall { FALSE };			// 1 if system call
    Bool		_isIllegalOp;			// 1 if illegal opcode 
 
    void (*_opControl)(Mipc*, unsigned, struct _pipe_reg*, struct _pipe_reg*);
@@ -98,7 +101,6 @@ public:
    // fetch/decode, decode/execute, execute/memory, memory/write back
    pipe_reg_t *_fd, *_de, *_em, *_mw;
    Bool		_isSyscall;			// 1 if system call
-   Bool     _isSyscallOver;   // set TRUE when WB executes the syscall in it's -ve half
 
    /*
    //unsigned int _ins;   // instruction register

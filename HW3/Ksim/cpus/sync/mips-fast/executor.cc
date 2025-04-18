@@ -22,7 +22,17 @@ Exe::MainLoop (void)
       AWAIT_P_PHI0; // @posedge
       pipe_reg_t *em = new pipe_reg_t(_mc->_de);
 
-      if (!_mc->_isSyscall && !_mc->_de->_isIllegalOp) {
+      if (em->_isIllegalOp) {
+         // if we have an illegal op, propagate that msg and move on
+         AWAIT_P_PHI1;
+         _mc->_em->_isIllegalOp = TRUE;
+#ifdef MIPC_DEBUG
+            fprintf(_mc->_debugLog, "<%llu> Illegal ins %#x in execution stage at PC %#x\n", SIM_TIME, em->_ins, em->_pc);
+#endif
+         continue;
+      }
+
+      if (!_mc->_de->_isSyscall) {
          _mc->_de->_opControl(_mc, _mc->_de->_ins, _mc->_de, em);
 #ifdef MIPC_DEBUG
          fprintf(_mc->_debugLog, "<%llu> Executed ins %#x\n", SIM_TIME, em->_ins);
@@ -30,12 +40,8 @@ Exe::MainLoop (void)
          // if it is a branch instr., then _bdslot = 1
          if (em->_bdslot && em->_btaken) 
             _mc->_pc = em->_btgt;
-         else if (!_stallFetch)
+         else if (!em->_is_bubble) 
             _mc->_pc = _mc->_pc + 4;
-      } else if (_mc->_de->_isIllegalOp) {
-#ifdef MIPC_DEBUG
-            fprintf(_mc->_debugLog, "<%llu> Illegal ins %#x in execution stage at PC %#x\n", SIM_TIME, em->_ins, em->_pc);
-#endif
       } else { 
 #ifdef MIPC_DEBUG
             fprintf(_mc->_debugLog, "<%llu> Deferring execution of syscall ins %#x\n", SIM_TIME, em->_ins);

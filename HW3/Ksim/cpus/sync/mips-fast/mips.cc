@@ -29,6 +29,7 @@ Mipc::MainLoop (void)
    Assert (_boot, "Mipc::MainLoop() called without boot?");
 
    _nfetched = 0;
+   _stallFetch = FALSE;
 
    while (!_sim_exit) {
       /*
@@ -38,34 +39,14 @@ Mipc::MainLoop (void)
        */
 
       AWAIT_P_PHI0; // @posedge
-      
-      if (_mc->_isSyscallOver)      
-         _mc->_isSyscall = FALSE;
-
-      _mc->_isSyscallOver = FALSE;
-
       AWAIT_P_PHI1; // @negedge
-      if (!_mc->_stallFetch) {
-         addr = _pc;
-         ins = _mem->BEGetWord (addr, _mem->Read(addr & ~(LL)0x7));
-
-     AWAIT_P_PHI0;	// @posedge
-     if (_insDone) {
-        addr = _pc;
-        ins = _mem->BEGetWord (addr, _mem->Read(addr & ~(LL)0x7));
-        AWAIT_P_PHI1;	// @negedge
+      if (!_stallFetch) {
+         _fd->_ins = _mem->BEGetWord (_pc, _mem->Read(_pc & ~(LL)0x7));
 #ifdef MIPC_DEBUG
-        fprintf(_debugLog, "<%llu> Fetched ins %#x from PC %#x\n", SIM_TIME, ins, _pc);
+        fprintf(_debugLog, "<%llu> Fetched ins %#x from PC %#x\n", SIM_TIME, _fd->_ins, _pc);
 #endif
-        _ins = ins;
-        _insValid = TRUE;
-        _insDone = FALSE;
         _nfetched++;
-        _bdslot = 0;
-     }
-     else {
-        PAUSE(1);
-     }
+      }
    }
 
    MipcDumpstats();

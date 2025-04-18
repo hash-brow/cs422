@@ -22,8 +22,18 @@ Writeback::MainLoop (void)
    while (1) {
       AWAIT_P_PHI0; // @posedge
       pipe_register_t* mw = new pipe_register_t(_mc->_mw);
+      
+      if (mw->_isIllegalOp) {
+         printf("Illegal ins %#x at PC %#x. Terminating simulation!\n", mw->_ins, mw->_pc);
+#ifdef MIPC_DEBUG
+         fclose(_mc->_debugLog);
+#endif
+         printf("Register state on termination:\n\n");
+         _mc->dumpregs();
+         exit(0);
+      }
 
-      if (!mw->_isIllegalOp && !mw->_isSyscall) {
+      if (!mw->_isSyscall) {
          if (mw->_writeReg) {
             _mc->_gpr[mw->_decodedDST] = mw->_opResultLo;
 #ifdef MIPC_DEBUG
@@ -52,15 +62,8 @@ Writeback::MainLoop (void)
          AWAIT_P_PHI1; // @negedge
       } else {
          AWAIT_P_PHI1; // @negedge
-         if (mw->_isIllegalOp) {
-            printf("Illegal ins %#x at PC %#x. Terminating simulation!\n", mw->_ins, mw->_pc);
-#ifdef MIPC_DEBUG
-            fclose(_mc->_debugLog);
-#endif
-            printf("Register state on termination:\n\n");
-            _mc->dumpregs();
-            exit(0);
-         } else if (mw->_isSyscall) {
+         // TODO: can system calls clobber registers??
+         if (mw->_isSyscall) {
             // TODO: can the branch delay slot have syscalls?
 #ifdef MIPC_DEBUG
             fprintf(_mc->_debugLog, "<%llu> SYSCALL! Trapping to emulation layer at PC %#x\n", SIM_TIME, mw->_pc);
@@ -68,7 +71,7 @@ Writeback::MainLoop (void)
             _mc->_opControl(_mc, mw->_ins, NULL, NULL);
             _mc->_pc += 4;
 
-            _isSyscallOver = TRUE;
+            _mc->_isSyscall = FALSE;
          }
       }
       delete mw;

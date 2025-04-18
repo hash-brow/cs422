@@ -32,10 +32,13 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
     * Reg. will be updated in the +ve half of WB,
     * and decode will read it in the -ve half.
     */
+   // TODO: ensure that fd propagates to de
    de->_dstall = 2;
    de->_src_reg[0] = 0;
    de->_src_reg[1] = 0;
    de->_src_freg = 0;
+   de->_has_float_src = 0;
+   de->_ins = fd->_ins;
 
    i.data = fd->_ins;
   
@@ -565,7 +568,8 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
-      de->_src_freg = i.freg.ft;
+      de->_src_freg = i.freg.ft >> 1;
+      de->_has_float_src = 1;
       de->_src_reg[0] = i.imm.rs;
       break;
 
@@ -668,7 +672,8 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
          de->_hiWPort = FALSE;
          de->_loWPort = FALSE;
          de->_memControl = FALSE;
-         de->_src_freg = i.freg.fs;
+         de->_src_freg = i.freg.fs >> 1;
+         de->_has_float_src = 1;
 	 break;
       default:
          de->_isIllegalOp = TRUE;

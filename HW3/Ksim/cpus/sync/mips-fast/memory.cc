@@ -22,6 +22,13 @@ Memory::MainLoop (void)
       AWAIT_P_PHI0; // @posedge
       pip_reg_t* em = new pipe_register_t(_mc->_em);
 
+      if (em->_isIllegalOp) {
+         AWAIT_P_PHI1;
+         _mc->_mw->_isIllegalOp = TRUE;
+         delete em;
+         continue;
+      }
+
       if (em->_memControl) {
          AWAIT_P_PHI1; // @negedge
          
