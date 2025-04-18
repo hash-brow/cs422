@@ -1,0 +1,15 @@
+3927 1:<FETCH> 
+3927 1:<FETCH> ************************************************************
+3927 1:<FETCH> 
+3927 1:<FETCH> Number of instructions: 2411
+3927 1:<FETCH> Number of simulated cycles: 3927
+3927 1:<FETCH> CPI: 1.63
+3927 1:<FETCH> Int Conditional Branches: 465
+3927 1:<FETCH> Jump and Link: 38
+3927 1:<FETCH> Jump Register: 36
+3927 1:<FETCH> Number of fp instructions: 4
+3927 1:<FETCH> Number of loads: 349
+3927 1:<FETCH> Number of syscall emulated loads: 75
+3927 1:<FETCH> Number of stores: 163
+3927 1:<FETCH> Number of syscall emulated stores: 62
+3927 1:<FETCH> 

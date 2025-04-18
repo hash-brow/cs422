@@ -33,6 +33,7 @@ Decode::MainLoop (void)
       _mc->Dec(fd, de); // "partial" decode
 
       Bool stall = FALSE;
+      Bool isNewSyscall = FALSE;
       _mc->_stallFetch = FALSE;
 
       if (_mc->_isSyscall == TRUE) {
@@ -46,23 +47,24 @@ Decode::MainLoop (void)
       } else if (de->_isSyscall) {
          // the current instr. is a syscall
          stall = TRUE;
+         isNewSyscall = TRUE;
          _mc->_isSyscall = TRUE;
       } else {
          for (int i = 0; i < 2; i++) {
-            unsigned int v = _mc->_de->_src_reg[i];
+            unsigned int v = de->_src_reg[i];
             if (v) {
                if (v == HI) {
                   stall |= (_mc->_hi_lo_wait[0] > 0);
                } else if (v == LO) {
                   stall |= (_mc->_hi_lo_wait[1] > 0);
                } else {
-                  stall |= (_mc->_gpr_wait[i] > 0);
+                  stall |= (_mc->_gpr_wait[v] > 0);
                }
             }
          }
 
-         if (_mc->_de->_has_float_src)
-            stall |= (_mc->_fpr_wait[_mc->_de->_src_freg] > 0);
+         if (de->_has_float_src)
+            stall |= (_mc->_fpr_wait[de->_src_freg] > 0);
       }
 
       for (int i = 0; i < 32; i++) {
@@ -77,8 +79,9 @@ Decode::MainLoop (void)
          if (_mc->_hi_lo_wait[i]) _mc->_hi_lo_wait[i]--;
       }
 
-      if (stall)
+      if (stall) {
          _mc->_stallFetch = TRUE;
+      }
 
       delete de;
 
@@ -88,19 +91,33 @@ Decode::MainLoop (void)
          _mc->Dec(fd, _mc->_de);
          
 #define SET_MAX(dest, src) if (src > dest) dest = src
-         if (_mc->_de->_writeREG && _mc->_de->_decodedDST) 
+         if (_mc->_de->_writeREG && _mc->_de->_decodedDST) { 
             SET_MAX(_mc->_gpr_wait[_mc->_de->_decodedDST], _mc->_de->_dstall);
+         }
          else if (_mc->_de->_hiWPort)
             SET_MAX(_mc->_hi_lo_wait[0], _mc->_de->_dstall);
          else if (_mc->_de->_loWPort)
             SET_MAX(_mc->_hi_lo_wait[1], _mc->_de->_dstall);
          else if (_mc->_de->_writeFREG)
             SET_MAX(_mc->_fpr_wait[_mc->_de->_decodedDST >> 1], _mc->_de->_dstall);
+      } else if (isNewSyscall) {
+         _mc->Dec(fd, _mc->_de);
+         fd->_ins = 0;
+         _mc->_de->_is_bubble = TRUE;
+
+        _mc->_fd->_ins = 0;
+      } else if (_mc->_isSyscall) {
+         fd->_ins = 0;
+         _mc->Dec(fd, _mc->_de);
+         _mc->_de->_is_bubble = TRUE;
+
+        _mc->_fd->_ins = 0;
       } else {
          fd->_ins = 0;
          _mc->Dec(fd, _mc->_de);
          _mc->_de->_is_bubble = TRUE;
       }
+
       delete fd;
 #ifdef MIPC_DEBUG
       fprintf(_mc->_debugLog, "<%llu> Decoded ins %#x\n", SIM_TIME, ins_copy);

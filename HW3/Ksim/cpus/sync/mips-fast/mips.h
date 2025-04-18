@@ -25,11 +25,46 @@ typedef unsigned Bool;
 #include "../../common/syscall.h"
 #include "queue.h"
 
-//#define MIPC_DEBUG 1
+#define MIPC_DEBUG 1
 
 typedef struct _pipe_reg {
+   _pipe_reg() :
+      _isIllegalOp(FALSE),
+      _ins(0),
+      _isSyscall(FALSE),
+      _dstall(0),
+      _has_float_src(0),
+      _is_bubble(FALSE),
+      _btgt(0), 
+      _bdslot(0),
+      _btaken(0),
+      _pc(0),
+      _decodedSRC1(0),
+      _decodedSRC2(0),
+      _decodedDST(0),
+      _subregOperand(0),
+      _memory_addr_reg(0),
+      _opResultHi(0),
+      _opResultLo(0),
+      _memControl(0),
+      _writeREG(0),
+      _writeFREG(0),
+      _branchOffset(0),
+      _hiWPort(0),
+      _loWPort(0),
+      _decodedShiftAmt(0),
+      _lastbdslot(0),
+      _valid(FALSE)
+   {
+      _src_reg[0] = 0;
+      _src_reg[1] = 0;
+      _src_freg = 0;
+   }
+
    // all zeros = NOP
    unsigned int _ins;
+
+   Bool _valid;
 
    // no. of cycles before which the dest. 
    // register will be updated
@@ -139,7 +174,7 @@ public:
 
    // Program counter from which instructions are fetched
    // Is updated by EX during the +ve half
-   unsigned int _pc;		
+   unsigned int _fetch_pc;		
 
    Bool _stallFetch;
                                  

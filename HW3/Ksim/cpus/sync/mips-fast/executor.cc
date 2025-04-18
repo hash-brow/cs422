@@ -20,6 +20,12 @@ Exe::MainLoop (void)
 
    while (1) {
       AWAIT_P_PHI0; // @posedge
+
+      if (!_mc->_de->_valid) {
+        AWAIT_P_PHI1;
+        continue;
+      }
+
       pipe_reg_t *em = new pipe_reg_t;
       *em = *_mc->_de;
 
@@ -40,9 +46,10 @@ Exe::MainLoop (void)
 #endif
          // if it is a branch instr., then _bdslot = 1
          if (em->_bdslot && em->_btaken) 
-            _mc->_pc = em->_btgt;
-         else if (!em->_is_bubble) 
-            _mc->_pc = _mc->_pc + 4;
+            _mc->_fetch_pc = em->_btgt;
+         else if (!em->_is_bubble) {
+            _mc->_fetch_pc += 4;
+         }
       } else { 
 #ifdef MIPC_DEBUG
             fprintf(_mc->_debugLog, "<%llu> Deferring execution of syscall ins %#x\n", SIM_TIME, em->_ins);

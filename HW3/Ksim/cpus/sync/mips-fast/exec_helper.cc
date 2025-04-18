@@ -30,6 +30,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    de->_dstall = 0;
    de->_has_float_src = 0;
    de->_is_bubble = FALSE;
+   de->_valid = TRUE;
 
    /*
     * Data stall is 2 cycles.
@@ -43,6 +44,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    de->_src_freg = 0;
    de->_has_float_src = 0;
    de->_ins = fd->_ins;
+   de->_pc = fd->_pc;
 
    i.data = fd->_ins;
   
@@ -331,7 +333,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = FALSE;
-      de->_branchOffset <<= 16; de->_branchOffset >>= 14; _de->_bdslot = 1; de->_btgt = (unsigned)((signed)_pc+de->_branchOffset+4);
+      de->_branchOffset <<= 16; de->_branchOffset >>= 14; _de->_bdslot = 1; de->_btgt = (unsigned)((signed)fd->_pc+de->_branchOffset+4);
       de->_src_reg[0] = i.imm.rs;
       de->_src_reg[1] = i.imm.rt;
       break;
@@ -349,7 +351,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       switch (i.reg.rt) {
       case 1:			// bgez
          de->_opControl = func_bgez;
-         de->_branchOffset <<= 16; de->_branchOffset >>= 14; _de->_bdslot = 1; de->_btgt = (unsigned)((signed)_pc+de->_branchOffset+4);
+         de->_branchOffset <<= 16; de->_branchOffset >>= 14; _de->_bdslot = 1; de->_btgt = (unsigned)((signed)fd->_pc+de->_branchOffset+4);
          de->_src_reg[0] = i.imm.rs;
 	 break;
 
@@ -357,7 +359,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
          de->_opControl = func_bgezal;
          de->_decodedDST = 31;
          de->_writeREG = TRUE;
-         de->_branchOffset <<= 16; de->_branchOffset >>= 14; _de->_bdslot = 1; de->_btgt = (unsigned)((signed)_pc+de->_branchOffset+4);
+         de->_branchOffset <<= 16; de->_branchOffset >>= 14; _de->_bdslot = 1; de->_btgt = (unsigned)((signed)fd->_pc+de->_branchOffset+4);
          de->_src_reg[0] = i.imm.rs;
 	 break;
 
@@ -365,13 +367,13 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
          de->_opControl = func_bltzal;
          de->_decodedDST = 31;
          de->_writeREG = TRUE;
-         de->_branchOffset <<= 16; de->_branchOffset >>= 14; _de->_bdslot = 1; de->_btgt = (unsigned)((signed)_pc+de->_branchOffset+4);
+         de->_branchOffset <<= 16; de->_branchOffset >>= 14; _de->_bdslot = 1; de->_btgt = (unsigned)((signed)fd->_pc+de->_branchOffset+4);
          de->_src_reg[0] = i.imm.rs;
 	 break;
 
       case 0x0:			// bltz
          de->_opControl = func_bltz;
-         de->_branchOffset <<= 16; de->_branchOffset >>= 14; _de->_bdslot = 1; de->_btgt = (unsigned)((signed)_pc+de->_branchOffset+4);
+         de->_branchOffset <<= 16; de->_branchOffset >>= 14; _de->_bdslot = 1; de->_btgt = (unsigned)((signed)fd->_pc+de->_branchOffset+4);
          de->_src_reg[0] = i.imm.rs;
 	 break;
 
@@ -390,7 +392,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = FALSE;
-      de->_branchOffset <<= 16; de->_branchOffset >>= 14; _de->_bdslot = 1; de->_btgt = (unsigned)((signed)_pc+de->_branchOffset+4);
+      de->_branchOffset <<= 16; de->_branchOffset >>= 14; _de->_bdslot = 1; de->_btgt = (unsigned)((signed)fd->_pc+de->_branchOffset+4);
       de->_src_reg[0] = i.imm.rs;
       break;
 
@@ -403,7 +405,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = FALSE;
-      de->_branchOffset <<= 16; de->_branchOffset >>= 14; _de->_bdslot = 1; de->_btgt = (unsigned)((signed)_pc+de->_branchOffset+4);
+      de->_branchOffset <<= 16; de->_branchOffset >>= 14; _de->_bdslot = 1; de->_btgt = (unsigned)((signed)fd->_pc+de->_branchOffset+4);
       de->_src_reg[0] = i.imm.rs;
       break;
 
@@ -417,7 +419,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = FALSE;
-      de->_branchOffset <<= 16; de->_branchOffset >>= 14; _de->_bdslot = 1; de->_btgt = (unsigned)((signed)_pc+de->_branchOffset+4);
+      de->_branchOffset <<= 16; de->_branchOffset >>= 14; _de->_bdslot = 1; de->_btgt = (unsigned)((signed)fd->_pc+de->_branchOffset+4);
       de->_src_reg[0] = i.imm.rs;
       de->_src_reg[1] = i.imm.rt;
       break;
@@ -430,7 +432,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = FALSE;
-      de->_btgt = ((_pc+4) & 0xf0000000) | (de->_branchOffset<<2); _de->_bdslot = 1;
+      de->_btgt = ((fd->_pc+4) & 0xf0000000) | (de->_branchOffset<<2); _de->_bdslot = 1;
       break;
 
    case 3:			// jal
@@ -442,7 +444,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = FALSE;
-      de->_btgt = ((_pc+4) & 0xf0000000) | (de->_branchOffset<<2); _de->_bdslot = 1;
+      de->_btgt = ((fd->_pc+4) & 0xf0000000) | (de->_branchOffset<<2); _de->_bdslot = 1;
       break;
 
    case 0x20:			// lb  
@@ -710,7 +712,7 @@ Mipc::dumpregs (void)
 {
    int i;
 
-   printf ("\n--- PC = %08x ---\n", _pc);
+   printf ("\n--- PC = %08x ---\n", _fetch_pc);
    for (i=0; i < 32; i++) {
       if (i < 10)
 	 printf (" r%d: %08x (%ld)\n", i, _gpr[i], _gpr[i]);
