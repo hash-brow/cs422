@@ -20,6 +20,12 @@ Memory::MainLoop (void)
 
    while (1) {
       AWAIT_P_PHI0; // @posedge
+      
+      if (!_mc->_em->_valid) {
+        AWAIT_P_PHI1;
+        continue;
+      }
+
       pipe_reg_t* em = new pipe_reg_t;
       *em = *_mc->_em;
 

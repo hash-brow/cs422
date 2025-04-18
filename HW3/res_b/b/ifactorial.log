@@ -1,0 +1,15 @@
+3785 1:<FETCH> 
+3785 1:<FETCH> ************************************************************
+3785 1:<FETCH> 
+3785 1:<FETCH> Number of instructions: 2298
+3785 1:<FETCH> Number of simulated cycles: 3785
+3785 1:<FETCH> CPI: 1.65
+3785 1:<FETCH> Int Conditional Branches: 465
+3785 1:<FETCH> Jump and Link: 29
+3785 1:<FETCH> Jump Register: 27
+3785 1:<FETCH> Number of fp instructions: 4
+3785 1:<FETCH> Number of loads: 329
+3785 1:<FETCH> Number of syscall emulated loads: 77
+3785 1:<FETCH> Number of stores: 133
+3785 1:<FETCH> Number of syscall emulated stores: 64
+3785 1:<FETCH> 

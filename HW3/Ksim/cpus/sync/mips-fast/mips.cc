@@ -6,6 +6,15 @@ Mipc::Mipc (Mem *m) : _l('M')
 {
    _mem = m;
    _sys = new MipcSysCall (this);	// Allocate syscall layer
+   _fd = new pipe_reg_t;
+   _de = new pipe_reg_t;
+   _em = new pipe_reg_t;
+   _mw = new pipe_reg_t;
+
+   for (int i = 0; i < 32; ++i) _gpr_wait[i] = 0;
+   for (int i = 0; i < 16; ++i) _fpr_wait[i] = 0;
+   for (int i = 0; i < 2; ++i) _hi_lo_wait[i] = 0;
+
 
 #ifdef MIPC_DEBUG
    _debugLog = fopen("mipc.debug", "w");
@@ -31,8 +40,6 @@ Mipc::MainLoop (void)
    _nfetched = 0;
    _stallFetch = FALSE;
 
-   _fd = new pipe_reg_t;
-
    while (!_sim_exit) {
       /*
        * Imagine in EX we calculate the branch target and update _pc
@@ -43,9 +50,10 @@ Mipc::MainLoop (void)
       AWAIT_P_PHI0; // @posedge
       AWAIT_P_PHI1; // @negedge
       if (!_stallFetch) {
-         _fd->_ins = _mem->BEGetWord (_pc, _mem->Read(_pc & ~(LL)0x7));
+         _fd->_ins = _mem->BEGetWord (_fetch_pc, _mem->Read(_fetch_pc & ~(LL)0x7));
+         _fd->_pc = _fetch_pc;
 #ifdef MIPC_DEBUG
-        fprintf(_debugLog, "<%llu> Fetched ins %#x from PC %#x\n", SIM_TIME, _fd->_ins, _pc);
+        fprintf(_debugLog, "<%llu> Fetched ins %#x from PC %#x\n", SIM_TIME, _fd->_ins, _fetch_pc);
 #endif
         _nfetched++;
       }
@@ -89,7 +97,7 @@ Mipc::MipcDumpstats()
 void 
 Mipc::fake_syscall (unsigned int ins)
 {
-   _sys->pc = _pc;
+   _sys->pc = _fetch_pc;
    _sys->quit = 0;
    _sys->EmulateSysCall ();
    if (_sys->quit)
@@ -130,7 +138,7 @@ Mipc::Reboot (char *image)
       _num_jr = 0;
 
       _sim_exit = 0;
-      _pc = ParamGetInt ("Mipc.BootPC");	// Boom! GO
+      _fetch_pc = ParamGetInt ("Mipc.BootPC");	// Boom! GO
    }
 }
 

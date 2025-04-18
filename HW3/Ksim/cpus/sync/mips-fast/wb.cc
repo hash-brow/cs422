@@ -21,6 +21,12 @@ Writeback::MainLoop (void)
 
    while (1) {
       AWAIT_P_PHI0; // @posedge
+
+      if (!_mc->_mw->_valid) {
+        AWAIT_P_PHI1;
+        continue;
+      }
+
       pipe_reg_t* mw = new pipe_reg_t;
       *mw = *_mc->_mw;
       
@@ -70,7 +76,7 @@ Writeback::MainLoop (void)
             fprintf(_mc->_debugLog, "<%llu> SYSCALL! Trapping to emulation layer at PC %#x\n", SIM_TIME, mw->_pc);
 #endif      
             mw->_opControl(_mc, mw->_ins, NULL, NULL);
-            _mc->_pc += 4;
+            _mc->_fetch_pc += 4;
 
             _mc->_isSyscall = FALSE;
          }
