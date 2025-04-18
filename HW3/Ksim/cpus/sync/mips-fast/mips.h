@@ -28,7 +28,23 @@ typedef unsigned Bool;
 //#define MIPC_DEBUG 1
 
 typedef struct _pipe_reg {
-   Bool _valid;
+   // all zeros = NOP
+   unsigned int _ins { 0 };
+
+   unsigned int _stall_ins { 0 };
+   unsigned int _stall_pc { 0 };
+
+   // no. of cycles before which the dest. 
+   // register will be updated
+   unsigned int _dstall { 0 };
+
+// magic numbers for _hi, _lo registers
+// make sure in any if/else using _src_reg, you check for HI, LO first so
+// as to avoid out-of-bounds checks
+#define HI 333
+#define LO 1729
+   unsigned int _src_reg[2];
+   unsigned int _src_freg;
 
    signed int	_decodedSRC1, _decodedSRC2;	// Reg fetch output (source values)
    unsigned	_decodedDST;			// Decoder output (dest reg no)
@@ -41,7 +57,6 @@ typedef struct _pipe_reg {
    Bool 	_hiWPort, _loWPort;		// WB control
    unsigned	_decodedShiftAmt;		// Shift amount
 
-   unsigned int _hi, _lo; 			// mult, div destination
    unsigned int	_pc;				// Program counter
    unsigned int _lastbdslot;			// branch delay state
    unsigned int _boot;				// boot code loaded?
@@ -82,6 +97,7 @@ public:
 
    // fetch/decode, decode/execute, execute/memory, memory/write back
    pipe_reg_t *_fd, *_de, *_em, *_mw;
+   Bool		_isSyscall;			// 1 if system call
 
    /*
    //unsigned int _ins;   // instruction register
@@ -105,17 +121,29 @@ public:
     */
    unsigned int 	_gpr[32];		// general-purpose integer registers
 
+   /*
+    * If you are decoding an instr. whose source operand $x has
+    * _gprWait[x] > 0, stall
+    */
+   unsigned int _gpr_wait[32]; 
+
    union {
       unsigned int l[2];
       float f[2];
       double d;
    } _fpr[16];					// floating-point registers (paired)
+   unsigned int _fpr_wait[16];
 
-   /*
    unsigned int _hi, _lo; 			// mult, div destination
-                                 */
-   unsigned int	_pc;				// Program counter
-                                 /*
+   unsigned int _hi_lo_wait[2];
+
+   // Program counter from which instructions are fetched
+   // Is updated by EX during the +ve half
+   unsigned int _pc;		
+
+   Bool _stallFetch { FALSE };
+                                 
+   /*
    unsigned int _lastbdslot;			// branch delay state
    unsigned int _boot;				// boot code loaded?
 

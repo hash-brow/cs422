@@ -27,6 +27,16 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    de->_isIllegalOp = FALSE;
    de->_isSyscall = FALSE;
 
+   /*
+    * Data stall is 2 cycles.
+    * Reg. will be updated in the +ve half of WB,
+    * and decode will read it in the -ve half.
+    */
+   de->_dstall = 2;
+   de->_src_reg[0] = 0;
+   de->_src_reg[1] = 0;
+   de->_src_freg = 0;
+
    i.data = fd->_ins;
   
 #define SIGN_EXTEND_BYTE(x)  do { x <<= 24; x >>= 24; } while (0)
@@ -43,6 +53,12 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = FALSE;
+
+      // See definition of MipsInsn
+      // Appropriately changed within the switch cases for the minority instructions
+      // https://www.kth.se/social/files/563c63c9f276547044e8695f/mips-ref-sheet.pdf
+      de->_src_reg[0] = i.reg.rt;
+      de->_src_reg[1] = i.reg.rs;
 
       switch (i.reg.func) {
       case 0x20:			// add
@@ -65,6 +81,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       case 0:			// sll
          de->_opControl = func_sll;
          de->decodedShiftAmt = i.reg.sa;
+         de->_src_reg[1] = 0;
 	 break;
 
       case 4:			// sllv
@@ -82,6 +99,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       case 0x3:			// sra
          de->_opControl = func_sra;
          de->decodedShiftAmt = i.reg.sa;
+         de->_src_reg[1] = 0;
 	 break;
 
       case 0x7:			// srav
@@ -91,6 +109,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       case 0x2:			// srl
          de->_opControl = func_srl;
          de->decodedShiftAmt = i.reg.sa;
+         de->_src_reg[1] = 0;
 	 break;
 
       case 0x6:			// srlv
@@ -125,10 +144,13 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
 
       case 0x10:			// mfhi
          de->_opControl = func_mfhi;
+         de->_src_reg[0] = HI;
+         de->_src_reg[1] = 0;
 	 break;
 
       case 0x12:			// mflo
          de->_opControl = func_mflo;
+         de->_src_reg[0] = LO;
 	 break;
 
       case 0x11:			// mthi
@@ -136,6 +158,8 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
          de->_hiWPort = TRUE;
          de->_writeREG = FALSE;
          de->_writeFREG = FALSE;
+         de->_src_reg[0] = i.reg.rs;
+         de->_src_reg[1] = 0;
 	 break;
 
       case 0x13:			// mtlo
@@ -143,6 +167,8 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
          de->_loWPort = TRUE;
          de->_writeREG = FALSE;
          de->_writeFREG = FALSE;
+         de->_src_reg[0] = i.reg.rs;
+         de->_src_reg[1] = 0;
 	 break;
 
       case 0x18:			// mult
@@ -186,6 +212,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
          de->_writeREG = FALSE;
          de->_writeFREG = FALSE;
          de->_isSyscall = TRUE;
+         de->_dstall = 3;
 	 break;
 
       default:
@@ -208,6 +235,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = FALSE;
+      de->_src_reg[0] = i.imm.rs;
       break;
 
    case 0xc:			// andi
@@ -220,6 +248,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = FALSE;
+      de->_src_reg[0] = i.imm.rs;
       break;
 
    case 0xf:			// lui
@@ -243,6 +272,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = FALSE;
+      de->_src_reg[0] = i.imm.rs;
       break;
 
    case 0xa:			// slti
@@ -255,6 +285,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = FALSE;
+      de->_src_reg[0] = i.imm.rs;
       break;
 
    case 0xb:			// sltiu
@@ -267,6 +298,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = FALSE;
+      de->_src_reg[0] = i.imm.rs;
       break;
 
    case 0xe:			// xori
@@ -279,6 +311,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = FALSE;
+      de->_src_reg[0] = i.imm.rs;
       break;
 
    case 4:			// beq
@@ -292,6 +325,8 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_loWPort = FALSE;
       de->_memControl = FALSE;
       de->_branchOffset <<= 16; de->_branchOffset >>= 14; _bdslot = 1; de->_btgt = (unsigned)((signed)_pc+de->_branchOffset+4);
+      de->_src_reg[0] = i.imm.rs;
+      de->_src_reg[1] = i.imm.rt;
       break;
 
    case 1:
@@ -308,6 +343,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       case 1:			// bgez
          de->_opControl = func_bgez;
          de->_branchOffset <<= 16; de->_branchOffset >>= 14; _bdslot = 1; de->_btgt = (unsigned)((signed)_pc+de->_branchOffset+4);
+         de->_src_reg[0] = i.imm.rs;
 	 break;
 
       case 0x11:			// bgezal
@@ -315,6 +351,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
          de->decodedDST = 31;
          de->_writeREG = TRUE;
          de->_branchOffset <<= 16; de->_branchOffset >>= 14; _bdslot = 1; de->_btgt = (unsigned)((signed)_pc+de->_branchOffset+4);
+         de->_src_reg[0] = i.imm.rs;
 	 break;
 
       case 0x10:			// bltzal
@@ -322,11 +359,13 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
          de->decodedDST = 31;
          de->_writeREG = TRUE;
          de->_branchOffset <<= 16; de->_branchOffset >>= 14; _bdslot = 1; de->_btgt = (unsigned)((signed)_pc+de->_branchOffset+4);
+         de->_src_reg[0] = i.imm.rs;
 	 break;
 
       case 0x0:			// bltz
          de->_opControl = func_bltz;
          de->_branchOffset <<= 16; de->_branchOffset >>= 14; _bdslot = 1; de->_btgt = (unsigned)((signed)_pc+de->_branchOffset+4);
+         de->_src_reg[0] = i.imm.rs;
 	 break;
 
       default:
@@ -345,6 +384,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_loWPort = FALSE;
       de->_memControl = FALSE;
       de->_branchOffset <<= 16; de->_branchOffset >>= 14; _bdslot = 1; de->_btgt = (unsigned)((signed)_pc+de->_branchOffset+4);
+      de->_src_reg[0] = i.imm.rs;
       break;
 
       case 6:			// blez
@@ -357,6 +397,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_loWPort = FALSE;
       de->_memControl = FALSE;
       de->_branchOffset <<= 16; de->_branchOffset >>= 14; _bdslot = 1; de->_btgt = (unsigned)((signed)_pc+de->_branchOffset+4);
+      de->_src_reg[0] = i.imm.rs;
       break;
 
    case 5:			// bne
@@ -370,6 +411,8 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_loWPort = FALSE;
       de->_memControl = FALSE;
       de->_branchOffset <<= 16; de->_branchOffset >>= 14; _bdslot = 1; de->_btgt = (unsigned)((signed)_pc+de->_branchOffset+4);
+      de->_src_reg[0] = i.imm.rs;
+      de->_src_reg[1] = i.imm.rt;
       break;
 
    case 2:			// j
@@ -459,6 +502,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
+      de->_src_reg[0] = i.imm.rt;
       break;
 
    case 0x23:			// lw
@@ -472,6 +516,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
+      de->_src_reg[0] = i.imm.rt;
       break;
 
    case 0x26:			// lwr
@@ -486,6 +531,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
+      de->_src_reg[0] = i.imm.rt;
       break;
 
    case 0x31:			// lwc1
@@ -499,6 +545,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
+      de->_src_reg[0] = i.imm.rt;
       break;
 
    case 0x39:			// swc1
@@ -512,6 +559,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
+      de->_src_freg = i.freg.ft;
       break;
 
    case 0x28:			// sb
@@ -525,6 +573,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
+      de->_src_reg[0] = i.imm.rt;
       break;
 
    case 0x29:			// sh  store half word
@@ -538,6 +587,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
+      de->_src_reg[0] = i.imm.rt;
       break;
 
    case 0x2a:			// swl
@@ -551,6 +601,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
+      de->_src_reg[0] = i.imm.rt;
       break;
 
    case 0x2b:			// sw
@@ -564,6 +615,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
+      de->_src_reg[0] = i.imm.rt;
       break;
 
    case 0x2e:			// swr
@@ -577,6 +629,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
+      de->_src_reg[0] = i.imm.rt;
       break;
 
    case 0x11:			// floating-point
@@ -591,6 +644,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
          de->_hiWPort = FALSE;
          de->_loWPort = FALSE;
          de->_memControl = FALSE;
+         de->_src_reg[0] = i.freg.ft;
 	 break;
 
       case 0:			// mfc1
@@ -602,6 +656,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
          de->_hiWPort = FALSE;
          de->_loWPort = FALSE;
          de->_memControl = FALSE;
+         de->_src_freg = i.freg.fs;
 	 break;
       default:
          de->_isIllegalOp = TRUE;

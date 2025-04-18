@@ -31,6 +31,18 @@ Mipc::MainLoop (void)
    _nfetched = 0;
 
    while (!_sim_exit) {
+      /*
+       * Imagine in EX we calculate the branch target and update _pc
+       * accordingly in the positive half. 
+       * We must hence do everything in the negative half
+       */
+
+      AWAIT_P_PHI0; // @posedge
+      AWAIT_P_PHI1; // @negedge
+      if (!_mc->_stallFetch) {
+         addr = _pc;
+         ins = _mem->BEGetWord (addr, _mem->Read(addr & ~(LL)0x7));
+
      AWAIT_P_PHI0;	// @posedge
      if (_insDone) {
         addr = _pc;
