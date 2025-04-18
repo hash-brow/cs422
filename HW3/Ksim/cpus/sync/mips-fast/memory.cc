@@ -20,7 +20,8 @@ Memory::MainLoop (void)
 
    while (1) {
       AWAIT_P_PHI0; // @posedge
-      pip_reg_t* em = new pipe_register_t(_mc->_em);
+      pipe_reg_t* em = new pipe_reg_t;
+      *em = *_mc->_em;
 
       if (em->_isIllegalOp) {
          AWAIT_P_PHI1;

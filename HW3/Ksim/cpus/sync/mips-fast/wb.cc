@@ -21,7 +21,8 @@ Writeback::MainLoop (void)
 
    while (1) {
       AWAIT_P_PHI0; // @posedge
-      pipe_register_t* mw = new pipe_register_t(_mc->_mw);
+      pipe_reg_t* mw = new pipe_reg_t;
+      *mw = *_mc->_mw;
       
       if (mw->_isIllegalOp) {
          printf("Illegal ins %#x at PC %#x. Terminating simulation!\n", mw->_ins, mw->_pc);
@@ -34,7 +35,7 @@ Writeback::MainLoop (void)
       }
 
       if (!mw->_isSyscall) {
-         if (mw->_writeReg) {
+         if (mw->_writeREG) {
             _mc->_gpr[mw->_decodedDST] = mw->_opResultLo;
 #ifdef MIPC_DEBUG
             fprintf(_mc->_debugLog, "<%llu> Writing to reg %u, value: %#x\n", SIM_TIME, mw->_decodedDST, mw->_opResultLo);
@@ -68,7 +69,7 @@ Writeback::MainLoop (void)
 #ifdef MIPC_DEBUG
             fprintf(_mc->_debugLog, "<%llu> SYSCALL! Trapping to emulation layer at PC %#x\n", SIM_TIME, mw->_pc);
 #endif      
-            _mc->_opControl(_mc, mw->_ins, NULL, NULL);
+            mw->_opControl(_mc, mw->_ins, NULL, NULL);
             _mc->_pc += 4;
 
             _mc->_isSyscall = FALSE;

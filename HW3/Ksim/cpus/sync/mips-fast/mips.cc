@@ -31,6 +31,8 @@ Mipc::MainLoop (void)
    _nfetched = 0;
    _stallFetch = FALSE;
 
+   _fd = new pipe_reg_t;
+
    while (!_sim_exit) {
       /*
        * Imagine in EX we calculate the branch target and update _pc
@@ -120,14 +122,6 @@ Mipc::Reboot (char *image)
       _mem->ReadImage(fp);
       fclose (fp);
 
-      // Reset state
-      _ins = 0;
-      _insValid = FALSE;
-      _decodeValid = FALSE;
-      _execValid = FALSE;
-      _memValid = FALSE;
-      _insDone = TRUE;
-
       _num_load = 0;
       _num_store = 0;
       _fpinst = 0;
@@ -135,10 +129,6 @@ Mipc::Reboot (char *image)
       _num_jal = 0;
       _num_jr = 0;
 
-      _lastbdslot = 0;
-      _bdslot = 0;
-      _btaken = 0;
-      _btgt = 0xdeadbeef;
       _sim_exit = 0;
       _pc = ParamGetInt ("Mipc.BootPC");	// Boom! GO
    }

@@ -20,7 +20,8 @@ Exe::MainLoop (void)
 
    while (1) {
       AWAIT_P_PHI0; // @posedge
-      pipe_reg_t *em = new pipe_reg_t(_mc->_de);
+      pipe_reg_t *em = new pipe_reg_t;
+      *em = *_mc->_de;
 
       if (em->_isIllegalOp) {
          // if we have an illegal op, propagate that msg and move on

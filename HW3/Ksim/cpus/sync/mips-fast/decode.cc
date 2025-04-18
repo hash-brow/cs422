@@ -25,7 +25,8 @@ Decode::MainLoop (void)
    // TODO: this stuff is big endian right?
    while (1) {
       AWAIT_P_PHI0; // @posedge
-      pipe_reg_t* fd = new pipe_reg_t(_mc->_fd);
+      pipe_reg_t* fd = new pipe_reg_t;
+      *fd = *_mc->_fd;
       unsigned int ins_copy = fd->_ins;
 
       pipe_reg_t* de = new pipe_reg_t;
@@ -51,9 +52,9 @@ Decode::MainLoop (void)
             unsigned int v = _mc->_de->_src_reg[i];
             if (v) {
                if (v == HI) {
-                  stall |= (_mc->_hi_low_wait[0] > 0);
+                  stall |= (_mc->_hi_lo_wait[0] > 0);
                } else if (v == LO) {
-                  stall |= (_mc->_hi_low_wait[1] > 0);
+                  stall |= (_mc->_hi_lo_wait[1] > 0);
                } else {
                   stall |= (_mc->_gpr_wait[i] > 0);
                }
@@ -61,7 +62,7 @@ Decode::MainLoop (void)
          }
 
          if (_mc->_de->_has_float_src)
-            stall |= (_fpr_wait[_mc->_de->_src_freg] > 0);
+            stall |= (_mc->_fpr_wait[_mc->_de->_src_freg] > 0);
       }
 
       for (int i = 0; i < 32; i++) {
@@ -91,7 +92,7 @@ Decode::MainLoop (void)
             SET_MAX(_mc->_gpr_wait[_mc->_de->_decodedDST], _mc->_de->_dstall);
          else if (_mc->_de->_hiWPort)
             SET_MAX(_mc->_hi_lo_wait[0], _mc->_de->_dstall);
-         else if (_mc->_de->loWPort)
+         else if (_mc->_de->_loWPort)
             SET_MAX(_mc->_hi_lo_wait[1], _mc->_de->_dstall);
          else if (_mc->_de->_writeFREG)
             SET_MAX(_mc->_fpr_wait[_mc->_de->_decodedDST >> 1], _mc->_de->_dstall);

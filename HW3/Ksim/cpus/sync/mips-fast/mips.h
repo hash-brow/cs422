@@ -29,14 +29,11 @@ typedef unsigned Bool;
 
 typedef struct _pipe_reg {
    // all zeros = NOP
-   unsigned int _ins { 0 };
-
-   unsigned int _stall_ins { 0 };
-   unsigned int _stall_pc { 0 };
+   unsigned int _ins;
 
    // no. of cycles before which the dest. 
    // register will be updated
-   unsigned int _dstall { 0 };
+   unsigned int _dstall;
 
 // magic numbers for _hi, _lo registers
 // make sure in any if/else using _src_reg, you check for HI, LO first so
@@ -45,9 +42,9 @@ typedef struct _pipe_reg {
 #define LO 1729
    unsigned int _src_reg[2];
    unsigned int _src_freg;
-   unsigned int _has_float_src { 0 };
+   unsigned int _has_float_src;
 
-   Bool _is_bubble { FALSE };
+   Bool _is_bubble;
 
    signed int	_decodedSRC1, _decodedSRC2;	// Reg fetch output (source values)
    unsigned	_decodedDST;			// Decoder output (dest reg no)
@@ -62,13 +59,12 @@ typedef struct _pipe_reg {
 
    unsigned int	_pc;				// Program counter
    unsigned int _lastbdslot;			// branch delay state
-   unsigned int _boot;				// boot code loaded?
 
    int 		_btaken; 			// taken branch (1 if taken, 0 if fall-through)
    int 		_bdslot;				// 1 if the next ins is delay slot
    unsigned int	_btgt;				// branch target
 
-   Bool		_isSyscall { FALSE };			// 1 if system call
+   Bool		_isSyscall;			// 1 if system call
    Bool		_isIllegalOp;			// 1 if illegal opcode 
 
    void (*_opControl)(Mipc*, unsigned, struct _pipe_reg*, struct _pipe_reg*);
@@ -93,7 +89,7 @@ public:
 				// image if any.
 
    void MipcDumpstats();			// Prints simulation statistics
-   void Dec (unsigned int ins);			// Decoder function
+   void Dec (pipe_reg_t*, pipe_reg_t*);			// Decoder function
    void fake_syscall (unsigned int ins);	// System call interface
 
    /* processor state */
@@ -101,6 +97,9 @@ public:
    // fetch/decode, decode/execute, execute/memory, memory/write back
    pipe_reg_t *_fd, *_de, *_em, *_mw;
    Bool		_isSyscall;			// 1 if system call
+
+   unsigned int _hi, _lo; 			// mult, div destination
+   unsigned int _hi_lo_wait[2];
 
    /*
    //unsigned int _ins;   // instruction register
@@ -137,19 +136,18 @@ public:
    } _fpr[16];					// floating-point registers (paired)
    unsigned int _fpr_wait[16];
 
-   unsigned int _hi, _lo; 			// mult, div destination
-   unsigned int _hi_lo_wait[2];
 
    // Program counter from which instructions are fetched
    // Is updated by EX during the +ve half
    unsigned int _pc;		
 
-   Bool _stallFetch { FALSE };
+   Bool _stallFetch;
                                  
    /*
    unsigned int _lastbdslot;			// branch delay state
+*/
    unsigned int _boot;				// boot code loaded?
-
+/*
    int 		_btaken; 			// taken branch (1 if taken, 0 if fall-through)
    int 		_bdslot;				// 1 if the next ins is delay slot
    unsigned int	_btgt;				// branch target
