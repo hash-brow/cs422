@@ -449,6 +449,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
+      de->_src_reg[0] = i.reg.rs;
       break;
 
    case 0x24:			// lbu
@@ -462,6 +463,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
+      de->_src_reg[0] = i.reg.rs;
       break;
 
    case 0x21:			// lh
@@ -475,6 +477,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
+      de->_src_reg[0] = i.reg.rs;
       break;
 
    case 0x25:			// lhu
@@ -488,6 +491,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
+      de->_src_reg[0] = i.reg.rs;
       break;
 
    case 0x22:			// lwl
@@ -503,6 +507,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
       de->_src_reg[0] = i.imm.rt;
+      de->_src_reg[1] = i.imm.rs;
       break;
 
    case 0x23:			// lw
@@ -516,7 +521,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
-      de->_src_reg[0] = i.imm.rt;
+      de->_src_reg[0] = i.imm.rs;
       break;
 
    case 0x26:			// lwr
@@ -532,6 +537,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
       de->_src_reg[0] = i.imm.rt;
+      de->_src_reg[1] = i.imm.rs;
       break;
 
    case 0x31:			// lwc1
@@ -545,7 +551,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
-      de->_src_reg[0] = i.imm.rt;
+      de->_src_reg[0] = i.reg.rs;
       break;
 
    case 0x39:			// swc1
@@ -560,6 +566,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
       de->_src_freg = i.freg.ft;
+      de->_src_reg[0] = i.imm.rs;
       break;
 
    case 0x28:			// sb
@@ -574,6 +581,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
       de->_src_reg[0] = i.imm.rt;
+      de->_src_reg[1] = i.imm.rs;
       break;
 
    case 0x29:			// sh  store half word
@@ -588,6 +596,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
       de->_src_reg[0] = i.imm.rt;
+      de->_src_reg[1] = i.imm.rs;
       break;
 
    case 0x2a:			// swl
@@ -602,6 +611,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
       de->_src_reg[0] = i.imm.rt;
+      de->_src_reg[1] = i.imm.rs;
       break;
 
    case 0x2b:			// sw
@@ -616,6 +626,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
       de->_src_reg[0] = i.imm.rt;
+      de->_src_reg[1] = i.imm.rs;
       break;
 
    case 0x2e:			// swr
@@ -630,6 +641,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
       de->_src_reg[0] = i.imm.rt;
+      de->_src_reg[1] = i.imm.rs;
       break;
 
    case 0x11:			// floating-point

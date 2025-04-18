@@ -98,6 +98,7 @@ public:
    // fetch/decode, decode/execute, execute/memory, memory/write back
    pipe_reg_t *_fd, *_de, *_em, *_mw;
    Bool		_isSyscall;			// 1 if system call
+   Bool     _isSyscallOver;   // set TRUE when WB executes the syscall in it's -ve half
 
    /*
    //unsigned int _ins;   // instruction register

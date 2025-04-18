@@ -10,47 +10,40 @@ Exe::~Exe (void) {}
 void
 Exe::MainLoop (void)
 {
-   unsigned int ins;
-   Bool isSyscall, isIllegalOp;
+   /*
+    * +ve half:
+    *    - reads data from _mc->_de and performs the operation, result stored in local registers
+    *    - updates _mc->_pc
+    * -ve half:
+    *    - stores results in _mc->_em
+    */
 
    while (1) {
-      AWAIT_P_PHI1; // @negedge
-      pipe_reg_t *de = new pipe_reg_t(_mc->de);
-      if (de->_valid) {
-         AWAIT_P_PHI0; // @posedge
-         if (!de->isSyscall && !de->isIllegalOp) {
-            _mc->opControl(_mc, de->_ins, de, _mc->_em);
-#ifdef MIPC_DEBUG
-            fprintf(_mc->_debugLog, "<%llu> Executed ins %#x\n", SIM_TIME, de->_ins);
-#endif
-         } else if (de->isSyscall) {
-#ifdef MIPC_DEBUG
-            fprintf(_mc->_debugLog, "<%llu> Deferring execution of syscall ins %#x\n", SIM_TIME, de->_ins);
-#endif
-         } else {
-#ifdef MIPC_DEBUG
-            fprintf(_mc->_debugLog, "<%llu> Illegal ins %#x in execution stage at PC %#x\n", SIM_TIME, de->_ins, de->_pc);
-#endif
-         }
-         _mc->_em->_valid = TRUE;
+      AWAIT_P_PHI0; // @posedge
+      pipe_reg_t *em = new pipe_reg_t(_mc->_de);
 
-         /*
-         if (!isIllegalOp && !isSyscall) {
-            if (_mc->_lastbdslot && _mc->_btaken)
-            {
-               _mc->_pc = _mc->_btgt;
-            }
-            else
-            {
-               _mc->_pc = _mc->_pc + 4;
-            }
-            _mc->_lastbdslot = _mc->_bdslot;
-         }
-         */
+      if (!_mc->_isSyscall && !_mc->_de->_isIllegalOp) {
+         _mc->_de->_opControl(_mc, _mc->_de->_ins, _mc->_de, em);
+#ifdef MIPC_DEBUG
+         fprintf(_mc->_debugLog, "<%llu> Executed ins %#x\n", SIM_TIME, em->_ins);
+#endif
+         // if it is a branch instr., then _bdslot = 1
+         if (em->_bdslot && em->_btaken) 
+            _mc->_pc = em->_btgt;
+         else if (!_stallFetch)
+            _mc->_pc = _mc->_pc + 4;
+      } else if (_mc->_de->_isIllegalOp) {
+#ifdef MIPC_DEBUG
+            fprintf(_mc->_debugLog, "<%llu> Illegal ins %#x in execution stage at PC %#x\n", SIM_TIME, em->_ins, em->_pc);
+#endif
+      } else { 
+#ifdef MIPC_DEBUG
+            fprintf(_mc->_debugLog, "<%llu> Deferring execution of syscall ins %#x\n", SIM_TIME, em->_ins);
+#endif
       }
-      else {
-         AWAIT_P_PHI0; // @posedge
-         _mc->_em->_valid = FALSE;
-      }
+
+      AWAIT_P_PHI1; // @negedge
+      *_mc->_em = *em;
+      delete em;
    }
 }

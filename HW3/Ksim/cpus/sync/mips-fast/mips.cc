@@ -38,6 +38,12 @@ Mipc::MainLoop (void)
        */
 
       AWAIT_P_PHI0; // @posedge
+      
+      if (_mc->_isSyscallOver)      
+         _mc->_isSyscall = FALSE;
+
+      _mc->_isSyscallOver = FALSE;
+
       AWAIT_P_PHI1; // @negedge
       if (!_mc->_stallFetch) {
          addr = _pc;

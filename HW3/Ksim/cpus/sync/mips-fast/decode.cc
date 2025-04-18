@@ -11,6 +11,8 @@ void
 Decode::MainLoop (void)
 {
    // TODO: ensure delete for all new
+   // TODO: this stuff is big endian right?
+   // TODO: Bug, syscall flushes instructions ahead of it as well?
    unsigned int ins;
    while (1) {
       AWAIT_P_PHI0; // @posedge
