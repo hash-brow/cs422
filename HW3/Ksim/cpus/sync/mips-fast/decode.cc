@@ -94,10 +94,12 @@ Decode::MainLoop (void)
          if (_mc->_de->_writeREG && _mc->_de->_decodedDST) { 
             SET_MAX(_mc->_gpr_wait[_mc->_de->_decodedDST], _mc->_de->_dstall);
          }
-         else if (_mc->_de->_hiWPort)
-            SET_MAX(_mc->_hi_lo_wait[0], _mc->_de->_dstall);
-         else if (_mc->_de->_loWPort)
-            SET_MAX(_mc->_hi_lo_wait[1], _mc->_de->_dstall);
+         else if (_mc->_de->_hiWPort || _mc->_de->_loWPort) {
+            if (_mc->_de->_hiWPort) 
+               SET_MAX(_mc->_hi_lo_wait[0], _mc->_de->_dstall);
+            if (_mc->_de->_loWPort)
+               SET_MAX(_mc->_hi_lo_wait[1], _mc->_de->_dstall);
+         }
          else if (_mc->_de->_writeFREG)
             SET_MAX(_mc->_fpr_wait[_mc->_de->_decodedDST >> 1], _mc->_de->_dstall);
       } else if (isNewSyscall) {

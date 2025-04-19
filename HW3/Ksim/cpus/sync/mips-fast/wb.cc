@@ -51,16 +51,19 @@ Writeback::MainLoop (void)
 #ifdef MIPC_DEBUG
             fprintf(_mc->_debugLog, "<%llu> Writing to freg %u, value: %#x\n", SIM_TIME, (mw->_decodedDST)>>1, mw->_opResultLo);
 #endif
-         } else if (mw->_hiWPort) {
-            _mc->_hi = mw->_opResultHi;
+         } else {
+            if (mw->_hiWPort) {
+               _mc->_hi = mw->_opResultHi;
 #ifdef MIPC_DEBUG
-            fprintf(_mc->_debugLog, "<%llu> Writing to Hi, value: %#x\n", SIM_TIME, mw->_opResultHi);
+               fprintf(_mc->_debugLog, "<%llu> Writing to Hi, value: %#x\n", SIM_TIME, mw->_opResultHi);
 #endif
-         } else if (mw->_loWPort) {
-            _mc->_lo = mw->_opResultLo;
+            } 
+            if (mw->_loWPort) {
+               _mc->_lo = mw->_opResultLo;
 #ifdef MIPC_DEBUG
-            fprintf(_mc->_debugLog, "<%llu> Writing to Lo, value: %#x\n", SIM_TIME, mw->_opResultLo);
+               fprintf(_mc->_debugLog, "<%llu> Writing to Lo, value: %#x\n", SIM_TIME, mw->_opResultLo);
 #endif
+            }
          }
 
          // $0 is always 0
