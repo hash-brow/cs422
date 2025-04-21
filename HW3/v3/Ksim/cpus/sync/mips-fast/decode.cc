@@ -32,9 +32,20 @@ Decode::MainLoop (void)
       pipe_reg_t* de = new pipe_reg_t;
       _mc->Dec(fd, de); // "partial" decode
 
+      pipe_reg_t* em = new pipe_reg_t;
+      *em = *_mc->_em;
+
       Bool stall = FALSE;
       Bool isNewSyscall = FALSE;
       _mc->_stallFetch = FALSE;
+
+#ifdef MIPC_DEBUG
+      if (fd->_ins == 0) {
+         fprintf(_mc->_debugLog, "<%llu> Decoding bubble ins\n", SIM_TIME);
+      } else {
+         fprintf(_mc->_debugLog, "<%llu> Decoding ins %#x\n", SIM_TIME, fd->_ins);
+      }
+#endif
 
       if (_mc->_isSyscall == TRUE) {
          // if there's an existing syscall in the pipeline, stall
@@ -54,18 +65,53 @@ Decode::MainLoop (void)
             unsigned int v = de->_src_reg[i];
             if (v) {
                if (v == HI) {
-                  stall |= (_mc->_hi_lo_wait[0] > 0);
+                  stall |= (_mc->_hi_lo_wait[0] == 1);
                } else if (v == LO) {
-                  stall |= (_mc->_hi_lo_wait[1] > 0);
+                  stall |= (_mc->_hi_lo_wait[1] == 1);  
                } else {
-                  stall |= (_mc->_gpr_wait[v] > 0);
+                  stall |= (_mc->_gpr_wait[v] == 1);
                }
             }
          }
 
-         if (de->_has_float_src)
+         if (de->_has_float_src){
             stall |= (_mc->_fpr_wait[de->_src_freg] > 0);
+         }
       }
+      
+      if (stall) {
+         _mc->_stallFetch = TRUE;
+      }
+
+      AWAIT_P_PHI1; // @negedge
+      if (!stall) {
+         // copy values to de register from mc register
+         for(int i = 0; i < 32; i++){
+            _mc->_de->_gpr[i] = _mc->_gpr[i];
+         }
+         // bypass from ex
+         for (int i = 0; i < 2; i++) {
+            unsigned int v = de->_src_reg[i];
+            if (v) {
+               if (v == HI) {
+                  if(_mc->_hi_lo_wait[0] == 2){
+                     _mc->_de->_hi = em->_opResultHi;
+                     _mc->_hi_lo_wait[0] = 0;   
+                  }
+               } else if (v == LO) {
+                  if(_mc->_hi_lo_wait[1] == 2){
+                     _mc->_de->_lo = em->_opResultLo;
+                     _mc->_hi_lo_wait[1] = 0;
+                  }
+               } else {
+                  if(_mc->_gpr_wait[v] == 2){   
+                     _mc->_de->_gpr[v] = em->_opResultLo;
+                     _mc->_gpr_wait[v] = 0;
+                  }
+               }
+            }
+         }
+     }
 
       for (int i = 0; i < 32; i++) {
          if (_mc->_gpr_wait[i]) _mc->_gpr_wait[i]--;
@@ -79,16 +125,10 @@ Decode::MainLoop (void)
          if (_mc->_hi_lo_wait[i]) _mc->_hi_lo_wait[i]--;
       }
 
-      if (stall) {
-         _mc->_stallFetch = TRUE;
-      }
 
-      delete de;
-
-      AWAIT_P_PHI1; // @negedge
-      if (!stall) {
-         // the proper decode
-         _mc->Dec(fd, _mc->_de);
+     if (!stall) {
+         // the proper decode 
+        _mc->Dec(fd, _mc->_de);
          
 #define SET_MAX(dest, src) if (src > dest) dest = src
          if (_mc->_de->_writeREG && _mc->_de->_decodedDST) { 
@@ -121,6 +161,8 @@ Decode::MainLoop (void)
       }
 
       delete fd;
+      delete de;
+      delete em;
 #ifdef MIPC_DEBUG
       fprintf(_mc->_debugLog, "<%llu> Decoded ins %#x\n", SIM_TIME, ins_copy);
 #endif

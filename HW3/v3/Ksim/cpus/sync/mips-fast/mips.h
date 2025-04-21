@@ -102,6 +102,9 @@ typedef struct _pipe_reg {
    Bool		_isSyscall;			// 1 if system call
    Bool		_isIllegalOp;			// 1 if illegal opcode 
 
+   unsigned int _gpr[32]; // local buffer states for registers
+   unsigned int _hi, _lo;
+ 
    void (*_opControl)(Mipc*, unsigned, struct _pipe_reg*, struct _pipe_reg*);
    void (*_memOp)(Mipc*, struct _pipe_reg*, struct _pipe_reg*);
 } pipe_reg_t;

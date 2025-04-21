@@ -236,7 +236,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    case 9:			// addiu
       // ignore overflow: no exceptions
       de->_opControl = func_addi_addiu;
-      de->_decodedSRC1 = _gpr[i.imm.rs];
+      de->_decodedSRC1 = de->_gpr[i.imm.rs];
       de->_decodedSRC2 = i.imm.imm;
       de->_decodedDST = i.imm.rt;
       de->_writeREG = TRUE;
@@ -249,7 +249,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
 
    case 0xc:			// andi
       de->_opControl = func_andi;
-      de->_decodedSRC1 = _gpr[i.imm.rs];
+      de->_decodedSRC1 = de->_gpr[i.imm.rs];
       de->_decodedSRC2 = i.imm.imm;
       de->_decodedDST = i.imm.rt;
       de->_writeREG = TRUE;
@@ -273,7 +273,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
 
    case 0xd:			// ori
       de->_opControl = func_ori;
-      de->_decodedSRC1 = _gpr[i.imm.rs];
+      de->_decodedSRC1 = de->_gpr[i.imm.rs];
       de->_decodedSRC2 = i.imm.imm;
       de->_decodedDST = i.imm.rt;
       de->_writeREG = TRUE;
@@ -286,7 +286,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
 
    case 0xa:			// slti
       de->_opControl = func_slti;
-      de->_decodedSRC1 = _gpr[i.imm.rs];
+      de->_decodedSRC1 = de->_gpr[i.imm.rs];
       de->_decodedSRC2 = i.imm.imm;
       de->_decodedDST = i.imm.rt;
       de->_writeREG = TRUE;
@@ -299,7 +299,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
 
    case 0xb:			// sltiu
       de->_opControl = func_sltiu;
-      de->_decodedSRC1 = _gpr[i.imm.rs];
+      de->_decodedSRC1 = de->_gpr[i.imm.rs];
       de->_decodedSRC2 = i.imm.imm;
       de->_decodedDST = i.imm.rt;
       de->_writeREG = TRUE;
@@ -312,7 +312,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
 
    case 0xe:			// xori
       de->_opControl = func_xori;
-      de->_decodedSRC1 = _gpr[i.imm.rs];
+      de->_decodedSRC1 = de->_gpr[i.imm.rs];
       de->_decodedSRC2 = i.imm.imm;
       de->_decodedDST = i.imm.rt;
       de->_writeREG = TRUE;
@@ -325,8 +325,8 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
 
    case 4:			// beq
       de->_opControl = func_beq;
-      de->_decodedSRC1 = _gpr[i.imm.rs];
-      de->_decodedSRC2 = _gpr[i.imm.rt];
+      de->_decodedSRC1 = de->_gpr[i.imm.rs];
+      de->_decodedSRC2 = de->_gpr[i.imm.rt];
       de->_branchOffset = i.imm.imm;
       de->_writeREG = FALSE;
       de->_writeFREG = FALSE;
@@ -340,7 +340,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
 
    case 1:
       // REGIMM
-      de->_decodedSRC1 = _gpr[i.reg.rs];
+      de->_decodedSRC1 = de->_gpr[i.reg.rs];
       de->_branchOffset = i.imm.imm;
       de->_writeREG = FALSE;
       de->_writeFREG = FALSE;
@@ -385,7 +385,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
 
    case 7:			// bgtz
       de->_opControl = func_bgtz;
-      de->_decodedSRC1 = _gpr[i.reg.rs];
+      de->_decodedSRC1 = de->_gpr[i.reg.rs];
       de->_branchOffset = i.imm.imm;
       de->_writeREG = FALSE;
       de->_writeFREG = FALSE;
@@ -398,7 +398,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
 
       case 6:			// blez
       de->_opControl = func_blez;
-      de->_decodedSRC1 = _gpr[i.reg.rs];
+      de->_decodedSRC1 = de->_gpr[i.reg.rs];
       de->_branchOffset = i.imm.imm;
       de->_writeREG = FALSE;
       de->_writeFREG = FALSE;
@@ -411,8 +411,8 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
 
    case 5:			// bne
       de->_opControl = func_bne;
-      de->_decodedSRC1 = _gpr[i.reg.rs];
-      de->_decodedSRC2 = _gpr[i.reg.rt];
+      de->_decodedSRC1 = de->_gpr[i.reg.rs];
+      de->_decodedSRC2 = de->_gpr[i.reg.rt];
       de->_branchOffset = i.imm.imm;
       de->_writeREG = FALSE;
       de->_writeFREG = FALSE;
@@ -450,7 +450,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    case 0x20:			// lb  
       de->_opControl = func_lb;
       de->_memOp = mem_lb;
-      de->_decodedSRC1 = _gpr[i.reg.rs];
+      de->_decodedSRC1 = de->_gpr[i.reg.rs];
       de->_decodedSRC2 = i.imm.imm;
       de->_decodedDST = i.reg.rt;
       de->_writeREG = TRUE;
@@ -464,7 +464,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    case 0x24:			// lbu
       de->_opControl = func_lbu;
       de->_memOp = mem_lbu;
-      de->_decodedSRC1 = _gpr[i.reg.rs];
+      de->_decodedSRC1 = de->_gpr[i.reg.rs];
       de->_decodedSRC2 = i.imm.imm;
       de->_decodedDST = i.reg.rt;
       de->_writeREG = TRUE;
@@ -478,7 +478,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    case 0x21:			// lh
       de->_opControl = func_lh;
       de->_memOp = mem_lh;
-      de->_decodedSRC1 = _gpr[i.reg.rs];
+      de->_decodedSRC1 = de->_gpr[i.reg.rs];
       de->_decodedSRC2 = i.imm.imm;
       de->_decodedDST = i.reg.rt;
       de->_writeREG = TRUE;
@@ -492,7 +492,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    case 0x25:			// lhu
       de->_opControl = func_lhu;
       de->_memOp = mem_lhu;
-      de->_decodedSRC1 = _gpr[i.reg.rs];
+      de->_decodedSRC1 = de->_gpr[i.reg.rs];
       de->_decodedSRC2 = i.imm.imm;
       de->_decodedDST = i.reg.rt;
       de->_writeREG = TRUE;
@@ -506,9 +506,9 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    case 0x22:			// lwl
       de->_opControl = func_lwl;
       de->_memOp = mem_lwl;
-      de->_decodedSRC1 = _gpr[i.reg.rs];
+      de->_decodedSRC1 = de->_gpr[i.reg.rs];
       de->_decodedSRC2 = i.imm.imm;
-      de->_subregOperand = _gpr[i.reg.rt];
+      de->_subregOperand = de->_gpr[i.reg.rt];
       de->_decodedDST = i.reg.rt;
       de->_writeREG = TRUE;
       de->_writeFREG = FALSE;
@@ -522,7 +522,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    case 0x23:			// lw
       de->_opControl = func_lw;
       de->_memOp = mem_lw;
-      de->_decodedSRC1 = _gpr[i.reg.rs];
+      de->_decodedSRC1 = de->_gpr[i.reg.rs];
       de->_decodedSRC2 = i.imm.imm;
       de->_decodedDST = i.reg.rt;
       de->_writeREG = TRUE;
@@ -536,9 +536,9 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    case 0x26:			// lwr
       de->_opControl = func_lwr;
       de->_memOp = mem_lwr;
-      de->_decodedSRC1 = _gpr[i.reg.rs];
+      de->_decodedSRC1 = de->_gpr[i.reg.rs];
       de->_decodedSRC2 = i.imm.imm;
-      de->_subregOperand = _gpr[i.reg.rt];
+      de->_subregOperand = de->_gpr[i.reg.rt];
       de->_decodedDST = i.reg.rt;
       de->_writeREG = TRUE;
       de->_writeFREG = FALSE;
@@ -552,7 +552,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    case 0x31:			// lwc1
       de->_opControl = func_lwc1;
       de->_memOp = mem_lwc1;
-      de->_decodedSRC1 = _gpr[i.reg.rs];
+      de->_decodedSRC1 = de->_gpr[i.reg.rs];
       de->_decodedSRC2 = i.imm.imm;
       de->_decodedDST = i.reg.rt;
       de->_writeREG = FALSE;
@@ -566,7 +566,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    case 0x39:			// swc1
       de->_opControl = func_swc1;
       de->_memOp = mem_swc1;
-      de->_decodedSRC1 = _gpr[i.reg.rs];
+      de->_decodedSRC1 = de->_gpr[i.reg.rs];
       de->_decodedSRC2 = i.imm.imm;
       de->_decodedDST = i.reg.rt;
       de->_writeREG = FALSE;
@@ -582,7 +582,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    case 0x28:			// sb
       de->_opControl = func_sb;
       de->_memOp = mem_sb;
-      de->_decodedSRC1 = _gpr[i.reg.rs];
+      de->_decodedSRC1 = de->_gpr[i.reg.rs];
       de->_decodedSRC2 = i.imm.imm;
       de->_decodedDST = i.reg.rt;
       de->_writeREG = FALSE;
@@ -597,7 +597,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    case 0x29:			// sh  store half word
       de->_opControl = func_sh;
       de->_memOp = mem_sh;
-      de->_decodedSRC1 = _gpr[i.reg.rs];
+      de->_decodedSRC1 = de->_gpr[i.reg.rs];
       de->_decodedSRC2 = i.imm.imm;
       de->_decodedDST = i.reg.rt;
       de->_writeREG = FALSE;
@@ -612,7 +612,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    case 0x2a:			// swl
       de->_opControl = func_swl;
       de->_memOp = mem_swl;
-      de->_decodedSRC1 = _gpr[i.reg.rs];
+      de->_decodedSRC1 = de->_gpr[i.reg.rs];
       de->_decodedSRC2 = i.imm.imm;
       de->_decodedDST = i.reg.rt;
       de->_writeREG = FALSE;
@@ -627,7 +627,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    case 0x2b:			// sw
       de->_opControl = func_sw;
       de->_memOp = mem_sw;
-      de->_decodedSRC1 = _gpr[i.reg.rs];
+      de->_decodedSRC1 = de->_gpr[i.reg.rs];
       de->_decodedSRC2 = i.imm.imm;
       de->_decodedDST = i.reg.rt;
       de->_writeREG = FALSE;
@@ -642,7 +642,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    case 0x2e:			// swr
       de->_opControl = func_swr;
       de->_memOp = mem_swr;
-      de->_decodedSRC1 = _gpr[i.reg.rs];
+      de->_decodedSRC1 = de->_gpr[i.reg.rs];
       de->_decodedSRC2 = i.imm.imm;
       de->_decodedDST = i.reg.rt;
       de->_writeREG = FALSE;
@@ -659,7 +659,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       switch (i.freg.fmt) {
       case 4:			// mtc1
          de->_opControl = func_mtc1;
-         de->_decodedSRC1 = _gpr[i.freg.ft];
+         de->_decodedSRC1 = de->_gpr[i.freg.ft];
          de->_decodedDST = i.freg.fs;
          de->_writeREG = FALSE;
          de->_writeFREG = TRUE;
