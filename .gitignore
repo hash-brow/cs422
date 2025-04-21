@@ -6,4 +6,3 @@ HW1/D/main/obj-ia32/*.so
 *.so
 *.o
 HW2/spec_2006
-*.sh
