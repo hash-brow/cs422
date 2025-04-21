@@ -30,6 +30,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    de->_dstall = 0;
    de->_has_float_src = 0;
    de->_is_bubble = FALSE;
+   de->_btgt_bypass = FALSE;
    de->_valid = TRUE;
 
    /*

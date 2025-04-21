@@ -113,7 +113,7 @@ Decode::MainLoop (void)
             // btgt = _decodedSRC1 
             if (_mc->_de->_btgt_bypass) _mc->_de->_btgt = _mc->_ex_ex_bypass_lo;
          }
-         if (ex_ex_bypass[1]) _mc->_de->_decodedSRC2 = _mc->_ex_ex_bypass_hi;
+         if (ex_ex_bypass[1]) _mc->_de->_decodedSRC2 = _mc->_ex_ex_bypass_lo;
          if (ex_ex_bypass_subreg) _mc->_de->_subregOperand = _mc->_ex_ex_bypass_lo;
          
 #define SET_MAX(dest, src) if (src > dest) dest = src
