@@ -1,0 +1,15 @@
+2807 1:<FETCH> 
+2807 1:<FETCH> ************************************************************
+2807 1:<FETCH> 
+2807 1:<FETCH> Number of instructions: 2404
+2807 1:<FETCH> Number of simulated cycles: 2807
+2807 1:<FETCH> CPI: 1.17
+2807 1:<FETCH> Int Conditional Branches: 463
+2807 1:<FETCH> Jump and Link: 38
+2807 1:<FETCH> Jump Register: 36
+2807 1:<FETCH> Number of fp instructions: 4
+2807 1:<FETCH> Number of loads: 349
+2807 1:<FETCH> Number of syscall emulated loads: 84
+2807 1:<FETCH> Number of stores: 163
+2807 1:<FETCH> Number of syscall emulated stores: 71
+2807 1:<FETCH> 

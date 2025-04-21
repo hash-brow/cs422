@@ -1,0 +1,15 @@
+2645 1:<FETCH> 
+2645 1:<FETCH> ************************************************************
+2645 1:<FETCH> 
+2645 1:<FETCH> Number of instructions: 2290
+2645 1:<FETCH> Number of simulated cycles: 2645
+2645 1:<FETCH> CPI: 1.16
+2645 1:<FETCH> Int Conditional Branches: 463
+2645 1:<FETCH> Jump and Link: 29
+2645 1:<FETCH> Jump Register: 27
+2645 1:<FETCH> Number of fp instructions: 4
+2645 1:<FETCH> Number of loads: 329
+2645 1:<FETCH> Number of syscall emulated loads: 86
+2645 1:<FETCH> Number of stores: 133
+2645 1:<FETCH> Number of syscall emulated stores: 73
+2645 1:<FETCH> 

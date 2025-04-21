@@ -1,0 +1,15 @@
+16897 1:<FETCH> 
+16897 1:<FETCH> ************************************************************
+16897 1:<FETCH> 
+16897 1:<FETCH> Number of instructions: 14497
+16897 1:<FETCH> Number of simulated cycles: 16897
+16897 1:<FETCH> CPI: 1.17
+16897 1:<FETCH> Int Conditional Branches: 2841
+16897 1:<FETCH> Jump and Link: 214
+16897 1:<FETCH> Jump Register: 232
+16897 1:<FETCH> Number of fp instructions: 76
+16897 1:<FETCH> Number of loads: 2675
+16897 1:<FETCH> Number of syscall emulated loads: 335
+16897 1:<FETCH> Number of stores: 1422
+16897 1:<FETCH> Number of syscall emulated stores: 72
+16897 1:<FETCH> 

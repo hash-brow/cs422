@@ -1,38 +1,9 @@
-Executing /home/group1/ashish3/HW3/v3a/Ksim/Bench/testcode/host/host.image
-Illegal ins 0 at PC 0x40009f. Terminating simulation!
-Register state on termination:
+Summation
 
-
---- PC = 004000af ---
- r0: 00000000 (0)
- r1: 00000001 (1)
- r2: ffffffff (-1)
- r3: 0041e154 (4317524)
- r4: 0041e7a0 (4319136)
- r5: 0041a3fc (4301820)
- r6: 7fffae54 (2147462740)
- r7: 0041e7b4 (4319156)
- r8: 00000000 (0)
- r9: 00000000 (0)
-r10: 00000000 (0)
-r11: 00000000 (0)
-r12: 00000000 (0)
-r13: 00000000 (0)
-r14: 00000000 (0)
-r15: 00000001 (1)
-r16: 00000000 (0)
-r17: 00000000 (0)
-r18: 00000000 (0)
-r19: 00000000 (0)
-r20: 00000000 (0)
-r21: 003f8ba0 (4164512)
-r22: 00000000 (0)
-r23: 00000000 (0)
-r24: 0041e794 (4319124)
-r25: 0041e154 (4317524)
-r26: 00000000 (0)
-r27: 00000000 (0)
-r28: 00425f90 (4349840)
-r29: 7fffad18 (2147462424)
-r30: 00000000 (0)
-r31: 004069f0 (4221424)
+Int: sum 5 = 16
+Int: sum 4 = 11
+Int: sum 3 = 7
+Int: sum 2 = 4
+Int: sum 1 = 2
+Executing /home/group1/ashish4/HW3/v3a/Ksim/Bench/testcode/host/host.image
+EXIT called, code: 0

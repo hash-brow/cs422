@@ -32,6 +32,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    de->_is_bubble = FALSE;
    de->_btgt_bypass = FALSE;
    de->_valid = TRUE;
+   de->_src_subreg = 0;
 
    /*
     * Data stall is 2 cycles.
@@ -91,7 +92,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       case 0:			// sll
          de->_opControl = func_sll;
          de->_decodedShiftAmt = i.reg.sa;
-         de->_src_reg[1] = 0;
+         de->_src_reg[0] = 0;
 	 break;
 
       case 4:			// sllv
@@ -109,7 +110,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       case 0x3:			// sra
          de->_opControl = func_sra;
          de->_decodedShiftAmt = i.reg.sa;
-         de->_src_reg[1] = 0;
+         de->_src_reg[0] = 0;
 	 break;
 
       case 0x7:			// srav
@@ -202,6 +203,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
          de->_btgt = de->_decodedSRC1;
          de->_bdslot = 1;
          de->_btgt_bypass = TRUE;
+         de->_src_reg[1] = 0;
          break;
 
       case 8:			// jr
@@ -211,6 +213,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
          de->_btgt = de->_decodedSRC1;
          de->_bdslot = 1;
          de->_btgt_bypass = TRUE;
+         de->_src_reg[1] = 0;
 	 break;
 
       case 0xd:			// await/break
@@ -518,7 +521,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
-      de->_src_reg[0] = i.imm.rs;
+      de->_src_reg[0] = i.reg.rs;
       de->_src_subreg = i.reg.rt;
       break;
 

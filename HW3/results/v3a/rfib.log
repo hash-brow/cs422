@@ -1,0 +1,15 @@
+31412 1:<FETCH> 
+31412 1:<FETCH> ************************************************************
+31412 1:<FETCH> 
+31412 1:<FETCH> Number of instructions: 25537
+31412 1:<FETCH> Number of simulated cycles: 31412
+31412 1:<FETCH> CPI: 1.23
+31412 1:<FETCH> Int Conditional Branches: 2439
+31412 1:<FETCH> Jump and Link: 1297
+31412 1:<FETCH> Jump Register: 1306
+31412 1:<FETCH> Number of fp instructions: 56
+31412 1:<FETCH> Number of loads: 3613
+31412 1:<FETCH> Number of syscall emulated loads: 99
+31412 1:<FETCH> Number of stores: 4326
+31412 1:<FETCH> Number of syscall emulated stores: 61
+31412 1:<FETCH> 

@@ -14,9 +14,11 @@ DEBUG_DIR="$ROOT_DIR/debug/$VERSION_NUMBER"
 mkdir -p "$RESULTS_DIR" "$OUTPUT_DIR" "$DEBUG_DIR"
 
 # Clean & build
+gmake clobber clean
+gmake
 
 # 3) 5) 6) + debug copy
-for test in c; do
+for test in Subreg asm c endian factorial fib hello host ifactorial ifib log2 msort rfib towers vadd; do
   case "$test" in
     Subreg)     benchRel="Ksim/Bench/testcode/Subreg/subreg";;
     asm)        benchRel="Ksim/Bench/testcode/asm-sim/example";;
@@ -41,10 +43,17 @@ for test in c; do
 
   FULL_BENCH="$ROOT_DIR/$VERSION_NUMBER/$benchRel"
   echo "=== Running $test on $FULL_BENCH ==="
-  ./mipc "$FULL_BENCH" 
+  ./mipc "$FULL_BENCH" > "$OUTPUT_DIR/${test}.out"
 
+  # copy the main log
+  mv mipc.log "$RESULTS_DIR/${test}.log"
+
+  # if a debug log was created, copy it too
+  if [ -f mipc.debug ]; then
+    mv mipc.debug "$DEBUG_DIR/${test}.debug"
+  fi
 done
 
 # Final cleanup
-
+gmake clobber clean
 

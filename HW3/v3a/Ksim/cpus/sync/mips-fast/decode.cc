@@ -66,8 +66,8 @@ Decode::MainLoop (void)
                   stall |= (_mc->_hi_lo_wait[1] > 0);
                } else {
                   if (_mc->_gpr_wait[v] > 0) {
-                     if (_mc->_gpr_wait[v] == 2 && (!de->_memControl || de->_writeREG)) {
-                        // ex-ex bypass, do not bypass stores
+                     if (_mc->_gpr_wait[v] == 2) {
+                        // ex-ex bypass, do not bypass stores, do not bypass when there is a load in EX
                         ex_ex_bypass[i] = TRUE;
                      } else stall |= TRUE;
                   }
@@ -83,6 +83,18 @@ Decode::MainLoop (void)
 
          if (de->_has_float_src)
             stall |= (_mc->_fpr_wait[de->_src_freg] > 0);
+      }
+
+      /*
+       * no ex-ex bypass if:
+       * (1) current instruction is a store
+       * (2) when there is a load in EX
+       */
+      if ((ex_ex_bypass_subreg | ex_ex_bypass[0] | ex_ex_bypass[1]) == TRUE) {
+         // store
+         if (de->_memControl && !de->_writeREG) stall = TRUE;
+         // load in EX
+         else if (_mc->_de->_memControl && _mc->_de->_writeREG) stall = TRUE;
       }
 
       for (int i = 0; i < 32; i++) {

@@ -1,0 +1,15 @@
+19377 1:<FETCH> 
+19377 1:<FETCH> ************************************************************
+19377 1:<FETCH> 
+19377 1:<FETCH> Number of instructions: 17100
+19377 1:<FETCH> Number of simulated cycles: 19377
+19377 1:<FETCH> CPI: 1.13
+19377 1:<FETCH> Int Conditional Branches: 3118
+19377 1:<FETCH> Jump and Link: 26
+19377 1:<FETCH> Jump Register: 23
+19377 1:<FETCH> Number of fp instructions: 4
+19377 1:<FETCH> Number of loads: 1754
+19377 1:<FETCH> Number of syscall emulated loads: 85
+19377 1:<FETCH> Number of stores: 890
+19377 1:<FETCH> Number of syscall emulated stores: 63
+19377 1:<FETCH> 
