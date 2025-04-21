@@ -40,6 +40,10 @@ Decode::MainLoop (void)
       Bool ex_ex_bypass[2];
       ex_ex_bypass[0] = FALSE;
       ex_ex_bypass[1] = FALSE;
+
+      Bool ex_ex_bypass_hi_lo[2];
+      ex_ex_bypass_hi_lo[0] = FALSE;
+      ex_ex_bypass_hi_lo[1] = FALSE;
       
       Bool ex_ex_bypass_subreg = FALSE;
 
@@ -61,9 +65,13 @@ Decode::MainLoop (void)
             unsigned int v = de->_src_reg[i];
             if (v) {
                if (v == HI) {
-                  stall |= (_mc->_hi_lo_wait[0] > 0);
+                  if (_mc->_hi_lo_wait[0] == 2) {
+                     ex_ex_bypass_hi_lo[0] = TRUE;
+                  } else if (_mc->_hi_lo_wait[0] > 0) stall = TRUE;
                } else if (v == LO) {
-                  stall |= (_mc->_hi_lo_wait[1] > 0);
+                  if (_mc->_hi_lo_wait[1] == 2) {
+                     ex_ex_bypass_hi_lo[1] = TRUE;
+                  } else if (_mc->_hi_lo_wait[1] > 0) stall = TRUE;
                } else {
                   if (_mc->_gpr_wait[v] > 0) {
                      if (_mc->_gpr_wait[v] == 2) {
@@ -90,7 +98,8 @@ Decode::MainLoop (void)
        * (1) current instruction is a store
        * (2) when there is a load in EX
        */
-      if ((ex_ex_bypass_subreg | ex_ex_bypass[0] | ex_ex_bypass[1]) == TRUE) {
+      if ((ex_ex_bypass_subreg | ex_ex_bypass[0] | ex_ex_bypass[1] |
+               ex_ex_bypass_hi_lo[0] | ex_ex_bypass_hi_lo[1]) == TRUE) {
          // store
          if (de->_memControl && !de->_writeREG) stall = TRUE;
          // load in EX
@@ -127,6 +136,8 @@ Decode::MainLoop (void)
          }
          if (ex_ex_bypass[1]) _mc->_de->_decodedSRC2 = _mc->_ex_ex_bypass_lo;
          if (ex_ex_bypass_subreg) _mc->_de->_subregOperand = _mc->_ex_ex_bypass_lo;
+         if (ex_ex_bypass_hi_lo[0]) _mc->_de->_decodedSRC1 = _mc->_ex_ex_bypass_hi;
+         if (ex_ex_bypass_hi_lo[1]) _mc->_de->_decodedSRC1 = _mc->_ex_ex_bypass_lo;
          
 #define SET_MAX(dest, src) if (src > dest) dest = src
          if (_mc->_de->_writeREG && _mc->_de->_decodedDST) { 

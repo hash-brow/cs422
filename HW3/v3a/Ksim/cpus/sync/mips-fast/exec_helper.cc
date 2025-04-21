@@ -155,13 +155,16 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
 
       case 0x10:			// mfhi
          de->_opControl = func_mfhi;
+         de->_decodedSRC1 = _hi;
          de->_src_reg[0] = HI;
          de->_src_reg[1] = 0;
 	 break;
 
       case 0x12:			// mflo
          de->_opControl = func_mflo;
+         de->_decodedSRC1 = _lo; 
          de->_src_reg[0] = LO;
+         de->_src_reg[1] = 0;
 	 break;
 
       case 0x11:			// mthi
@@ -858,13 +861,13 @@ Mipc::func_divu (Mipc *mc, unsigned ins, pipe_reg_t* de, pipe_reg_t* em)
 void
 Mipc::func_mfhi (Mipc *mc, unsigned ins, pipe_reg_t* de, pipe_reg_t* em)
 {
-   em->_opResultLo = mc->_hi;
+   em->_opResultLo = de->_decodedSRC1;
 }
 
 void
 Mipc::func_mflo (Mipc *mc, unsigned ins, pipe_reg_t* de, pipe_reg_t* em)
 {
-   em->_opResultLo = mc->_lo;
+   em->_opResultLo = de->_decodedSRC1;
 }
 
 void
