@@ -1,0 +1,15 @@
+6037 1:<FETCH> 
+6037 1:<FETCH> ************************************************************
+6037 1:<FETCH> 
+6037 1:<FETCH> Number of instructions: 4218
+6037 1:<FETCH> Number of simulated cycles: 6037
+6037 1:<FETCH> CPI: 1.43
+6037 1:<FETCH> Int Conditional Branches: 676
+6037 1:<FETCH> Jump and Link: 65
+6037 1:<FETCH> Jump Register: 66
+6037 1:<FETCH> Number of fp instructions: 8
+6037 1:<FETCH> Number of loads: 855
+6037 1:<FETCH> Number of syscall emulated loads: 104
+6037 1:<FETCH> Number of stores: 661
+6037 1:<FETCH> Number of syscall emulated stores: 64
+6037 1:<FETCH> 
