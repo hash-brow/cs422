@@ -32,6 +32,17 @@ Decode::MainLoop (void)
       pipe_reg_t* de = new pipe_reg_t;
       _mc->Dec(fd, de); // "partial" decode
 
+      pipe_reg_t* em = new pipe_reg_t;
+      *em = *_mc->_em;
+
+#ifdef MIPC_DEBUG
+      if (fd->_ins == 0) {
+         fprintf(_mc->_debugLog, "<%llu> Decoding bubble ins\n", SIM_TIME);
+      } else {
+         fprintf(_mc->_debugLog, "<%llu> Decoding ins %#x\n", SIM_TIME, fd->_ins);
+      }
+#endif
+
       Bool stall = FALSE;
       Bool isNewSyscall = FALSE;
       _mc->_stallFetch = FALSE;
@@ -54,17 +65,34 @@ Decode::MainLoop (void)
             unsigned int v = de->_src_reg[i];
             if (v) {
                if (v == HI) {
-                  stall |= (_mc->_hi_lo_wait[0] > 0);
+                  stall |= (_mc->_hi_lo_wait[0] == 1);
+                  if(_mc->_hi_lo_wait[0] == 2) {
+                     _mc->_hi_lo_wait[0] = 0;
+                     _mc->_hi = em->_opResultHi;
+                  }
                } else if (v == LO) {
-                  stall |= (_mc->_hi_lo_wait[1] > 0);
+                  stall |= (_mc->_hi_lo_wait[1] == 1);
+                  if(_mc->_hi_lo_wait[1] == 2) {
+                     _mc->_hi_lo_wait[1] = 0;
+                     _mc->_lo = em->_opResultLo;
+                  }
                } else {
-                  stall |= (_mc->_gpr_wait[v] > 0);
+                  stall |= (_mc->_gpr_wait[v] == 1);
+                  if (_mc->_gpr_wait[v] == 2) {
+                     _mc->_gpr_wait[v] = 0;
+                     _mc->_gpr[v] = em->_opResultLo;
+                  }
                }
             }
          }
 
-         if (de->_has_float_src)
+         if (de->_has_float_src){
             stall |= (_mc->_fpr_wait[de->_src_freg] > 0);
+            // if (_mc->_fpr_wait[de->_src_freg] == 2) {
+            //    _mc->_fpr_wait[de->_src_freg] = 0;
+            //    _mc->_fpr[de->_src_freg] = em->_opResultLo;
+            // }
+         }
       }
 
       for (int i = 0; i < 32; i++) {
