@@ -1,0 +1,15 @@
+3167 1:<FETCH> 
+3167 1:<FETCH> ************************************************************
+3167 1:<FETCH> 
+3167 1:<FETCH> Number of instructions: 1992
+3167 1:<FETCH> Number of simulated cycles: 3167
+3167 1:<FETCH> CPI: 1.59
+3167 1:<FETCH> Int Conditional Branches: 408
+3167 1:<FETCH> Jump and Link: 31
+3167 1:<FETCH> Jump Register: 29
+3167 1:<FETCH> Number of fp instructions: 4
+3167 1:<FETCH> Number of loads: 319
+3167 1:<FETCH> Number of syscall emulated loads: 71
+3167 1:<FETCH> Number of stores: 130
+3167 1:<FETCH> Number of syscall emulated stores: 60
+3167 1:<FETCH> 

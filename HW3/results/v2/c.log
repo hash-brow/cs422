@@ -1,0 +1,15 @@
+3004 1:<FETCH> 
+3004 1:<FETCH> ************************************************************
+3004 1:<FETCH> 
+3004 1:<FETCH> Number of instructions: 1822
+3004 1:<FETCH> Number of simulated cycles: 3004
+3004 1:<FETCH> CPI: 1.65
+3004 1:<FETCH> Int Conditional Branches: 369
+3004 1:<FETCH> Jump and Link: 26
+3004 1:<FETCH> Jump Register: 24
+3004 1:<FETCH> Number of fp instructions: 4
+3004 1:<FETCH> Number of loads: 282
+3004 1:<FETCH> Number of syscall emulated loads: 69
+3004 1:<FETCH> Number of stores: 109
+3004 1:<FETCH> Number of syscall emulated stores: 64
+3004 1:<FETCH> 

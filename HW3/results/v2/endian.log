@@ -1,0 +1,15 @@
+2951 1:<FETCH> 
+2951 1:<FETCH> ************************************************************
+2951 1:<FETCH> 
+2951 1:<FETCH> Number of instructions: 1861
+2951 1:<FETCH> Number of simulated cycles: 2951
+2951 1:<FETCH> CPI: 1.59
+2951 1:<FETCH> Int Conditional Branches: 351
+2951 1:<FETCH> Jump and Link: 29
+2951 1:<FETCH> Jump Register: 28
+2951 1:<FETCH> Number of fp instructions: 4
+2951 1:<FETCH> Number of loads: 324
+2951 1:<FETCH> Number of syscall emulated loads: 67
+2951 1:<FETCH> Number of stores: 168
+2951 1:<FETCH> Number of syscall emulated stores: 64
+2951 1:<FETCH> 

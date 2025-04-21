@@ -1,0 +1,260 @@
+=== [v0] Running run.sh ===
+Cleaning /home/group1/Ksim/lib...
+Cleaning deps in /home/group1/Ksim/lib...
+Clobbering /home/group1/Ksim/lib...
+Cleaning /home/group1/ashish3/HW3/v0/Ksim/cpus/sync/mips-fast...
+Cleaning deps in /home/group1/ashish3/HW3/v0/Ksim/cpus/sync/mips-fast...
+Clobbering /home/group1/ashish3/HW3/v0/Ksim/cpus/sync/mips-fast...
+Cleaning /home/group1/Ksim/lib...
+Cleaning /home/group1/ashish3/HW3/v0/Ksim/cpus/sync/mips-fast...
+Building in /home/group1/Ksim/lib with options:
+     Make        : gmake
+     C compiler  : /usr/bin/gcc -O3
+     C++ compiler: /usr/bin/g++ -O3
+     CFLAGS      : -DLINUX -D_BSD_SIGNALS -I$(SIMDIR)/lib -I. -Wno-deprecated 
+
+Deps for time.c
+Deps for misc.c
+Deps for config.cc
+Deps for lex.c
+Deps for hash.c
+Deps for inthash.c
+Deps for heap.c
+Deps for pp.c
+Deps for tcp.cc
+Deps for bool.c
+Deps for prs.c
+Deps for prs_proc.cc
+Deps for contexts.c
+Deps for thread.c
+Deps for mutex.c
+Deps for count.c
+Deps for channel.c
+Deps for sim.cc
+Deps for log.cc
+Deps for mem.cc
+Deps for sim.cc
+Deps for queue.cc
+Deps for contexts.c
+Deps for tasking.cc
+Deps for log.cc
+Deps for checkpoint.cc
+Deps for mem.cc
+Deps for wakeupcall.cc
+Deps for view.c
+Compiling time.c
+Compiling misc.c
+Compiling config.cc
+Compiling lex.c
+Compiling hash.c
+Compiling inthash.c
+Compiling heap.c
+Compiling pp.c
+Compiling tcp.cc
+Compiling bool.c
+Compiling sim.cc
+Compiling queue.cc
+Compiling contexts_uf
+Compiling tasking.cc
+Compiling log.cc
+Compiling checkpoint.cc
+Compiling mem.cc
+Compiling wakeupcall.cc
+Linking sync simulation library...
+a - time.o
+a - misc.o
+a - config.o
+a - lex.o
+a - hash.o
+a - inthash.o
+a - heap.o
+a - pp.o
+a - tcp.o
+a - bool.o
+a - sim.o
+a - queue.o
+a - contexts_uf.o
+a - tasking.o
+a - log.o
+a - checkpoint.o
+a - mem.o
+a - wakeupcall.o
+Building in /home/group1/ashish3/HW3/v0/Ksim/cpus/sync/mips-fast with options:
+     Make        : gmake
+     C compiler  : /usr/bin/gcc -O3
+     C++ compiler: /usr/bin/g++ -O3
+     CFLAGS      : -DLINUX -DMIPS_FAST -DSYNCHRONOUS -D_BSD_SIGNALS 
+               -I$(SIMDIR)/lib -I. -I../../common -Wno-deprecated -include 
+               /usr/include/errno.h 
+
+Deps for mips.cc
+Deps for exec_helper.cc
+Deps for ../../common/syscall.cc
+Deps for decode.cc
+Deps for executor.cc
+Deps for memory.cc
+Deps for wb.cc
+Deps for main.cc
+Compiling main.cc
+Compiling mips.cc
+Compiling exec_helper.cc
+Compiling ../../common/syscall.cc
+Compiling decode.cc
+Compiling executor.cc
+Compiling memory.cc
+Compiling wb.cc
+Linking mipc...
+=== Running asm on /home/group1/ashish3/HW3/v0/Ksim/Bench/testcode/asm-sim/example ===
+=== Running c on /home/group1/ashish3/HW3/v0/Ksim/Bench/testcode/c-sim/example ===
+=== Running endian on /home/group1/ashish3/HW3/v0/Ksim/Bench/testcode/endian/endian ===
+=== Running factorial on /home/group1/ashish3/HW3/v0/Ksim/Bench/testcode/factorial/factorial ===
+=== Running fib on /home/group1/ashish3/HW3/v0/Ksim/Bench/testcode/fib/fib ===
+=== Running hello on /home/group1/ashish3/HW3/v0/Ksim/Bench/testcode/hello/hello ===
+=== Running host on /home/group1/ashish3/HW3/v0/Ksim/Bench/testcode/host/host ===
+=== Running ifactorial on /home/group1/ashish3/HW3/v0/Ksim/Bench/testcode/ifactorial/ifactorial ===
+=== Running ifib on /home/group1/ashish3/HW3/v0/Ksim/Bench/testcode/ifib/ifib ===
+=== Running log2 on /home/group1/ashish3/HW3/v0/Ksim/Bench/testcode/log2/log2 ===
+=== Running msort on /home/group1/ashish3/HW3/v0/Ksim/Bench/testcode/msort/msort ===
+=== Running rfib on /home/group1/ashish3/HW3/v0/Ksim/Bench/testcode/rfib/rfib ===
+=== Running towers on /home/group1/ashish3/HW3/v0/Ksim/Bench/testcode/towers/towers ===
+=== Running vadd on /home/group1/ashish3/HW3/v0/Ksim/Bench/testcode/vadd/vadd ===
+Cleaning /home/group1/Ksim/lib...
+Cleaning deps in /home/group1/Ksim/lib...
+Clobbering /home/group1/Ksim/lib...
+Cleaning /home/group1/ashish3/HW3/v0/Ksim/cpus/sync/mips-fast...
+Cleaning deps in /home/group1/ashish3/HW3/v0/Ksim/cpus/sync/mips-fast...
+Clobbering /home/group1/ashish3/HW3/v0/Ksim/cpus/sync/mips-fast...
+Cleaning /home/group1/Ksim/lib...
+Cleaning /home/group1/ashish3/HW3/v0/Ksim/cpus/sync/mips-fast...
+=== [v0] done ===
+=== [v2] Running run.sh ===
+Cleaning /home/group1/Ksim/lib...
+Cleaning deps in /home/group1/Ksim/lib...
+Clobbering /home/group1/Ksim/lib...
+Cleaning /home/group1/ashish3/HW3/v2/Ksim/cpus/sync/mips-fast...
+Cleaning deps in /home/group1/ashish3/HW3/v2/Ksim/cpus/sync/mips-fast...
+Clobbering /home/group1/ashish3/HW3/v2/Ksim/cpus/sync/mips-fast...
+Cleaning /home/group1/Ksim/lib...
+Cleaning /home/group1/ashish3/HW3/v2/Ksim/cpus/sync/mips-fast...
+Building in /home/group1/Ksim/lib with options:
+     Make        : gmake
+     C compiler  : /usr/bin/gcc -O3
+     C++ compiler: /usr/bin/g++ -O3
+     CFLAGS      : -DLINUX -D_BSD_SIGNALS -I$(SIMDIR)/lib -I. -Wno-deprecated 
+
+Deps for time.c
+Deps for misc.c
+Deps for config.cc
+Deps for lex.c
+Deps for hash.c
+Deps for inthash.c
+Deps for heap.c
+Deps for pp.c
+Deps for tcp.cc
+Deps for bool.c
+Deps for prs.c
+Deps for prs_proc.cc
+Deps for contexts.c
+Deps for thread.c
+Deps for mutex.c
+Deps for count.c
+Deps for channel.c
+Deps for sim.cc
+Deps for log.cc
+Deps for mem.cc
+Deps for sim.cc
+Deps for queue.cc
+Deps for contexts.c
+Deps for tasking.cc
+Deps for log.cc
+Deps for checkpoint.cc
+Deps for mem.cc
+Deps for wakeupcall.cc
+Deps for view.c
+Compiling time.c
+Compiling misc.c
+Compiling config.cc
+Compiling lex.c
+Compiling hash.c
+Compiling inthash.c
+Compiling heap.c
+Compiling pp.c
+Compiling tcp.cc
+Compiling bool.c
+Compiling sim.cc
+Compiling queue.cc
+Compiling contexts_uf
+Compiling tasking.cc
+Compiling log.cc
+Compiling checkpoint.cc
+Compiling mem.cc
+Compiling wakeupcall.cc
+Linking sync simulation library...
+a - time.o
+a - misc.o
+a - config.o
+a - lex.o
+a - hash.o
+a - inthash.o
+a - heap.o
+a - pp.o
+a - tcp.o
+a - bool.o
+a - sim.o
+a - queue.o
+a - contexts_uf.o
+a - tasking.o
+a - log.o
+a - checkpoint.o
+a - mem.o
+a - wakeupcall.o
+Building in /home/group1/ashish3/HW3/v2/Ksim/cpus/sync/mips-fast with options:
+     Make        : gmake
+     C compiler  : /usr/bin/gcc -O3
+     C++ compiler: /usr/bin/g++ -O3
+     CFLAGS      : -DLINUX -DMIPS_FAST -DSYNCHRONOUS -D_BSD_SIGNALS 
+               -I$(SIMDIR)/lib -I. -I../../common -Wno-deprecated -g -include 
+               /usr/include/errno.h 
+
+Deps for mips.cc
+Deps for exec_helper.cc
+Deps for ../../common/syscall.cc
+Deps for decode.cc
+Deps for executor.cc
+Deps for memory.cc
+Deps for wb.cc
+Deps for main.cc
+Compiling main.cc
+Compiling mips.cc
+Compiling exec_helper.cc
+Compiling ../../common/syscall.cc
+Compiling decode.cc
+Compiling executor.cc
+Compiling memory.cc
+Compiling wb.cc
+Linking mipc...
+=== Running asm on /home/group1/ashish3/HW3/v2/Ksim/Bench/testcode/asm-sim/example ===
+=== Running c on /home/group1/ashish3/HW3/v2/Ksim/Bench/testcode/c-sim/example ===
+=== Running endian on /home/group1/ashish3/HW3/v2/Ksim/Bench/testcode/endian/endian ===
+=== Running factorial on /home/group1/ashish3/HW3/v2/Ksim/Bench/testcode/factorial/factorial ===
+=== Running fib on /home/group1/ashish3/HW3/v2/Ksim/Bench/testcode/fib/fib ===
+=== Running hello on /home/group1/ashish3/HW3/v2/Ksim/Bench/testcode/hello/hello ===
+=== Running host on /home/group1/ashish3/HW3/v2/Ksim/Bench/testcode/host/host ===
+=== Running ifactorial on /home/group1/ashish3/HW3/v2/Ksim/Bench/testcode/ifactorial/ifactorial ===
+=== Running ifib on /home/group1/ashish3/HW3/v2/Ksim/Bench/testcode/ifib/ifib ===
+=== Running log2 on /home/group1/ashish3/HW3/v2/Ksim/Bench/testcode/log2/log2 ===
+=== Running msort on /home/group1/ashish3/HW3/v2/Ksim/Bench/testcode/msort/msort ===
+=== Running rfib on /home/group1/ashish3/HW3/v2/Ksim/Bench/testcode/rfib/rfib ===
+=== Running towers on /home/group1/ashish3/HW3/v2/Ksim/Bench/testcode/towers/towers ===
+=== Running vadd on /home/group1/ashish3/HW3/v2/Ksim/Bench/testcode/vadd/vadd ===
+Cleaning /home/group1/Ksim/lib...
+Cleaning deps in /home/group1/Ksim/lib...
+Clobbering /home/group1/Ksim/lib...
+Cleaning /home/group1/ashish3/HW3/v2/Ksim/cpus/sync/mips-fast...
+Cleaning deps in /home/group1/ashish3/HW3/v2/Ksim/cpus/sync/mips-fast...
+Clobbering /home/group1/ashish3/HW3/v2/Ksim/cpus/sync/mips-fast...
+Cleaning /home/group1/Ksim/lib...
+Cleaning /home/group1/ashish3/HW3/v2/Ksim/cpus/sync/mips-fast...
+=== [v2] done ===
+=== Running verify.sh ===
+ALL OK
