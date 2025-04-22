@@ -36756,7 +36756,7 @@
 <8083> Fetched ins 0x8fb1002c from PC 0x40e50c
 <8083> Accessing memory at address 0x7fffa9a8 for ins 0xc7b50020
 <8084> Executed ins 0x8fb00028
-<8084> Writing to freg 10, value: 0x8714968
+<8084> Writing to freg 10, value: 0x9321968
 <8084> Accessing memory at address 0x7fffa9ac for ins 0xc7b40024
 <8084> Decoded ins 0x8fb1002c
 <8084> Fetched ins 0x8fb20030 from PC 0x40e510

@@ -4185,7 +4185,7 @@
 <909> Accessing memory at address 0x7fffa9a8 for ins 0xc7b50020
 <909> Decoded ins 0x8fb00028
 <909> Fetched ins 0x8fb1002c from PC 0x40e49c
-<910> Writing to freg 10, value: 0x94a2968
+<910> Writing to freg 10, value: 0x9508968
 <910> Executed ins 0x8fb00028
 <910> Fetched ins 0x8fb20030 from PC 0x40e4a0
 <910> Accessing memory at address 0x7fffa9ac for ins 0xc7b40024

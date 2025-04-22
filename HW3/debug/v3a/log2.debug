@@ -5151,7 +5151,7 @@
 <1124> Accessing memory at address 0x7fffa9a8 for ins 0xc7b50020
 <1124> Decoded ins 0x8fb00028
 <1124> Fetched ins 0x8fb1002c from PC 0x40e4dc
-<1125> Writing to freg 10, value: 0x8bfe968
+<1125> Writing to freg 10, value: 0x890f968
 <1125> Executed ins 0x8fb00028
 <1125> Fetched ins 0x8fb20030 from PC 0x40e4e0
 <1125> Accessing memory at address 0x7fffa9ac for ins 0xc7b40024
