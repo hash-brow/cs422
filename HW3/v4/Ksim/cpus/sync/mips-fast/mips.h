@@ -161,6 +161,12 @@ public:
       unsigned hi;
    } _ex_ex;
 
+   // mem-ex bypasses
+   struct {
+      unsigned lo;
+      unsigned hi;
+   } _mem_ex;
+
 #define FPR(...) FPR_(__VA_ARGS__)
 #define FPR_(fpr, idx) (fpr[(idx)>>1].l[FP_TWIDDLE^((idx)&1)])
    union {

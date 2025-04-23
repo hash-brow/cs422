@@ -21,8 +21,29 @@ Decode::MainLoop (void)
     *    - update _mc->_de with the results
     */
 
-   // TODO: ensure delete for all new
    // TODO: this stuff is big endian right?
+   
+   struct bypass {
+      Bool src[2]; // for gpr[_src_regs[i]], i = 0, 1
+      Bool hi_lo[2]; // for _hi, _lo
+      Bool subreg; // for _subregOperand
+      Bool fpr; // for fprs
+      Bool src_dst; // for _decodedDST
+      Bool src_fdst; // for _decodedDST, but when the src is a fpr
+
+      bypass() :
+         subreg(FALSE),
+         fpr(FALSE),
+         src_dst(FALSE),
+         src_fdst(FALSE)
+      {
+         src[0] = src[1] = hi_lo[0] = hi_lo[1] = FALSE;
+      }
+
+      Bool is_bypass() {
+         return src[0] | src[1] | hi_lo[0] | hi_lo[1] | subreg | fpr;
+      }
+   };
    while (1) {
       AWAIT_P_PHI0; // @posedge
       pipe_reg_t* fd = new pipe_reg_t;
@@ -36,22 +57,8 @@ Decode::MainLoop (void)
       Bool isNewSyscall = FALSE;
       _mc->_stallFetch = FALSE;
 
-      // EX-EX Bypass
-      struct {
-         Bool src[2]; // for _src_regs[i], i = 0, 1
-         Bool hi_lo[2];
-         Bool subreg;
-         Bool fpr;
-         Bool src_dst;
-         Bool src_fdst;
-
-         Bool is_bypass() {
-            return src[0] | src[1] | hi_lo[0] | hi_lo[1] | subreg | fpr;
-         }
-      } ex_ex;
-      ex_ex.src[0] = ex_ex.src[1] = ex_ex.hi_lo[0] = 
-         ex_ex.hi_lo[1] = ex_ex.subreg = ex_ex.fpr = 
-         ex_ex.src_dst = ex_ex.src_fdst = FALSE;
+      struct bypass ex_ex;
+      struct bypass mem_ex;
 
       if (_mc->_isSyscall == TRUE) {
          // if there's an existing syscall in the pipeline, stall
@@ -71,64 +78,55 @@ Decode::MainLoop (void)
             unsigned int v = de->_src_reg[i];
             if (v) {
                if (v == HI) {
-                  if (_mc->_hi_lo_wait[0] == 2) {
-                     ex_ex.hi_lo[0] = TRUE;
-                  } else if (_mc->_hi_lo_wait[0] > 0) stall = TRUE;
+                  int u = _mc->_hi_lo_wait[0];
+                  if (u == 2) ex_ex.hi_lo[0] = TRUE;
+                  else if (u == 1) mem_ex.hi_lo[0] = TRUE;
                } else if (v == LO) {
-                  if (_mc->_hi_lo_wait[1] == 2) {
-                     ex_ex.hi_lo[1] = TRUE;
-                  } else if (_mc->_hi_lo_wait[1] > 0) stall = TRUE;
+                  int u = _mc->_hi_lo_wait[1];
+                  if (u == 2) ex_ex.hi_lo[1] = TRUE;
+                  else if (u == 1) mem_ex.hi_lo[1] = TRUE;
                } else {
-                  if (_mc->_gpr_wait[v] > 0) {
-                     if (_mc->_gpr_wait[v] == 2) {
-                        ex_ex.src[i] = TRUE;
-                     } else stall |= TRUE;
-                  }
+                  int u = _mc->_gpr_wait[v];
+                  if (u == 2) ex_ex.src[i] = TRUE;
+                  else if (u == 1) mem_ex.src[i] = TRUE;
                }
             }
          }
 
          if (de->_src_dst) {
             int v = _mc->_gpr_wait[de->_src_dst];
-            if (v == 2) {
-               ex_ex.src_dst = TRUE;
-            } else if (v > 0)
-               stall |= TRUE;
+            if (v == 2) ex_ex.src_dst = TRUE;
+            else if (v == 1) mem_ex.src_dst = TRUE;
          }
 
          if (de->_src_subreg && _mc->_gpr_wait[de->_src_subreg] > 0) {
-            if (_mc->_gpr_wait[de->_src_subreg] == 2) {
-               ex_ex.subreg = TRUE;
-            } else stall |= TRUE;
+            int v = _mc->_gpr_wait[de->_src_subreg];
+            if (v == 2) ex_ex.subreg = TRUE;
+            else if (v == 1) mem_ex.subreg = TRUE;
          }
 
          // 0 is a valid fpr, hence we require separate flags unlike gpr
          if (de->_has_float_src) {
             int v = _mc->_fpr_wait[de->_src_freg >> 1];
-            if (v == 2) {
-               ex_ex.fpr = TRUE;
-            } else if (v > 0) stall |= TRUE;
+            if (v == 2) ex_ex.fpr = TRUE;
+            else if (v == 1) mem_ex.fpr = TRUE;
          }
 
          if (de->_has_fdst) {
             int v = _mc->_fpr_wait[de->_src_fdst >> 1];
-            if (v == 2) {
-               ex_ex.src_fdst = TRUE;
-            } else if (v > 0)
-               stall |= TRUE;
+            if (v == 2) ex_ex.src_fdst = TRUE;
+            else if (v == 1) mem_ex.src_fdst = TRUE;
          }
       }
 
+      // TODO: dont stall all loads, but only when we r using the load bypass
       /*
        * no ex-ex bypass if:
-       * (1) current instruction is a store
-       * (2) when there is a load in EX
+       * (1) when there is a load in EX
        */
       if (ex_ex.is_bypass() == TRUE) {
-         // store
-         if (de->_memControl && !de->_writeREG) ;
          // load in EX
-         else if (_mc->_de->_memControl && _mc->_de->_writeREG) stall = TRUE;
+         if (_mc->_de->_memControl && _mc->_de->_writeREG) stall = TRUE;
       }
 
       for (int i = 0; i < 32; i++) {
@@ -154,6 +152,7 @@ Decode::MainLoop (void)
          // the proper decode
          _mc->Dec(fd, _mc->_de);
 
+         // EX-EX bypass
          if (ex_ex.src[0]) {
             _mc->_de->_decodedSRC1 = _mc->_ex_ex.lo;
             // btgt = _decodedSRC1 
@@ -166,6 +165,19 @@ Decode::MainLoop (void)
          if (ex_ex.fpr) _mc->_de->_decodedSRC1 = _mc->_ex_ex.lo;
          if (ex_ex.src_dst) _mc->_de->_decodedDST = _mc->_ex_ex.lo;
          if (ex_ex.src_fdst) _mc->_de->_decodedDST = _mc->_ex_ex.lo;
+
+         // MEM-EX bypass
+         if (mem_ex.src[0]) {
+            _mc->_de->_decodedSRC1 = _mc->_mem_ex.lo;
+            if (_mc->_de->_btgt_bypass) _mc->_de->_btgt = _mc->_mem_ex.lo;
+         }
+         if (mem_ex.src[1]) _mc->_de->_decodedSRC2 = _mc->_mem_ex.lo;
+         if (mem_ex.subreg) _mc->_de->_subregOperand = _mc->_mem_ex.lo;
+         if (mem_ex.hi_lo[0]) _mc->_de->_decodedSRC1 = _mc->_mem_ex.hi;
+         if (mem_ex.hi_lo[1]) _mc->_de->_decodedSRC1 = _mc->_mem_ex.lo;
+         if (mem_ex.fpr) _mc->_de->_decodedSRC1 = _mc->_mem_ex.lo;
+         if (mem_ex.src_dst) _mc->_de->_decodedDST = _mc->_mem_ex.lo;
+         if (mem_ex.src_fdst) _mc->_de->_decodedDST = _mc->_mem_ex.lo;
          
 #define SET_MAX(dest, src) if (src > dest) dest = src
          if (_mc->_de->_writeREG && _mc->_de->_decodedDST) { 

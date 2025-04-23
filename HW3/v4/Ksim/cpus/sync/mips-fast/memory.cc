@@ -26,32 +26,38 @@ Memory::MainLoop (void)
         continue;
       }
 
-      pipe_reg_t* em = new pipe_reg_t;
-      *em = *_mc->_em;
+      pipe_reg_t* mw = new pipe_reg_t;
+      *mw = *_mc->_em;
 
-      if (em->_isIllegalOp) {
+      _mc->_mem_ex.lo = mw->_opResultLo;
+      _mc->_mem_ex.hi = mw->_opResultHi;
+
+      if (mw->_isIllegalOp) {
          AWAIT_P_PHI1;
          _mc->_mw->_isIllegalOp = TRUE;
-         delete em;
+         delete mw;
          continue;
       }
 
-      if (em->_memControl) {
-         AWAIT_P_PHI1; // @negedge
+      if (mw->_memControl) {
+         mw->_memOp(_mc, _mc->_em, mw);
+
+         if (mw->_writeREG || mw->_writeFREG)
+            _mc->_mem_ex.lo = mw->_opResultLo;
          
-         *_mc->_mw = *em;
-         em->_memOp(_mc, em, _mc->_mw);
+         AWAIT_P_PHI1; // @negedge
+         *_mc->_mw = *mw;
 
 #ifdef MIPC_DEBUG
-         fprintf(_mc->_debugLog, "<%llu> Accessing memory at address %#x for ins %#x\n", SIM_TIME, em->_memory_addr_reg, em->_ins);
+         fprintf(_mc->_debugLog, "<%llu> Accessing memory at address %#x for ins %#x\n", SIM_TIME, mw->_memory_addr_reg, mw->_ins);
 #endif
       } else {
          AWAIT_P_PHI1; // @negedge
-         *_mc->_mw = *em;
+         *_mc->_mw = *mw;
 #ifdef MIPC_DEBUG
-         fprintf(_mc->_debugLog, "<%llu> Memory has nothing to do for ins %#x\n", SIM_TIME, em->_ins);
+         fprintf(_mc->_debugLog, "<%llu> Memory has nothing to do for ins %#x\n", SIM_TIME, mw->_ins);
 #endif
       }
-      delete em;
+      delete mw;
    }
 }
