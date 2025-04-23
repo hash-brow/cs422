@@ -55,8 +55,11 @@ typedef struct _pipe_reg {
       _decodedShiftAmt(0),
       _lastbdslot(0),
       _valid(FALSE),
-      _btgt_bypass(FALSE)
+      _btgt_bypass(FALSE),
+      _has_fdst(FALSE)
    {
+      _src_dst = 0;
+      _src_fdst = 0;
       _src_reg[0] = 0;
       _src_reg[1] = 0;
       _src_subreg = 0; 
@@ -79,6 +82,9 @@ typedef struct _pipe_reg {
 #define LO 1729
    unsigned int _src_reg[2];
    unsigned int _src_subreg;
+   unsigned int _src_dst;
+   unsigned int _src_fdst;
+   unsigned int _has_fdst;
    unsigned int _src_freg;
    unsigned int _has_float_src;
 
@@ -149,11 +155,14 @@ public:
     */
    unsigned int _gpr_wait[32]; 
 
-   // bypasses for _opResultLo, _opResultHi
-   unsigned _ex_ex_bypass_lo;
-   unsigned _ex_ex_bypass_hi;
-   unsigned _ex_ex_bypass_subreg;
+   // ex-ex bypasses
+   struct {
+      unsigned lo;
+      unsigned hi;
+   } _ex_ex;
 
+#define FPR(...) FPR_(__VA_ARGS__)
+#define FPR_(fpr, idx) (fpr[(idx)>>1].l[FP_TWIDDLE^((idx)&1)])
    union {
       unsigned int l[2];
       float f[2];

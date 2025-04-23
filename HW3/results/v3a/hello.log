@@ -1,15 +1,15 @@
-1897 1:<FETCH> 
-1897 1:<FETCH> ************************************************************
-1897 1:<FETCH> 
-1897 1:<FETCH> Number of instructions: 1639
-1897 1:<FETCH> Number of simulated cycles: 1897
-1897 1:<FETCH> CPI: 1.16
-1897 1:<FETCH> Int Conditional Branches: 342
-1897 1:<FETCH> Jump and Link: 23
-1897 1:<FETCH> Jump Register: 19
-1897 1:<FETCH> Number of fp instructions: 4
-1897 1:<FETCH> Number of loads: 274
-1897 1:<FETCH> Number of syscall emulated loads: 75
-1897 1:<FETCH> Number of stores: 103
-1897 1:<FETCH> Number of syscall emulated stores: 63
-1897 1:<FETCH> 
+1879 1:<FETCH> 
+1879 1:<FETCH> ************************************************************
+1879 1:<FETCH> 
+1879 1:<FETCH> Number of instructions: 1639
+1879 1:<FETCH> Number of simulated cycles: 1879
+1879 1:<FETCH> CPI: 1.15
+1879 1:<FETCH> Int Conditional Branches: 342
+1879 1:<FETCH> Jump and Link: 23
+1879 1:<FETCH> Jump Register: 19
+1879 1:<FETCH> Number of fp instructions: 4
+1879 1:<FETCH> Number of loads: 274
+1879 1:<FETCH> Number of syscall emulated loads: 75
+1879 1:<FETCH> Number of stores: 103
+1879 1:<FETCH> Number of syscall emulated stores: 63
+1879 1:<FETCH> 

@@ -41,8 +41,8 @@ Exe::MainLoop (void)
 
       if (!_mc->_de->_isSyscall) {
          _mc->_de->_opControl(_mc, _mc->_de->_ins, _mc->_de, em);
-         _mc->_ex_ex_bypass_lo = em->_opResultLo;
-         _mc->_ex_ex_bypass_hi = em->_opResultHi;
+         _mc->_ex_ex.lo = em->_opResultLo;
+         _mc->_ex_ex.hi = em->_opResultHi;
 #ifdef MIPC_DEBUG
          fprintf(_mc->_debugLog, "<%llu> Executed ins %#x\n", SIM_TIME, em->_ins);
 #endif

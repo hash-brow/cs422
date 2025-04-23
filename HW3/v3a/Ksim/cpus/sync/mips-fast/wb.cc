@@ -47,7 +47,7 @@ Writeback::MainLoop (void)
             fprintf(_mc->_debugLog, "<%llu> Writing to reg %u, value: %#x\n", SIM_TIME, mw->_decodedDST, mw->_opResultLo);
 #endif
          } else if (mw->_writeFREG) {
-            _mc->_fpr[(mw->_decodedDST)>>1].l[FP_TWIDDLE^((mw->_decodedDST)&1)] = mw->_opResultLo;
+            FPR(_mc->_fpr, mw->_decodedDST) = mw->_opResultLo;
 #ifdef MIPC_DEBUG
             fprintf(_mc->_debugLog, "<%llu> Writing to freg %u, value: %#x\n", SIM_TIME, (mw->_decodedDST)>>1, mw->_opResultLo);
 #endif

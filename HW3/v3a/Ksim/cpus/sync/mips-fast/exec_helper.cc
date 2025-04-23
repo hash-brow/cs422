@@ -33,6 +33,9 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    de->_btgt_bypass = FALSE;
    de->_valid = TRUE;
    de->_src_subreg = 0;
+   de->_src_dst = 0;
+   de->_src_fdst = 0;
+   de->_has_fdst = 0;
 
    /*
     * Data stall is 2 cycles.
@@ -577,14 +580,14 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_memOp = mem_swc1;
       de->_decodedSRC1 = _gpr[i.reg.rs];
       de->_decodedSRC2 = i.imm.imm;
-      de->_decodedDST = i.reg.rt;
+      de->_decodedDST = FPR(_fpr, i.reg.rt);
       de->_writeREG = FALSE;
       de->_writeFREG = FALSE;
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
-      de->_src_freg = i.freg.ft >> 1;
-      de->_has_float_src = 1;
+      de->_src_fdst = i.reg.rt;
+      de->_has_fdst = TRUE;
       de->_src_reg[0] = i.reg.rs;
       break;
 
@@ -593,14 +596,15 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_memOp = mem_sb;
       de->_decodedSRC1 = _gpr[i.reg.rs];
       de->_decodedSRC2 = i.imm.imm;
-      de->_decodedDST = i.reg.rt;
+      de->_decodedDST = _gpr[i.reg.rt];
       de->_writeREG = FALSE;
       de->_writeFREG = FALSE;
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
       de->_src_reg[0] = i.reg.rs;
-      de->_src_reg[1] = i.reg.rt;
+      de->_src_reg[1] = 0;
+      de->_src_dst = i.reg.rt;
       break;
 
    case 0x29:			// sh  store half word
@@ -608,14 +612,15 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_memOp = mem_sh;
       de->_decodedSRC1 = _gpr[i.reg.rs];
       de->_decodedSRC2 = i.imm.imm;
-      de->_decodedDST = i.reg.rt;
+      de->_decodedDST = _gpr[i.reg.rt];
       de->_writeREG = FALSE;
       de->_writeFREG = FALSE;
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
       de->_src_reg[0] = i.reg.rs;
-      de->_src_reg[1] = i.reg.rt;
+      de->_src_reg[1] = 0;
+      de->_src_dst = i.reg.rt;
       break;
 
    case 0x2a:			// swl
@@ -623,14 +628,15 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_memOp = mem_swl;
       de->_decodedSRC1 = _gpr[i.reg.rs];
       de->_decodedSRC2 = i.imm.imm;
-      de->_decodedDST = i.reg.rt;
+      de->_decodedDST = _gpr[i.reg.rt];
       de->_writeREG = FALSE;
       de->_writeFREG = FALSE;
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
       de->_src_reg[0] = i.imm.rs;
-      de->_src_reg[1] = i.imm.rt;
+      de->_src_reg[1] = 0;
+      de->_src_dst = i.reg.rt;
       break;
 
    case 0x2b:			// sw
@@ -638,14 +644,15 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_memOp = mem_sw;
       de->_decodedSRC1 = _gpr[i.reg.rs];
       de->_decodedSRC2 = i.imm.imm;
-      de->_decodedDST = i.reg.rt;
+      de->_decodedDST = _gpr[i.reg.rt];
       de->_writeREG = FALSE;
       de->_writeFREG = FALSE;
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
       de->_src_reg[0] = i.imm.rs;
-      de->_src_reg[1] = i.imm.rt;
+      de->_src_reg[1] = 0;
+      de->_src_dst = i.reg.rt;
       break;
 
    case 0x2e:			// swr
@@ -653,14 +660,15 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       de->_memOp = mem_swr;
       de->_decodedSRC1 = _gpr[i.reg.rs];
       de->_decodedSRC2 = i.imm.imm;
-      de->_decodedDST = i.reg.rt;
+      de->_decodedDST = _gpr[i.reg.rt];
       de->_writeREG = FALSE;
       de->_writeFREG = FALSE;
       de->_hiWPort = FALSE;
       de->_loWPort = FALSE;
       de->_memControl = TRUE;
       de->_src_reg[0] = i.imm.rs;
-      de->_src_reg[1] = i.imm.rt;
+      de->_src_reg[1] = 0;
+      de->_src_dst = i.reg.rt;
       break;
 
    case 0x11:			// floating-point
@@ -680,14 +688,14 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
 
       case 0:			// mfc1
          de->_opControl = func_mfc1;
-         de->_decodedSRC1 = _fpr[(i.freg.fs)>>1].l[FP_TWIDDLE^((i.freg.fs)&1)];
+         de->_decodedSRC1 = FPR(_fpr, i.freg.fs);
          de->_decodedDST = i.freg.ft;
          de->_writeREG = TRUE;
          de->_writeFREG = FALSE;
          de->_hiWPort = FALSE;
          de->_loWPort = FALSE;
          de->_memControl = FALSE;
-         de->_src_freg = i.freg.fs >> 1;
+         de->_src_freg = i.freg.fs;
          de->_has_float_src = 1;
 	 break;
       default:
@@ -727,7 +735,7 @@ Mipc::dumpregs (void)
 	 printf (" r%d: %08x (%ld)\n", i, _gpr[i], _gpr[i]);
       else
 	 printf ("r%d: %08x (%ld)\n", i, _gpr[i], _gpr[i]);
-   }
+   }  
    //printf ("taken: %d, bd: %d\n", _btaken, de->_bdslot);
    //printf ("target: %08x\n", _btgt);
 }
@@ -1315,19 +1323,19 @@ Mipc::mem_lwc1 (Mipc *mc, pipe_reg_t* em, pipe_reg_t* mw)
 void
 Mipc::mem_swc1 (Mipc *mc, pipe_reg_t* em, pipe_reg_t* mw)
 {
-   mc->_mem->Write(em->_memory_addr_reg & ~(LL)0x7, mc->_mem->BESetWord (em->_memory_addr_reg, mc->_mem->Read(em->_memory_addr_reg & ~(LL)0x7), mc->_fpr[em->_decodedDST>>1].l[FP_TWIDDLE^(em->_decodedDST&1)]));
+   mc->_mem->Write(em->_memory_addr_reg & ~(LL)0x7, mc->_mem->BESetWord (em->_memory_addr_reg, mc->_mem->Read(em->_memory_addr_reg & ~(LL)0x7), em->_decodedDST));
 }
 
 void
 Mipc::mem_sb (Mipc *mc, pipe_reg_t* em, pipe_reg_t* mw)
 {
-   mc->_mem->Write(em->_memory_addr_reg & ~(LL)0x7, mc->_mem->BESetByte (em->_memory_addr_reg, mc->_mem->Read(em->_memory_addr_reg & ~(LL)0x7), mc->_gpr[em->_decodedDST] & 0xff));
+   mc->_mem->Write(em->_memory_addr_reg & ~(LL)0x7, mc->_mem->BESetByte (em->_memory_addr_reg, mc->_mem->Read(em->_memory_addr_reg & ~(LL)0x7), em->_decodedDST & 0xff));
 }
 
 void
 Mipc::mem_sh (Mipc *mc, pipe_reg_t* em, pipe_reg_t* mw)
 {
-   mc->_mem->Write(em->_memory_addr_reg & ~(LL)0x7, mc->_mem->BESetHalfWord (em->_memory_addr_reg, mc->_mem->Read(em->_memory_addr_reg & ~(LL)0x7), mc->_gpr[em->_decodedDST] & 0xffff));
+   mc->_mem->Write(em->_memory_addr_reg & ~(LL)0x7, mc->_mem->BESetHalfWord (em->_memory_addr_reg, mc->_mem->Read(em->_memory_addr_reg & ~(LL)0x7), em->_decodedDST & 0xffff));
 }
 
 void
@@ -1337,14 +1345,14 @@ Mipc::mem_swl (Mipc *mc, pipe_reg_t* em, pipe_reg_t* mw)
 
    ar1 = mc->_mem->BEGetWord (em->_memory_addr_reg, mc->_mem->Read(em->_memory_addr_reg & ~(LL)0x7));
    s1 = (em->_memory_addr_reg & 3) << 3;
-   ar1 = (mc->_gpr[em->_decodedDST] >> s1) | (ar1 & ~(~(unsigned)0 >> s1));
+   ar1 = (em->_decodedDST >> s1) | (ar1 & ~(~(unsigned)0 >> s1));
    mc->_mem->Write(em->_memory_addr_reg & ~(LL)0x7, mc->_mem->BESetWord (em->_memory_addr_reg, mc->_mem->Read(em->_memory_addr_reg & ~(LL)0x7), ar1));
 }
 
 void
 Mipc::mem_sw (Mipc *mc, pipe_reg_t* em, pipe_reg_t* mw)
 {
-   mc->_mem->Write(em->_memory_addr_reg & ~(LL)0x7, mc->_mem->BESetWord (em->_memory_addr_reg, mc->_mem->Read(em->_memory_addr_reg & ~(LL)0x7), mc->_gpr[em->_decodedDST]));
+   mc->_mem->Write(em->_memory_addr_reg & ~(LL)0x7, mc->_mem->BESetWord (em->_memory_addr_reg, mc->_mem->Read(em->_memory_addr_reg & ~(LL)0x7), em->_decodedDST));
 }
 
 void
@@ -1354,7 +1362,7 @@ Mipc::mem_swr (Mipc *mc, pipe_reg_t* em, pipe_reg_t* mw)
 
    ar1 = mc->_mem->BEGetWord (em->_memory_addr_reg, mc->_mem->Read(em->_memory_addr_reg & ~(LL)0x7));
    s1 = (~em->_memory_addr_reg & 3) << 3;
-   ar1 = (mc->_gpr[em->_decodedDST] << s1) | (ar1 & ~(~0UL << s1));
+   ar1 = (em->_decodedDST << s1) | (ar1 & ~(~0UL << s1));
    mc->_mem->Write(em->_memory_addr_reg & ~(LL)0x7, mc->_mem->BESetWord (em->_memory_addr_reg, mc->_mem->Read(em->_memory_addr_reg & ~(LL)0x7), ar1));
 }
 

@@ -36,16 +36,22 @@ Decode::MainLoop (void)
       Bool isNewSyscall = FALSE;
       _mc->_stallFetch = FALSE;
 
-      // for _src_regs[i], i = 0, 1
-      Bool ex_ex_bypass[2];
-      ex_ex_bypass[0] = FALSE;
-      ex_ex_bypass[1] = FALSE;
+      // EX-EX Bypass
+      struct {
+         Bool src[2]; // for _src_regs[i], i = 0, 1
+         Bool hi_lo[2];
+         Bool subreg;
+         Bool fpr;
+         Bool src_dst;
+         Bool src_fdst;
 
-      Bool ex_ex_bypass_hi_lo[2];
-      ex_ex_bypass_hi_lo[0] = FALSE;
-      ex_ex_bypass_hi_lo[1] = FALSE;
-      
-      Bool ex_ex_bypass_subreg = FALSE;
+         Bool is_bypass() {
+            return src[0] | src[1] | hi_lo[0] | hi_lo[1] | subreg | fpr;
+         }
+      } ex_ex;
+      ex_ex.src[0] = ex_ex.src[1] = ex_ex.hi_lo[0] = 
+         ex_ex.hi_lo[1] = ex_ex.subreg = ex_ex.fpr = 
+         ex_ex.src_dst = ex_ex.src_fdst = FALSE;
 
       if (_mc->_isSyscall == TRUE) {
          // if there's an existing syscall in the pipeline, stall
@@ -66,31 +72,51 @@ Decode::MainLoop (void)
             if (v) {
                if (v == HI) {
                   if (_mc->_hi_lo_wait[0] == 2) {
-                     ex_ex_bypass_hi_lo[0] = TRUE;
+                     ex_ex.hi_lo[0] = TRUE;
                   } else if (_mc->_hi_lo_wait[0] > 0) stall = TRUE;
                } else if (v == LO) {
                   if (_mc->_hi_lo_wait[1] == 2) {
-                     ex_ex_bypass_hi_lo[1] = TRUE;
+                     ex_ex.hi_lo[1] = TRUE;
                   } else if (_mc->_hi_lo_wait[1] > 0) stall = TRUE;
                } else {
                   if (_mc->_gpr_wait[v] > 0) {
                      if (_mc->_gpr_wait[v] == 2) {
-                        // ex-ex bypass, do not bypass stores, do not bypass when there is a load in EX
-                        ex_ex_bypass[i] = TRUE;
+                        ex_ex.src[i] = TRUE;
                      } else stall |= TRUE;
                   }
                }
             }
          }
 
+         if (de->_src_dst) {
+            int v = _mc->_gpr_wait[de->_src_dst];
+            if (v == 2) {
+               ex_ex.src_dst = TRUE;
+            } else if (v > 0)
+               stall |= TRUE;
+         }
+
          if (de->_src_subreg && _mc->_gpr_wait[de->_src_subreg] > 0) {
             if (_mc->_gpr_wait[de->_src_subreg] == 2) {
-               ex_ex_bypass_subreg = TRUE;
+               ex_ex.subreg = TRUE;
             } else stall |= TRUE;
          }
 
-         if (de->_has_float_src)
-            stall |= (_mc->_fpr_wait[de->_src_freg] > 0);
+         // 0 is a valid fpr, hence we require separate flags unlike gpr
+         if (de->_has_float_src) {
+            int v = _mc->_fpr_wait[de->_src_freg >> 1];
+            if (v == 2) {
+               ex_ex.fpr = TRUE;
+            } else if (v > 0) stall |= TRUE;
+         }
+
+         if (de->_has_fdst) {
+            int v = _mc->_fpr_wait[de->_src_fdst >> 1];
+            if (v == 2) {
+               ex_ex.src_fdst = TRUE;
+            } else if (v > 0)
+               stall |= TRUE;
+         }
       }
 
       /*
@@ -98,10 +124,9 @@ Decode::MainLoop (void)
        * (1) current instruction is a store
        * (2) when there is a load in EX
        */
-      if ((ex_ex_bypass_subreg | ex_ex_bypass[0] | ex_ex_bypass[1] |
-               ex_ex_bypass_hi_lo[0] | ex_ex_bypass_hi_lo[1]) == TRUE) {
+      if (ex_ex.is_bypass() == TRUE) {
          // store
-         if (de->_memControl && !de->_writeREG) stall = TRUE;
+         if (de->_memControl && !de->_writeREG) ;
          // load in EX
          else if (_mc->_de->_memControl && _mc->_de->_writeREG) stall = TRUE;
       }
@@ -129,15 +154,18 @@ Decode::MainLoop (void)
          // the proper decode
          _mc->Dec(fd, _mc->_de);
 
-         if (ex_ex_bypass[0]) {
-            _mc->_de->_decodedSRC1 = _mc->_ex_ex_bypass_lo;
+         if (ex_ex.src[0]) {
+            _mc->_de->_decodedSRC1 = _mc->_ex_ex.lo;
             // btgt = _decodedSRC1 
-            if (_mc->_de->_btgt_bypass) _mc->_de->_btgt = _mc->_ex_ex_bypass_lo;
+            if (_mc->_de->_btgt_bypass) _mc->_de->_btgt = _mc->_ex_ex.lo;
          }
-         if (ex_ex_bypass[1]) _mc->_de->_decodedSRC2 = _mc->_ex_ex_bypass_lo;
-         if (ex_ex_bypass_subreg) _mc->_de->_subregOperand = _mc->_ex_ex_bypass_lo;
-         if (ex_ex_bypass_hi_lo[0]) _mc->_de->_decodedSRC1 = _mc->_ex_ex_bypass_hi;
-         if (ex_ex_bypass_hi_lo[1]) _mc->_de->_decodedSRC1 = _mc->_ex_ex_bypass_lo;
+         if (ex_ex.src[1]) _mc->_de->_decodedSRC2 = _mc->_ex_ex.lo;
+         if (ex_ex.subreg) _mc->_de->_subregOperand = _mc->_ex_ex.lo;
+         if (ex_ex.hi_lo[0]) _mc->_de->_decodedSRC1 = _mc->_ex_ex.hi;
+         if (ex_ex.hi_lo[1]) _mc->_de->_decodedSRC1 = _mc->_ex_ex.lo;
+         if (ex_ex.fpr) _mc->_de->_decodedSRC1 = _mc->_ex_ex.lo;
+         if (ex_ex.src_dst) _mc->_de->_decodedDST = _mc->_ex_ex.lo;
+         if (ex_ex.src_fdst) _mc->_de->_decodedDST = _mc->_ex_ex.lo;
          
 #define SET_MAX(dest, src) if (src > dest) dest = src
          if (_mc->_de->_writeREG && _mc->_de->_decodedDST) { 
@@ -176,3 +204,4 @@ Decode::MainLoop (void)
 #endif
    }
 }
+
