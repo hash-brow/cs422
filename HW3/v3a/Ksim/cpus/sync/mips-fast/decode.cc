@@ -152,6 +152,7 @@ Decode::MainLoop (void)
          else if (_mc->_de->_writeFREG)
             SET_MAX(_mc->_fpr_wait[_mc->_de->_decodedDST >> 1], _mc->_de->_dstall);
       } else if (isNewSyscall) {
+         _mc->_fetch_pc -= 4;
          _mc->Dec(fd, _mc->_de);
          fd->_ins = 0;
          _mc->_de->_is_bubble = TRUE;
