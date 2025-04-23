@@ -1,0 +1,15 @@
+2427 1:<FETCH> 
+2427 1:<FETCH> ************************************************************
+2427 1:<FETCH> 
+2427 1:<FETCH> Number of instructions: 2408
+2427 1:<FETCH> Number of simulated cycles: 2427
+2427 1:<FETCH> CPI: 1.01
+2427 1:<FETCH> Int Conditional Branches: 466
+2427 1:<FETCH> Jump and Link: 38
+2427 1:<FETCH> Jump Register: 36
+2427 1:<FETCH> Number of fp instructions: 4
+2427 1:<FETCH> Number of loads: 349
+2427 1:<FETCH> Number of syscall emulated loads: 83
+2427 1:<FETCH> Number of stores: 163
+2427 1:<FETCH> Number of syscall emulated stores: 70
+2427 1:<FETCH> 

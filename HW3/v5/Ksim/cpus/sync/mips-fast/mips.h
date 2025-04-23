@@ -88,6 +88,8 @@ typedef struct _pipe_reg {
    unsigned int _src_freg;
    unsigned int _has_float_src;
 
+   Bool _mem_mem_bypass;
+
    Bool _is_bubble;
 
    Bool _btgt_bypass;
@@ -166,6 +168,11 @@ public:
       unsigned lo;
       unsigned hi;
    } _mem_ex;
+
+   // mem-mem bypass
+   struct {
+      unsigned lo;
+   } _mem_mem;
 
 #define FPR(...) FPR_(__VA_ARGS__)
 #define FPR_(fpr, idx) (fpr[(idx)>>1].l[FP_TWIDDLE^((idx)&1)])

@@ -36,6 +36,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
    de->_src_dst = 0;
    de->_src_fdst = 0;
    de->_has_fdst = 0;
+   de->_mem_mem_bypass = FALSE;
 
    /*
     * Data stall is 2 cycles.

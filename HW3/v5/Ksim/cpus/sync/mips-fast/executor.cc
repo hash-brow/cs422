@@ -60,6 +60,10 @@ Exe::MainLoop (void)
 
       AWAIT_P_PHI1; // @negedge
       *_mc->_em = *em;
+      if (_mc->_em->_mem_mem_bypass) {
+         _mc->_em->_decodedDST = _mc->_mem_mem.lo;
+      }
+
       delete em;
    }
 }

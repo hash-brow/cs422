@@ -42,8 +42,10 @@ Memory::MainLoop (void)
       if (mw->_memControl) {
          mw->_memOp(_mc, _mc->_em, mw);
 
-         if (mw->_writeREG || mw->_writeFREG)
+         if (mw->_writeREG || mw->_writeFREG) {
             _mc->_mem_ex.lo = mw->_opResultLo;
+            _mc->_mem_mem.lo = mw->_opResultLo;
+         }
          
          AWAIT_P_PHI1; // @negedge
          *_mc->_mw = *mw;

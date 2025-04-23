@@ -4,7 +4,7 @@ set -euo pipefail
 #### CONFIGURE HERE ###########################################################
 # List all versions to compare; the first one is taken as the “baseline.”
 # Just add more entries (e.g. v1, v3…) to this list when new versions appear.
-VERSIONS=(v0 v2 v3a v4)
+VERSIONS=(v0 v5)
 OUTPUT_ROOT="./outputs"
 ###############################################################################
 

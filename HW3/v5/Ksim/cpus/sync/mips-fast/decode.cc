@@ -119,14 +119,16 @@ Decode::MainLoop (void)
          }
       }
 
-      // TODO: dont stall all loads, but only when we r using the load bypass
+      Bool mem_mem_bypass = FALSE;
+
       /*
-       * no ex-ex bypass if:
-       * (1) when there is a load in EX
+       * no ex-ex bypass if there is a load in EX, and the current instruction is not a store
        */
-      if (ex_ex.is_bypass() == TRUE) {
-         // load in EX
-         if (_mc->_de->_memControl && _mc->_de->_writeREG) stall = TRUE;
+      if (ex_ex.is_bypass() == TRUE && _mc->_de->_memControl && _mc->_de->_writeREG) {
+         if (de->_memControl && ((de->_writeREG && ex_ex.src_dst) || (de->_writeFREG && ex_ex.src_fdst))) {
+            // store with dst coming from load, we need to trigger the mem-mem bypass
+            mem_mem_bypass = TRUE;
+         } else stall = TRUE;
       }
 
       for (int i = 0; i < 32; i++) {
@@ -165,6 +167,8 @@ Decode::MainLoop (void)
          if (ex_ex.fpr) _mc->_de->_decodedSRC1 = _mc->_ex_ex.lo;
          if (ex_ex.src_dst) _mc->_de->_decodedDST = _mc->_ex_ex.lo;
          if (ex_ex.src_fdst) _mc->_de->_decodedDST = _mc->_ex_ex.lo;
+
+         if (mem_mem_bypass) _mc->_de->_mem_mem_bypass = TRUE;
 
          // MEM-EX bypass
          if (mem_ex.src[0]) {
