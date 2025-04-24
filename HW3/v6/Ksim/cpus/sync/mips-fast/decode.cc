@@ -134,8 +134,12 @@ Decode::MainLoop (void)
          } else{
              // load interlock stalls only
              stall = TRUE;
-            _mc->_num_stalls++;
+            //_mc->_num_stalls++;
          }
+      }
+
+      if (_mc->_de->_memControl && (_mc->_de->_writeREG || _mc->_de->_writeFREG)) {
+         if(fd->_ins == 0) _mc->_num_stalls++;
       }
     
       _mc->_num_mem_mem += mem_mem_bypass;    

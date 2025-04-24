@@ -1,20 +1,13 @@
-.data
-my_var: .word 0
-
        .section .text
        .globl main
        .ent main
-
 main:
 #
 # print something
-        la $7, my_var
+#
         li $4, 1      # parameter passed to printf in $a0
         la $5, lab    # load the address of the string to be printed in $a1
         li $6, 9      # length of the string in $a2
-        sw $6, 0($7)
-        lw $8, 0($7)
-        sw $8, 0($7)
         li $2, 1004   # load the system call number in $v0
         syscall
         nop
@@ -29,5 +22,3 @@ main:
 
 lab:    .ascii "hi there\n"
         .end main
-
-

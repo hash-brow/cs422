@@ -18,4 +18,4 @@
 1657 1:<FETCH> Number of mem-ex bypasses: 229
 1657 1:<FETCH> Number of mem-mem bypasses: 0
 1657 1:<FETCH> Number of syscalls: 5
-1657 1:<FETCH> Number of stalls due to load interlock: 0
+1657 1:<FETCH> Number of stalls due to load interlock: 140

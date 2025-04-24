@@ -18,4 +18,4 @@
 17122 1:<FETCH> Number of mem-ex bypasses: 843
 17122 1:<FETCH> Number of mem-mem bypasses: 0
 17122 1:<FETCH> Number of syscalls: 5
-17122 1:<FETCH> Number of stalls due to load interlock: 0
+17122 1:<FETCH> Number of stalls due to load interlock: 655
