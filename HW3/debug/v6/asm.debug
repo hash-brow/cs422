@@ -90,15 +90,15 @@
 <19> Fetched ins 0x41080 from PC 0x400fb0
 <20> Writing to reg 5, value: 0x7fffae4c
 <20> Executed ins 0x24a60004
-<20> Fetched ins 0x279c1560 from PC 0x400fb4
+<20> Fetched ins 0x279c1540 from PC 0x400fb4
 <20> Memory has nothing to do for ins 0x3c1c0042
 <20> Decoded ins 0x41080
 <21> Writing to reg 28, value: 0x420000
 <21> Executed ins 0x41080
-<21> Decoded ins 0x279c1560
+<21> Decoded ins 0x279c1540
 <21> Fetched ins 0xc23021 from PC 0x400fb8
 <21> Memory has nothing to do for ins 0x24a60004
-<22> Executed ins 0x279c1560
+<22> Executed ins 0x279c1540
 <22> Writing to reg 6, value: 0x7fffae50
 <22> Memory has nothing to do for ins 0x41080
 <22> Decoded ins 0xc23021
@@ -107,31 +107,31 @@
 <23> Executed ins 0xc23021
 <23> Decoded ins 0x3c010042
 <23> Fetched ins 0x27bdffe8 from PC 0x400fc0
-<23> Memory has nothing to do for ins 0x279c1560
+<23> Memory has nothing to do for ins 0x279c1540
 <24> Executed ins 0x3c010042
-<24> Writing to reg 28, value: 0x421560
+<24> Writing to reg 28, value: 0x421540
 <24> Memory has nothing to do for ins 0xc23021
 <24> Decoded ins 0x27bdffe8
-<24> Fetched ins 0xac269580 from PC 0x400fc4
+<24> Fetched ins 0xac269560 from PC 0x400fc4
 <25> Writing to reg 6, value: 0x7fffae54
 <25> Executed ins 0x27bdffe8
 <25> Fetched ins 0xaf85af64 from PC 0x400fc8
 <25> Memory has nothing to do for ins 0x3c010042
-<25> Decoded ins 0xac269580
+<25> Decoded ins 0xac269560
 <26> Writing to reg 1, value: 0x420000
-<26> Executed ins 0xac269580
+<26> Executed ins 0xac269560
 <26> Decoded ins 0xaf85af64
 <26> Fetched ins 0xafa00014 from PC 0x400fcc
 <26> Memory has nothing to do for ins 0x27bdffe8
 <27> Executed ins 0xaf85af64
 <27> Writing to reg 29, value: 0x7fffae30
-<27> Accessing memory at address 0x419580 for ins 0xac269580
+<27> Accessing memory at address 0x419560 for ins 0xac269560
 <27> Decoded ins 0xafa00014
 <27> Fetched ins 0xf025 from PC 0x400fd0
 <28> Executed ins 0xafa00014
 <28> Decoded ins 0xf025
 <28> Fetched ins 0xc1003e3 from PC 0x400fd4
-<28> Accessing memory at address 0x41c4c4 for ins 0xaf85af64
+<28> Accessing memory at address 0x41c4a4 for ins 0xaf85af64
 <29> Executed ins 0xf025
 <29> Accessing memory at address 0x7fffae44 for ins 0xafa00014
 <29> Decoded ins 0xc1003e3
@@ -147,27 +147,27 @@
 <31> Memory has nothing to do for ins 0xc1003e3
 <32> Executed ins 0
 <32> Writing to reg 31, value: 0x400fdc
-<32> Accessing memory at address 0x41c4c8 for ins 0xaf84af68
+<32> Accessing memory at address 0x41c4a8 for ins 0xaf84af68
 <32> Decoded ins 0x3e00008
 <32> Fetched ins 0 from PC 0x400f94
 <33> Executed ins 0x3e00008
 <33> Decoded ins 0
-<33> Fetched ins 0xc100438 from PC 0x400fdc
+<33> Fetched ins 0xc100434 from PC 0x400fdc
 <33> Memory has nothing to do for ins 0
 <34> Executed ins 0
 <34> Writing to reg 0, value: 0
 <34> Memory has nothing to do for ins 0x3e00008
-<34> Decoded ins 0xc100438
+<34> Decoded ins 0xc100434
 <34> Fetched ins 0 from PC 0x400fe0
-<35> Executed ins 0xc100438
-<35> Fetched ins 0x3e00008 from PC 0x4010e0
+<35> Executed ins 0xc100434
+<35> Fetched ins 0x3e00008 from PC 0x4010d0
 <35> Memory has nothing to do for ins 0
 <35> Decoded ins 0
 <36> Writing to reg 0, value: 0
 <36> Executed ins 0
 <36> Decoded ins 0x3e00008
-<36> Fetched ins 0 from PC 0x4010e4
-<36> Memory has nothing to do for ins 0xc100438
+<36> Fetched ins 0 from PC 0x4010d4
+<36> Memory has nothing to do for ins 0xc100434
 <37> Executed ins 0x3e00008
 <37> Writing to reg 31, value: 0x400fe4
 <37> Memory has nothing to do for ins 0
@@ -184,117 +184,102 @@
 <39> Fetched ins 0x8f85af64 from PC 0x400fec
 <40> Writing to reg 0, value: 0
 <40> Executed ins 0x8f84af68
-<40> Fetched ins 0x8cc69580 from PC 0x400ff0
+<40> Fetched ins 0x8cc69560 from PC 0x400ff0
 <40> Memory has nothing to do for ins 0x3c060042
 <40> Decoded ins 0x8f85af64
 <41> Writing to reg 6, value: 0x420000
 <41> Executed ins 0x8f85af64
-<41> Decoded ins 0x8cc69580
+<41> Decoded ins 0x8cc69560
 <41> Fetched ins 0xc100408 from PC 0x400ff4
-<41> Accessing memory at address 0x41c4c8 for ins 0x8f84af68
-<42> Executed ins 0x8cc69580
+<41> Accessing memory at address 0x41c4a8 for ins 0x8f84af68
+<42> Executed ins 0x8cc69560
 <42> Writing to reg 4, value: 0x1
-<42> Accessing memory at address 0x41c4c4 for ins 0x8f85af64
+<42> Accessing memory at address 0x41c4a4 for ins 0x8f85af64
 <42> Decoded ins 0xc100408
 <42> Fetched ins 0 from PC 0x400ff8
 <43> Writing to reg 5, value: 0x7fffae4c
 <43> Executed ins 0xc100408
 <43> Decoded ins 0
-<43> Fetched ins 0x3c070042 from PC 0x401020
-<43> Accessing memory at address 0x419580 for ins 0x8cc69580
+<43> Fetched ins 0x24040001 from PC 0x401020
+<43> Accessing memory at address 0x419560 for ins 0x8cc69560
 <44> Executed ins 0
 <44> Writing to reg 6, value: 0x7fffae54
 <44> Memory has nothing to do for ins 0xc100408
-<44> Decoded ins 0x3c070042
-<44> Fetched ins 0x24e78f90 from PC 0x401024
+<44> Decoded ins 0x24040001
+<44> Fetched ins 0x3c050040 from PC 0x401024
 <45> Writing to reg 31, value: 0x400ffc
-<45> Executed ins 0x3c070042
-<45> Fetched ins 0x24040001 from PC 0x401028
+<45> Executed ins 0x24040001
+<45> Fetched ins 0x24a5104c from PC 0x401028
 <45> Memory has nothing to do for ins 0
-<45> Decoded ins 0x24e78f90
+<45> Decoded ins 0x3c050040
 <46> Writing to reg 0, value: 0
-<46> Executed ins 0x24e78f90
-<46> Decoded ins 0x24040001
-<46> Fetched ins 0x3c050040 from PC 0x40102c
-<46> Memory has nothing to do for ins 0x3c070042
-<47> Executed ins 0x24040001
-<47> Writing to reg 7, value: 0x420000
-<47> Memory has nothing to do for ins 0x24e78f90
-<47> Decoded ins 0x3c050040
-<47> Fetched ins 0x24a51058 from PC 0x401030
-<48> Writing to reg 7, value: 0x418f90
-<48> Executed ins 0x3c050040
-<48> Decoded ins 0x24a51058
-<48> Fetched ins 0x24060009 from PC 0x401034
-<48> Memory has nothing to do for ins 0x24040001
-<49> Executed ins 0x24a51058
-<49> Writing to reg 4, value: 0x1
-<49> Memory has nothing to do for ins 0x3c050040
-<49> Decoded ins 0x24060009
-<49> Fetched ins 0xace60000 from PC 0x401038
-<50> Writing to reg 5, value: 0x400000
-<50> Executed ins 0x24060009
-<50> Fetched ins 0x240203ec from PC 0x40103c
-<50> Memory has nothing to do for ins 0x24a51058
-<50> Decoded ins 0xace60000
-<51> Writing to reg 5, value: 0x401058
-<51> Executed ins 0xace60000
-<51> Decoded ins 0x240203ec
-<51> Fetched ins 0xc from PC 0x401040
-<51> Memory has nothing to do for ins 0x24060009
-<52> Executed ins 0x240203ec
-<52> Writing to reg 6, value: 0x9
-<52> Accessing memory at address 0x418f90 for ins 0xace60000
-<52> Decoded ins 0xc
-<53> Deferring execution of syscall ins 0xc
+<46> Executed ins 0x3c050040
+<46> Decoded ins 0x24a5104c
+<46> Fetched ins 0x24060009 from PC 0x40102c
+<46> Memory has nothing to do for ins 0x24040001
+<47> Executed ins 0x24a5104c
+<47> Writing to reg 4, value: 0x1
+<47> Memory has nothing to do for ins 0x3c050040
+<47> Decoded ins 0x24060009
+<47> Fetched ins 0x240203ec from PC 0x401030
+<48> Writing to reg 5, value: 0x400000
+<48> Executed ins 0x24060009
+<48> Decoded ins 0x240203ec
+<48> Fetched ins 0xc from PC 0x401034
+<48> Memory has nothing to do for ins 0x24a5104c
+<49> Executed ins 0x240203ec
+<49> Writing to reg 5, value: 0x40104c
+<49> Memory has nothing to do for ins 0x24060009
+<49> Decoded ins 0xc
+<50> Writing to reg 6, value: 0x9
+<50> Deferring execution of syscall ins 0xc
+<50> Memory has nothing to do for ins 0x240203ec
+<50> Decoded ins 0
+<51> Writing to reg 2, value: 0x3ec
+<51> Executed ins 0
+<51> Decoded ins 0
+<51> Memory has nothing to do for ins 0xc
+<52> Executed ins 0
+<52> SYSCALL! Trapping to emulation layer at PC 0x401034
+<52> Memory has nothing to do for ins 0
+<52> Decoded ins 0
+<53> Writing to reg 0, value: 0
+<53> Executed ins 0
 <53> Decoded ins 0
-<53> Memory has nothing to do for ins 0x240203ec
+<53> Fetched ins 0 from PC 0x401038
+<53> Memory has nothing to do for ins 0
 <54> Executed ins 0
-<54> Writing to reg 2, value: 0x3ec
-<54> Memory has nothing to do for ins 0xc
+<54> Writing to reg 0, value: 0
+<54> Memory has nothing to do for ins 0
 <54> Decoded ins 0
+<54> Fetched ins 0x2404000a from PC 0x40103c
+<55> Writing to reg 0, value: 0
 <55> Executed ins 0
-<55> SYSCALL! Trapping to emulation layer at PC 0x401040
+<55> Fetched ins 0x240203e9 from PC 0x401040
 <55> Memory has nothing to do for ins 0
-<55> Decoded ins 0
+<55> Decoded ins 0x2404000a
 <56> Writing to reg 0, value: 0
-<56> Executed ins 0
-<56> Decoded ins 0
-<56> Fetched ins 0 from PC 0x401044
+<56> Executed ins 0x2404000a
+<56> Decoded ins 0x240203e9
+<56> Fetched ins 0xc from PC 0x401044
 <56> Memory has nothing to do for ins 0
-<57> Executed ins 0
+<57> Executed ins 0x240203e9
 <57> Writing to reg 0, value: 0
-<57> Memory has nothing to do for ins 0
-<57> Decoded ins 0
-<57> Fetched ins 0x2404000a from PC 0x401048
-<58> Writing to reg 0, value: 0
-<58> Executed ins 0
-<58> Decoded ins 0x2404000a
-<58> Fetched ins 0x240203e9 from PC 0x40104c
-<58> Memory has nothing to do for ins 0
-<59> Executed ins 0x2404000a
-<59> Writing to reg 0, value: 0
-<59> Memory has nothing to do for ins 0
-<59> Decoded ins 0x240203e9
-<59> Fetched ins 0xc from PC 0x401050
-<60> Writing to reg 0, value: 0
-<60> Executed ins 0x240203e9
-<60> Memory has nothing to do for ins 0x2404000a
-<60> Decoded ins 0xc
-<61> Writing to reg 4, value: 0xa
-<61> Deferring execution of syscall ins 0xc
+<57> Memory has nothing to do for ins 0x2404000a
+<57> Decoded ins 0xc
+<58> Writing to reg 4, value: 0xa
+<58> Deferring execution of syscall ins 0xc
+<58> Decoded ins 0
+<58> Memory has nothing to do for ins 0x240203e9
+<59> Executed ins 0
+<59> Writing to reg 2, value: 0x3e9
+<59> Memory has nothing to do for ins 0xc
+<59> Decoded ins 0
+<60> Executed ins 0
+<60> SYSCALL! Trapping to emulation layer at PC 0x401044
+<60> Memory has nothing to do for ins 0
+<60> Decoded ins 0
+<61> Writing to reg 0, value: 0
+<61> Executed ins 0
 <61> Decoded ins 0
-<61> Memory has nothing to do for ins 0x240203e9
-<62> Executed ins 0
-<62> Writing to reg 2, value: 0x3e9
-<62> Memory has nothing to do for ins 0xc
-<62> Decoded ins 0
-<63> Executed ins 0
-<63> Decoded ins 0
-<63> SYSCALL! Trapping to emulation layer at PC 0x401050
-<63> Memory has nothing to do for ins 0
-<64> Executed ins 0
-<64> Writing to reg 0, value: 0
-<64> Memory has nothing to do for ins 0
-<64> Decoded ins 0
-<64> Fetched ins 0 from PC 0x401054
+<61> Fetched ins 0 from PC 0x401048

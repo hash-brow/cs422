@@ -7,7 +7,7 @@
 14615 1:<FETCH> Int Conditional Branches: 2863
 14615 1:<FETCH> Jump and Link: 214
 14615 1:<FETCH> Jump Register: 232
-14615 1:<FETCH> Number of fp instructions: 76
+14615 1:<FETCH> Number of fp instructions: 38
 14615 1:<FETCH> Number of loads: 2675
 14615 1:<FETCH> Number of syscall emulated loads: 334
 14615 1:<FETCH> Number of stores: 1422

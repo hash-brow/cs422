@@ -1,0 +1,15 @@
+12715 1:<FETCH> 
+12715 1:<FETCH> ************************************************************
+12715 1:<FETCH> 
+12715 1:<FETCH> Number of instructions: 7454
+12715 1:<FETCH> Number of simulated cycles: 12715
+12715 1:<FETCH> CPI: 1.71
+12715 1:<FETCH> Int Conditional Branches: 1327
+12715 1:<FETCH> Jump and Link: 105
+12715 1:<FETCH> Jump Register: 114
+12715 1:<FETCH> Number of fp instructions: 56
+12715 1:<FETCH> Number of loads: 1205
+12715 1:<FETCH> Number of syscall emulated loads: 98
+12715 1:<FETCH> Number of stores: 714
+12715 1:<FETCH> Number of syscall emulated stores: 60
+12715 1:<FETCH> 

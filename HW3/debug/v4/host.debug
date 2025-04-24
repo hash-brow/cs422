@@ -6650,11 +6650,11 @@
 <1426> Fetched ins 0x8fb1002c from PC 0x40e9bc
 <1426> Accessing memory at address 0x7fffa8f0 for ins 0xc7b50020
 <1427> Executed ins 0x8fb00028
-<1427> Writing to freg 10, value: 0x8340b70
+<1427> Writing to freg 10, value: 0x8b72b70
 <1427> Accessing memory at address 0x7fffa8f4 for ins 0xc7b40024
 <1427> Decoded ins 0x8fb1002c
 <1427> Fetched ins 0x8fb20030 from PC 0x40e9c0
-<1428> Writing to freg 10, value: 0x8340968
+<1428> Writing to freg 10, value: 0x8b72968
 <1428> Executed ins 0x8fb1002c
 <1428> Decoded ins 0x8fb20030
 <1428> Fetched ins 0x8fb30034 from PC 0x40e9c4
@@ -9897,13 +9897,13 @@
 <2120> Fetched ins 0x8fb1002c from PC 0x40e9bc
 <2120> Accessing memory at address 0x7fffa8f0 for ins 0xc7b50020
 <2120> Decoded ins 0x8fb00028
-<2121> Writing to freg 10, value: 0x8340b70
+<2121> Writing to freg 10, value: 0x8b72b70
 <2121> Executed ins 0x8fb00028
 <2121> Decoded ins 0x8fb1002c
 <2121> Fetched ins 0x8fb20030 from PC 0x40e9c0
 <2121> Accessing memory at address 0x7fffa8f4 for ins 0xc7b40024
 <2122> Executed ins 0x8fb1002c
-<2122> Writing to freg 10, value: 0x8340968
+<2122> Writing to freg 10, value: 0x8b72968
 <2122> Accessing memory at address 0x7fffa8f8 for ins 0x8fb00028
 <2122> Decoded ins 0x8fb20030
 <2122> Fetched ins 0x8fb30034 from PC 0x40e9c4
@@ -14571,11 +14571,11 @@
 <3118> Fetched ins 0x8fb1002c from PC 0x40e9bc
 <3118> Accessing memory at address 0x7fffa8f0 for ins 0xc7b50020
 <3119> Executed ins 0x8fb00028
-<3119> Writing to freg 10, value: 0x8340b70
+<3119> Writing to freg 10, value: 0x8b72b70
 <3119> Accessing memory at address 0x7fffa8f4 for ins 0xc7b40024
 <3119> Decoded ins 0x8fb1002c
 <3119> Fetched ins 0x8fb20030 from PC 0x40e9c0
-<3120> Writing to freg 10, value: 0x8340968
+<3120> Writing to freg 10, value: 0x8b72968
 <3120> Executed ins 0x8fb1002c
 <3120> Fetched ins 0x8fb30034 from PC 0x40e9c4
 <3120> Accessing memory at address 0x7fffa8f8 for ins 0x8fb00028
@@ -17101,13 +17101,13 @@
 <3660> Fetched ins 0x8fb1002c from PC 0x40e9bc
 <3660> Accessing memory at address 0x7fffa8f8 for ins 0xc7b50020
 <3660> Decoded ins 0x8fb00028
-<3661> Writing to freg 10, value: 0x8340b70
+<3661> Writing to freg 10, value: 0x8b72b70
 <3661> Executed ins 0x8fb00028
 <3661> Decoded ins 0x8fb1002c
 <3661> Fetched ins 0x8fb20030 from PC 0x40e9c0
 <3661> Accessing memory at address 0x7fffa8fc for ins 0xc7b40024
 <3662> Executed ins 0x8fb1002c
-<3662> Writing to freg 10, value: 0x8340968
+<3662> Writing to freg 10, value: 0x8b72968
 <3662> Accessing memory at address 0x7fffa900 for ins 0x8fb00028
 <3662> Decoded ins 0x8fb20030
 <3662> Fetched ins 0x8fb30034 from PC 0x40e9c4
@@ -18453,12 +18453,12 @@
 <3949> Accessing memory at address 0x7fffa8f8 for ins 0xc7b50020
 <3949> Decoded ins 0x8fb00028
 <3949> Fetched ins 0x8fb1002c from PC 0x40e9bc
-<3950> Writing to freg 10, value: 0x8340b70
+<3950> Writing to freg 10, value: 0x8b72b70
 <3950> Executed ins 0x8fb00028
 <3950> Fetched ins 0x8fb20030 from PC 0x40e9c0
 <3950> Accessing memory at address 0x7fffa8fc for ins 0xc7b40024
 <3950> Decoded ins 0x8fb1002c
-<3951> Writing to freg 10, value: 0x8340968
+<3951> Writing to freg 10, value: 0x8b72968
 <3951> Executed ins 0x8fb1002c
 <3951> Decoded ins 0x8fb20030
 <3951> Fetched ins 0x8fb30034 from PC 0x40e9c4
@@ -22862,13 +22862,13 @@
 <4890> Fetched ins 0x8fb1002c from PC 0x40e9bc
 <4890> Accessing memory at address 0x7fffa8f8 for ins 0xc7b50020
 <4890> Decoded ins 0x8fb00028
-<4891> Writing to freg 10, value: 0x8340b70
+<4891> Writing to freg 10, value: 0x8b72b70
 <4891> Executed ins 0x8fb00028
 <4891> Decoded ins 0x8fb1002c
 <4891> Fetched ins 0x8fb20030 from PC 0x40e9c0
 <4891> Accessing memory at address 0x7fffa8fc for ins 0xc7b40024
 <4892> Executed ins 0x8fb1002c
-<4892> Writing to freg 10, value: 0x8340968
+<4892> Writing to freg 10, value: 0x8b72968
 <4892> Accessing memory at address 0x7fffa900 for ins 0x8fb00028
 <4892> Decoded ins 0x8fb20030
 <4892> Fetched ins 0x8fb30034 from PC 0x40e9c4
@@ -26889,11 +26889,11 @@
 <5748> Fetched ins 0x8fb1002c from PC 0x40e9bc
 <5748> Accessing memory at address 0x7fffa8f0 for ins 0xc7b50020
 <5749> Executed ins 0x8fb00028
-<5749> Writing to freg 10, value: 0x8340b70
+<5749> Writing to freg 10, value: 0x8b72b70
 <5749> Accessing memory at address 0x7fffa8f4 for ins 0xc7b40024
 <5749> Decoded ins 0x8fb1002c
 <5749> Fetched ins 0x8fb20030 from PC 0x40e9c0
-<5750> Writing to freg 10, value: 0x8340968
+<5750> Writing to freg 10, value: 0x8b72968
 <5750> Executed ins 0x8fb1002c
 <5750> Fetched ins 0x8fb30034 from PC 0x40e9c4
 <5750> Accessing memory at address 0x7fffa8f8 for ins 0x8fb00028
@@ -28245,11 +28245,11 @@
 <6038> Fetched ins 0x8fb1002c from PC 0x40e9bc
 <6038> Accessing memory at address 0x7fffa8f8 for ins 0xc7b50020
 <6039> Executed ins 0x8fb00028
-<6039> Writing to freg 10, value: 0x8340b70
+<6039> Writing to freg 10, value: 0x8b72b70
 <6039> Accessing memory at address 0x7fffa8fc for ins 0xc7b40024
 <6039> Decoded ins 0x8fb1002c
 <6039> Fetched ins 0x8fb20030 from PC 0x40e9c0
-<6040> Writing to freg 10, value: 0x8340968
+<6040> Writing to freg 10, value: 0x8b72968
 <6040> Executed ins 0x8fb1002c
 <6040> Fetched ins 0x8fb30034 from PC 0x40e9c4
 <6040> Accessing memory at address 0x7fffa900 for ins 0x8fb00028
@@ -32584,12 +32584,12 @@
 <6964> Accessing memory at address 0x7fffa8f8 for ins 0xc7b50020
 <6964> Decoded ins 0x8fb00028
 <6964> Fetched ins 0x8fb1002c from PC 0x40e9bc
-<6965> Writing to freg 10, value: 0x8340b70
+<6965> Writing to freg 10, value: 0x8b72b70
 <6965> Executed ins 0x8fb00028
 <6965> Fetched ins 0x8fb20030 from PC 0x40e9c0
 <6965> Accessing memory at address 0x7fffa8fc for ins 0xc7b40024
 <6965> Decoded ins 0x8fb1002c
-<6966> Writing to freg 10, value: 0x8340968
+<6966> Writing to freg 10, value: 0x8b72968
 <6966> Executed ins 0x8fb1002c
 <6966> Decoded ins 0x8fb20030
 <6966> Fetched ins 0x8fb30034 from PC 0x40e9c4
@@ -36610,13 +36610,13 @@
 <7822> Accessing memory at address 0x7fffa8f0 for ins 0xc7b50020
 <7822> Decoded ins 0x8fb00028
 <7822> Fetched ins 0x8fb1002c from PC 0x40e9bc
-<7823> Writing to freg 10, value: 0x8340b70
+<7823> Writing to freg 10, value: 0x8b72b70
 <7823> Executed ins 0x8fb00028
 <7823> Decoded ins 0x8fb1002c
 <7823> Fetched ins 0x8fb20030 from PC 0x40e9c0
 <7823> Accessing memory at address 0x7fffa8f4 for ins 0xc7b40024
 <7824> Executed ins 0x8fb1002c
-<7824> Writing to freg 10, value: 0x8340968
+<7824> Writing to freg 10, value: 0x8b72968
 <7824> Accessing memory at address 0x7fffa8f8 for ins 0x8fb00028
 <7824> Decoded ins 0x8fb20030
 <7824> Fetched ins 0x8fb30034 from PC 0x40e9c4
@@ -37966,13 +37966,13 @@
 <8112> Accessing memory at address 0x7fffa8f8 for ins 0xc7b50020
 <8112> Decoded ins 0x8fb00028
 <8112> Fetched ins 0x8fb1002c from PC 0x40e9bc
-<8113> Writing to freg 10, value: 0x8340b70
+<8113> Writing to freg 10, value: 0x8b72b70
 <8113> Executed ins 0x8fb00028
 <8113> Decoded ins 0x8fb1002c
 <8113> Fetched ins 0x8fb20030 from PC 0x40e9c0
 <8113> Accessing memory at address 0x7fffa8fc for ins 0xc7b40024
 <8114> Executed ins 0x8fb1002c
-<8114> Writing to freg 10, value: 0x8340968
+<8114> Writing to freg 10, value: 0x8b72968
 <8114> Accessing memory at address 0x7fffa900 for ins 0x8fb00028
 <8114> Decoded ins 0x8fb20030
 <8114> Fetched ins 0x8fb30034 from PC 0x40e9c4
@@ -41778,13 +41778,13 @@
 <8927> Accessing memory at address 0x7fffa8f8 for ins 0xc7b50020
 <8927> Decoded ins 0x8fb00028
 <8927> Fetched ins 0x8fb1002c from PC 0x40e9bc
-<8928> Writing to freg 10, value: 0x8340b70
+<8928> Writing to freg 10, value: 0x8b72b70
 <8928> Executed ins 0x8fb00028
 <8928> Decoded ins 0x8fb1002c
 <8928> Fetched ins 0x8fb20030 from PC 0x40e9c0
 <8928> Accessing memory at address 0x7fffa8fc for ins 0xc7b40024
 <8929> Executed ins 0x8fb1002c
-<8929> Writing to freg 10, value: 0x8340968
+<8929> Writing to freg 10, value: 0x8b72968
 <8929> Accessing memory at address 0x7fffa900 for ins 0x8fb00028
 <8929> Decoded ins 0x8fb20030
 <8929> Fetched ins 0x8fb30034 from PC 0x40e9c4
@@ -45396,13 +45396,13 @@
 <9700> Fetched ins 0x8fb1002c from PC 0x40e9bc
 <9700> Accessing memory at address 0x7fffa8f0 for ins 0xc7b50020
 <9700> Decoded ins 0x8fb00028
-<9701> Writing to freg 10, value: 0x8340b70
+<9701> Writing to freg 10, value: 0x8b72b70
 <9701> Executed ins 0x8fb00028
 <9701> Decoded ins 0x8fb1002c
 <9701> Fetched ins 0x8fb20030 from PC 0x40e9c0
 <9701> Accessing memory at address 0x7fffa8f4 for ins 0xc7b40024
 <9702> Executed ins 0x8fb1002c
-<9702> Writing to freg 10, value: 0x8340968
+<9702> Writing to freg 10, value: 0x8b72968
 <9702> Accessing memory at address 0x7fffa8f8 for ins 0x8fb00028
 <9702> Decoded ins 0x8fb20030
 <9702> Fetched ins 0x8fb30034 from PC 0x40e9c4
@@ -46752,13 +46752,13 @@
 <9990> Fetched ins 0x8fb1002c from PC 0x40e9bc
 <9990> Accessing memory at address 0x7fffa8f8 for ins 0xc7b50020
 <9990> Decoded ins 0x8fb00028
-<9991> Writing to freg 10, value: 0x8340b70
+<9991> Writing to freg 10, value: 0x8b72b70
 <9991> Executed ins 0x8fb00028
 <9991> Decoded ins 0x8fb1002c
 <9991> Fetched ins 0x8fb20030 from PC 0x40e9c0
 <9991> Accessing memory at address 0x7fffa8fc for ins 0xc7b40024
 <9992> Executed ins 0x8fb1002c
-<9992> Writing to freg 10, value: 0x8340968
+<9992> Writing to freg 10, value: 0x8b72968
 <9992> Accessing memory at address 0x7fffa900 for ins 0x8fb00028
 <9992> Decoded ins 0x8fb20030
 <9992> Fetched ins 0x8fb30034 from PC 0x40e9c4
@@ -50495,13 +50495,13 @@
 <10790> Fetched ins 0x8fb1002c from PC 0x40e9bc
 <10790> Accessing memory at address 0x7fffa8f8 for ins 0xc7b50020
 <10790> Decoded ins 0x8fb00028
-<10791> Writing to freg 10, value: 0x8340b70
+<10791> Writing to freg 10, value: 0x8b72b70
 <10791> Executed ins 0x8fb00028
 <10791> Decoded ins 0x8fb1002c
 <10791> Fetched ins 0x8fb20030 from PC 0x40e9c0
 <10791> Accessing memory at address 0x7fffa8fc for ins 0xc7b40024
 <10792> Executed ins 0x8fb1002c
-<10792> Writing to freg 10, value: 0x8340968
+<10792> Writing to freg 10, value: 0x8b72968
 <10792> Accessing memory at address 0x7fffa900 for ins 0x8fb00028
 <10792> Decoded ins 0x8fb20030
 <10792> Fetched ins 0x8fb30034 from PC 0x40e9c4
@@ -54114,11 +54114,11 @@
 <11563> Fetched ins 0x8fb1002c from PC 0x40e9bc
 <11563> Accessing memory at address 0x7fffa8f0 for ins 0xc7b50020
 <11564> Executed ins 0x8fb00028
-<11564> Writing to freg 10, value: 0x8340b70
+<11564> Writing to freg 10, value: 0x8b72b70
 <11564> Accessing memory at address 0x7fffa8f4 for ins 0xc7b40024
 <11564> Decoded ins 0x8fb1002c
 <11564> Fetched ins 0x8fb20030 from PC 0x40e9c0
-<11565> Writing to freg 10, value: 0x8340968
+<11565> Writing to freg 10, value: 0x8b72968
 <11565> Executed ins 0x8fb1002c
 <11565> Fetched ins 0x8fb30034 from PC 0x40e9c4
 <11565> Accessing memory at address 0x7fffa8f8 for ins 0x8fb00028
@@ -55470,11 +55470,11 @@
 <11853> Fetched ins 0x8fb1002c from PC 0x40e9bc
 <11853> Accessing memory at address 0x7fffa8f8 for ins 0xc7b50020
 <11854> Executed ins 0x8fb00028
-<11854> Writing to freg 10, value: 0x8340b70
+<11854> Writing to freg 10, value: 0x8b72b70
 <11854> Accessing memory at address 0x7fffa8fc for ins 0xc7b40024
 <11854> Decoded ins 0x8fb1002c
 <11854> Fetched ins 0x8fb20030 from PC 0x40e9c0
-<11855> Writing to freg 10, value: 0x8340968
+<11855> Writing to freg 10, value: 0x8b72968
 <11855> Executed ins 0x8fb1002c
 <11855> Fetched ins 0x8fb30034 from PC 0x40e9c4
 <11855> Accessing memory at address 0x7fffa900 for ins 0x8fb00028
@@ -59144,11 +59144,11 @@
 <12638> Fetched ins 0x8fb1002c from PC 0x40e9bc
 <12638> Accessing memory at address 0x7fffa8f8 for ins 0xc7b50020
 <12639> Executed ins 0x8fb00028
-<12639> Writing to freg 10, value: 0x8340b70
+<12639> Writing to freg 10, value: 0x8b72b70
 <12639> Accessing memory at address 0x7fffa8fc for ins 0xc7b40024
 <12639> Decoded ins 0x8fb1002c
 <12639> Fetched ins 0x8fb20030 from PC 0x40e9c0
-<12640> Writing to freg 10, value: 0x8340968
+<12640> Writing to freg 10, value: 0x8b72968
 <12640> Executed ins 0x8fb1002c
 <12640> Fetched ins 0x8fb30034 from PC 0x40e9c4
 <12640> Accessing memory at address 0x7fffa900 for ins 0x8fb00028
@@ -62762,11 +62762,11 @@
 <13411> Fetched ins 0x8fb1002c from PC 0x40e9bc
 <13411> Accessing memory at address 0x7fffa8f0 for ins 0xc7b50020
 <13412> Executed ins 0x8fb00028
-<13412> Writing to freg 10, value: 0x8340b70
+<13412> Writing to freg 10, value: 0x8b72b70
 <13412> Accessing memory at address 0x7fffa8f4 for ins 0xc7b40024
 <13412> Decoded ins 0x8fb1002c
 <13412> Fetched ins 0x8fb20030 from PC 0x40e9c0
-<13413> Writing to freg 10, value: 0x8340968
+<13413> Writing to freg 10, value: 0x8b72968
 <13413> Executed ins 0x8fb1002c
 <13413> Decoded ins 0x8fb20030
 <13413> Fetched ins 0x8fb30034 from PC 0x40e9c4

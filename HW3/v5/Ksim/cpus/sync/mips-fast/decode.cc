@@ -14,7 +14,7 @@ Decode::MainLoop (void)
     * +ve half:
     *    - make a local copy of _mc->_fd
     *    - do a "partial" decode to check if we are decoding a sys call
-    *      or an instr. with a data hazard; if so, stall
+    *      or an instr. with a data hazard; if so, stall/bypass
     * -ve half:
     *    - if no stall, decode the instruction completely. doing this in the -ve
     *      half allows us to read values written by WB in the +ve half.

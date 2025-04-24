@@ -5991,7 +5991,7 @@
 <1270> Fetched ins 0x8fb20030 from PC 0x40e4c0
 <1270> Accessing memory at address 0x7fffa9ac for ins 0xc7b40024
 <1270> Decoded ins 0x8fb1002c
-<1271> Writing to freg 10, value: 0x8af7b70
+<1271> Writing to freg 10, value: 0x91e4b70
 <1271> Executed ins 0x8fb1002c
 <1271> Decoded ins 0x8fb20030
 <1271> Fetched ins 0x8fb30034 from PC 0x40e4c4

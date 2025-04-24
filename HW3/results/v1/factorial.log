@@ -1,0 +1,15 @@
+4384 1:<FETCH> 
+4384 1:<FETCH> ************************************************************
+4384 1:<FETCH> 
+4384 1:<FETCH> Number of instructions: 2408
+4384 1:<FETCH> Number of simulated cycles: 4384
+4384 1:<FETCH> CPI: 1.82
+4384 1:<FETCH> Int Conditional Branches: 466
+4384 1:<FETCH> Jump and Link: 38
+4384 1:<FETCH> Jump Register: 36
+4384 1:<FETCH> Number of fp instructions: 4
+4384 1:<FETCH> Number of loads: 349
+4384 1:<FETCH> Number of syscall emulated loads: 83
+4384 1:<FETCH> Number of stores: 163
+4384 1:<FETCH> Number of syscall emulated stores: 70
+4384 1:<FETCH> 

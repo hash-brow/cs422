@@ -10,14 +10,6 @@ Memory::~Memory (void) {}
 void
 Memory::MainLoop (void)
 {
-   /*
-    * +ve half:
-    *    - reads _mc->_em into local registers
-    * -ve half:
-    *    - performs memory op, if one exists
-    *    - copies results to _mc->_mw
-    */
-
    while (1) {
       AWAIT_P_PHI0; // @posedge
       

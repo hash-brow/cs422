@@ -1,0 +1,15 @@
+32916 1:<FETCH> 
+32916 1:<FETCH> ************************************************************
+32916 1:<FETCH> 
+32916 1:<FETCH> Number of instructions: 17104
+32916 1:<FETCH> Number of simulated cycles: 32916
+32916 1:<FETCH> CPI: 1.92
+32916 1:<FETCH> Int Conditional Branches: 3121
+32916 1:<FETCH> Jump and Link: 26
+32916 1:<FETCH> Jump Register: 23
+32916 1:<FETCH> Number of fp instructions: 4
+32916 1:<FETCH> Number of loads: 1754
+32916 1:<FETCH> Number of syscall emulated loads: 84
+32916 1:<FETCH> Number of stores: 890
+32916 1:<FETCH> Number of syscall emulated stores: 62
+32916 1:<FETCH> 

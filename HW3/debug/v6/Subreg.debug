@@ -310,32 +310,32 @@
 <67> Executed ins 0x3c040042
 <67> Accessing memory at address 0x7fffae23 for ins 0xbba20023
 <67> Decoded ins 0x2484a018
-<67> Fetched ins 0x3c05aabb from PC 0x4010b4
+<67> Fetched ins 0x3c05aaaa from PC 0x4010b4
 <68> Executed ins 0x2484a018
-<68> Decoded ins 0x3c05aabb
+<68> Decoded ins 0x3c05aaaa
 <68> Fetched ins 0xc101554 from PC 0x4010b8
 <68> Memory has nothing to do for ins 0x3c040042
-<69> Executed ins 0x3c05aabb
+<69> Executed ins 0x3c05aaaa
 <69> Writing to reg 4, value: 0x420000
 <69> Memory has nothing to do for ins 0x2484a018
 <69> Decoded ins 0xc101554
-<69> Fetched ins 0x34a5ccdd from PC 0x4010bc
+<69> Fetched ins 0x34a5bbcc from PC 0x4010bc
 <70> Writing to reg 4, value: 0x41a018
 <70> Executed ins 0xc101554
 <70> Fetched ins 0x27bdffd8 from PC 0x405550
-<70> Memory has nothing to do for ins 0x3c05aabb
-<70> Decoded ins 0x34a5ccdd
-<71> Writing to reg 5, value: 0xaabb0000
-<71> Executed ins 0x34a5ccdd
+<70> Memory has nothing to do for ins 0x3c05aaaa
+<70> Decoded ins 0x34a5bbcc
+<71> Writing to reg 5, value: 0xaaaa0000
+<71> Executed ins 0x34a5bbcc
 <71> Decoded ins 0x27bdffd8
 <71> Fetched ins 0x8f8e88b4 from PC 0x405554
 <71> Memory has nothing to do for ins 0xc101554
 <72> Executed ins 0x27bdffd8
 <72> Writing to reg 31, value: 0x4010c0
-<72> Memory has nothing to do for ins 0x34a5ccdd
+<72> Memory has nothing to do for ins 0x34a5bbcc
 <72> Decoded ins 0x8f8e88b4
 <72> Fetched ins 0xafbf0014 from PC 0x405558
-<73> Writing to reg 5, value: 0xaabbccdd
+<73> Writing to reg 5, value: 0xaaaabbcc
 <73> Executed ins 0x8f8e88b4
 <73> Decoded ins 0xafbf0014
 <73> Fetched ins 0xafa40028 from PC 0x40555c
@@ -2298,7 +2298,7 @@
 <493> Fetched ins 0x322d0400 from PC 0x40d28c
 <493> Accessing memory at address 0x7fffae04 for ins 0x8dec0000
 <494> Executed ins 0xafac028c
-<494> Writing to reg 12, value: 0xaabbccdd
+<494> Writing to reg 12, value: 0xaaaabbcc
 <494> Accessing memory at address 0x7fffac00 for ins 0xafb80288
 <494> Decoded ins 0x322d0400
 <494> Fetched ins 0x11a00007 from PC 0x40d290
@@ -2375,7 +2375,7 @@
 <510> Fetched ins 0xafaf0114 from PC 0x40d2fc
 <510> Accessing memory at address 0x7fffac04 for ins 0x8faf028c
 <510> Decoded ins 0x10400004
-<511> Writing to reg 15, value: 0xaabbccdd
+<511> Writing to reg 15, value: 0xaaaabbcc
 <511> Executed ins 0x10400004
 <511> Decoded ins 0xafaf0114
 <511> Fetched ins 0x8fac0110 from PC 0x40d30c
@@ -2397,7 +2397,7 @@
 <515> Fetched ins 0x15a0000b from PC 0x40d31c
 <515> Accessing memory at address 0x7fffaa8c for ins 0x8fad0114
 <515> Decoded ins 0x557c3
-<516> Writing to reg 13, value: 0xaabbccdd
+<516> Writing to reg 13, value: 0xaaaabbcc
 <516> Executed ins 0x557c3
 <516> Decoded ins 0x15a0000b
 <516> Fetched ins 0x557c3 from PC 0x40d320
@@ -2447,7 +2447,7 @@
 <526> Fetched ins 0x1726821 from PC 0x40d370
 <526> Accessing memory at address 0x7fffaa8c for ins 0x8faf0114
 <527> Executed ins 0x32f5824
-<527> Writing to reg 15, value: 0xaabbccdd
+<527> Writing to reg 15, value: 0xaaaabbcc
 <527> Memory has nothing to do for ins 0x26f7ffff
 <527> Decoded ins 0x1726821
 <527> Fetched ins 0x91b80000 from PC 0x40d374
@@ -2457,16 +2457,16 @@
 <528> Fetched ins 0x24060000 from PC 0x40d378
 <528> Memory has nothing to do for ins 0x32f5824
 <529> Executed ins 0x91b80000
-<529> Writing to reg 11, value: 0xd
+<529> Writing to reg 11, value: 0xc
 <529> Memory has nothing to do for ins 0x1726821
 <529> Decoded ins 0x24060000
 <529> Fetched ins 0xa2f80000 from PC 0x40d37c
-<530> Writing to reg 13, value: 0x41acd1
+<530> Writing to reg 13, value: 0x41acd0
 <530> Executed ins 0x24060000
 <530> Fetched ins 0x8fa50114 from PC 0x40d380
-<530> Accessing memory at address 0x41acd1 for ins 0x91b80000
+<530> Accessing memory at address 0x41acd0 for ins 0x91b80000
 <530> Decoded ins 0xa2f80000
-<531> Writing to reg 24, value: 0x44
+<531> Writing to reg 24, value: 0x43
 <531> Executed ins 0xa2f80000
 <531> Decoded ins 0x8fa50114
 <531> Fetched ins 0x8fa40110 from PC 0x40d384
@@ -2481,7 +2481,7 @@
 <533> Fetched ins 0xc1047de from PC 0x40d38c
 <533> Accessing memory at address 0x7fffaa8c for ins 0x8fa50114
 <534> Executed ins 0xafa8044c
-<534> Writing to reg 5, value: 0xaabbccdd
+<534> Writing to reg 5, value: 0xaaaabbcc
 <534> Accessing memory at address 0x7fffaa88 for ins 0x8fa40110
 <534> Decoded ins 0xc1047de
 <534> Fetched ins 0x24070001 from PC 0x40d390
@@ -2583,7 +2583,7 @@
 <556> Fetched ins 0x8faa000c from PC 0x411fec
 <556> Accessing memory at address 0x7fffa974 for ins 0x8fae0014
 <557> Executed ins 0x8fab0010
-<557> Writing to reg 14, value: 0xaabbccdd
+<557> Writing to reg 14, value: 0xaaaabbcc
 <557> Accessing memory at address 0x7fffa970 for ins 0x8fb80010
 <557> Decoded ins 0x8faa000c
 <557> Fetched ins 0x1ae7806 from PC 0x411ff0
@@ -2602,7 +2602,7 @@
 <560> Fetched ins 0x14b6007 from PC 0x411ffc
 <560> Memory has nothing to do for ins 0x1ae7806
 <560> Decoded ins 0x1e84825
-<561> Writing to reg 15, value: 0x555de66e
+<561> Writing to reg 15, value: 0x55555de6
 <561> Executed ins 0x1e84825
 <561> Decoded ins 0x14b6007
 <561> Fetched ins 0xafa90004 from PC 0x412000
@@ -2612,7 +2612,7 @@
 <562> Memory has nothing to do for ins 0x1e84825
 <562> Decoded ins 0xafa90004
 <562> Fetched ins 0x10000004 from PC 0x412004
-<563> Writing to reg 9, value: 0x555de66e
+<563> Writing to reg 9, value: 0x55555de6
 <563> Executed ins 0xafa90004
 <563> Decoded ins 0x10000004
 <563> Fetched ins 0xafac0000 from PC 0x412008
@@ -2640,7 +2640,7 @@
 <568> Fetched ins 0x27bd0018 from PC 0x412028
 <568> Accessing memory at address 0x7fffa964 for ins 0x8fa30004
 <569> Executed ins 0x3e00008
-<569> Writing to reg 3, value: 0x555de66e
+<569> Writing to reg 3, value: 0x55555de6
 <569> Memory has nothing to do for ins 0
 <569> Decoded ins 0x27bd0018
 <569> Fetched ins 0x3c017fff from PC 0x40d394
@@ -2693,7 +2693,7 @@
 <579> Memory has nothing to do for ins 0x612824
 <579> Decoded ins 0x30e9003f
 <579> Fetched ins 0xafa60008 from PC 0x411f80
-<580> Writing to reg 5, value: 0x555de66e
+<580> Writing to reg 5, value: 0x55555de6
 <580> Executed ins 0x30e9003f
 <580> Fetched ins 0xafa7000c from PC 0x411f84
 <580> Memory has nothing to do for ins 0x27bdffe8
@@ -2777,7 +2777,7 @@
 <598> Fetched ins 0x8faa000c from PC 0x411fec
 <598> Accessing memory at address 0x7fffa974 for ins 0x8fae0014
 <599> Executed ins 0x8fab0010
-<599> Writing to reg 14, value: 0x555de66e
+<599> Writing to reg 14, value: 0x55555de6
 <599> Accessing memory at address 0x7fffa970 for ins 0x8fb80010
 <599> Decoded ins 0x8faa000c
 <599> Fetched ins 0x1ae7806 from PC 0x411ff0
@@ -2796,7 +2796,7 @@
 <602> Memory has nothing to do for ins 0x1ae7806
 <602> Decoded ins 0x1e84825
 <602> Fetched ins 0x14b6007 from PC 0x411ffc
-<603> Writing to reg 15, value: 0xaabbccd
+<603> Writing to reg 15, value: 0xaaaabbc
 <603> Executed ins 0x1e84825
 <603> Decoded ins 0x14b6007
 <603> Fetched ins 0xafa90004 from PC 0x412000
@@ -2806,7 +2806,7 @@
 <604> Memory has nothing to do for ins 0x1e84825
 <604> Decoded ins 0xafa90004
 <604> Fetched ins 0x10000004 from PC 0x412004
-<605> Writing to reg 9, value: 0xaabbccd
+<605> Writing to reg 9, value: 0xaaaabbc
 <605> Executed ins 0xafa90004
 <605> Fetched ins 0xafac0000 from PC 0x412008
 <605> Memory has nothing to do for ins 0x14b6007
@@ -2833,7 +2833,7 @@
 <610> Fetched ins 0x27bd0018 from PC 0x412028
 <610> Accessing memory at address 0x7fffa964 for ins 0x8fa30004
 <610> Decoded ins 0x3e00008
-<611> Writing to reg 3, value: 0xaabbccd
+<611> Writing to reg 3, value: 0xaaaabbc
 <611> Executed ins 0x3e00008
 <611> Decoded ins 0x27bd0018
 <611> Fetched ins 0x8fa8044c from PC 0x40d3b4
@@ -2884,7 +2884,7 @@
 <621> Fetched ins 0x1726821 from PC 0x40d370
 <621> Accessing memory at address 0x7fffaa8c for ins 0x8faf0114
 <622> Executed ins 0x32f5824
-<622> Writing to reg 15, value: 0xaabbccd
+<622> Writing to reg 15, value: 0xaaaabbc
 <622> Memory has nothing to do for ins 0x26f7ffff
 <622> Decoded ins 0x1726821
 <622> Fetched ins 0x91b80000 from PC 0x40d374
@@ -2894,16 +2894,16 @@
 <623> Fetched ins 0x24060000 from PC 0x40d378
 <623> Memory has nothing to do for ins 0x32f5824
 <624> Executed ins 0x91b80000
-<624> Writing to reg 11, value: 0xd
+<624> Writing to reg 11, value: 0xc
 <624> Memory has nothing to do for ins 0x1726821
 <624> Decoded ins 0x24060000
 <624> Fetched ins 0xa2f80000 from PC 0x40d37c
-<625> Writing to reg 13, value: 0x41acd1
+<625> Writing to reg 13, value: 0x41acd0
 <625> Executed ins 0x24060000
 <625> Fetched ins 0x8fa50114 from PC 0x40d380
-<625> Accessing memory at address 0x41acd1 for ins 0x91b80000
+<625> Accessing memory at address 0x41acd0 for ins 0x91b80000
 <625> Decoded ins 0xa2f80000
-<626> Writing to reg 24, value: 0x44
+<626> Writing to reg 24, value: 0x43
 <626> Executed ins 0xa2f80000
 <626> Decoded ins 0x8fa50114
 <626> Fetched ins 0x8fa40110 from PC 0x40d384
@@ -2918,7 +2918,7 @@
 <628> Fetched ins 0xc1047de from PC 0x40d38c
 <628> Accessing memory at address 0x7fffaa8c for ins 0x8fa50114
 <629> Executed ins 0xafa8044c
-<629> Writing to reg 5, value: 0xaabbccd
+<629> Writing to reg 5, value: 0xaaaabbc
 <629> Accessing memory at address 0x7fffaa88 for ins 0x8fa40110
 <629> Decoded ins 0xc1047de
 <629> Fetched ins 0x24070001 from PC 0x40d390
@@ -3020,7 +3020,7 @@
 <651> Fetched ins 0x8faa000c from PC 0x411fec
 <651> Accessing memory at address 0x7fffa974 for ins 0x8fae0014
 <652> Executed ins 0x8fab0010
-<652> Writing to reg 14, value: 0xaabbccd
+<652> Writing to reg 14, value: 0xaaaabbc
 <652> Accessing memory at address 0x7fffa970 for ins 0x8fb80010
 <652> Decoded ins 0x8faa000c
 <652> Fetched ins 0x1ae7806 from PC 0x411ff0
@@ -3039,7 +3039,7 @@
 <655> Fetched ins 0x14b6007 from PC 0x411ffc
 <655> Memory has nothing to do for ins 0x1ae7806
 <655> Decoded ins 0x1e84825
-<656> Writing to reg 15, value: 0x555de66
+<656> Writing to reg 15, value: 0x55555de
 <656> Executed ins 0x1e84825
 <656> Decoded ins 0x14b6007
 <656> Fetched ins 0xafa90004 from PC 0x412000
@@ -3049,7 +3049,7 @@
 <657> Memory has nothing to do for ins 0x1e84825
 <657> Decoded ins 0xafa90004
 <657> Fetched ins 0x10000004 from PC 0x412004
-<658> Writing to reg 9, value: 0x555de66
+<658> Writing to reg 9, value: 0x55555de
 <658> Executed ins 0xafa90004
 <658> Decoded ins 0x10000004
 <658> Fetched ins 0xafac0000 from PC 0x412008
@@ -3077,7 +3077,7 @@
 <663> Fetched ins 0x27bd0018 from PC 0x412028
 <663> Accessing memory at address 0x7fffa964 for ins 0x8fa30004
 <664> Executed ins 0x3e00008
-<664> Writing to reg 3, value: 0x555de66
+<664> Writing to reg 3, value: 0x55555de
 <664> Memory has nothing to do for ins 0
 <664> Decoded ins 0x27bd0018
 <664> Fetched ins 0x3c017fff from PC 0x40d394
@@ -3130,7 +3130,7 @@
 <674> Memory has nothing to do for ins 0x612824
 <674> Decoded ins 0x30e9003f
 <674> Fetched ins 0xafa60008 from PC 0x411f80
-<675> Writing to reg 5, value: 0x555de66
+<675> Writing to reg 5, value: 0x55555de
 <675> Executed ins 0x30e9003f
 <675> Fetched ins 0xafa7000c from PC 0x411f84
 <675> Memory has nothing to do for ins 0x27bdffe8
@@ -3214,7 +3214,7 @@
 <693> Fetched ins 0x8faa000c from PC 0x411fec
 <693> Accessing memory at address 0x7fffa974 for ins 0x8fae0014
 <694> Executed ins 0x8fab0010
-<694> Writing to reg 14, value: 0x555de66
+<694> Writing to reg 14, value: 0x55555de
 <694> Accessing memory at address 0x7fffa970 for ins 0x8fb80010
 <694> Decoded ins 0x8faa000c
 <694> Fetched ins 0x1ae7806 from PC 0x411ff0
@@ -3233,7 +3233,7 @@
 <697> Memory has nothing to do for ins 0x1ae7806
 <697> Decoded ins 0x1e84825
 <697> Fetched ins 0x14b6007 from PC 0x411ffc
-<698> Writing to reg 15, value: 0xaabbcc
+<698> Writing to reg 15, value: 0xaaaabb
 <698> Executed ins 0x1e84825
 <698> Decoded ins 0x14b6007
 <698> Fetched ins 0xafa90004 from PC 0x412000
@@ -3243,7 +3243,7 @@
 <699> Memory has nothing to do for ins 0x1e84825
 <699> Decoded ins 0xafa90004
 <699> Fetched ins 0x10000004 from PC 0x412004
-<700> Writing to reg 9, value: 0xaabbcc
+<700> Writing to reg 9, value: 0xaaaabb
 <700> Executed ins 0xafa90004
 <700> Fetched ins 0xafac0000 from PC 0x412008
 <700> Memory has nothing to do for ins 0x14b6007
@@ -3270,7 +3270,7 @@
 <705> Fetched ins 0x27bd0018 from PC 0x412028
 <705> Accessing memory at address 0x7fffa964 for ins 0x8fa30004
 <705> Decoded ins 0x3e00008
-<706> Writing to reg 3, value: 0xaabbcc
+<706> Writing to reg 3, value: 0xaaaabb
 <706> Executed ins 0x3e00008
 <706> Decoded ins 0x27bd0018
 <706> Fetched ins 0x8fa8044c from PC 0x40d3b4
@@ -3321,7 +3321,7 @@
 <716> Fetched ins 0x1726821 from PC 0x40d370
 <716> Accessing memory at address 0x7fffaa8c for ins 0x8faf0114
 <717> Executed ins 0x32f5824
-<717> Writing to reg 15, value: 0xaabbcc
+<717> Writing to reg 15, value: 0xaaaabb
 <717> Memory has nothing to do for ins 0x26f7ffff
 <717> Decoded ins 0x1726821
 <717> Fetched ins 0x91b80000 from PC 0x40d374
@@ -3331,16 +3331,16 @@
 <718> Fetched ins 0x24060000 from PC 0x40d378
 <718> Memory has nothing to do for ins 0x32f5824
 <719> Executed ins 0x91b80000
-<719> Writing to reg 11, value: 0xc
+<719> Writing to reg 11, value: 0xb
 <719> Memory has nothing to do for ins 0x1726821
 <719> Decoded ins 0x24060000
 <719> Fetched ins 0xa2f80000 from PC 0x40d37c
-<720> Writing to reg 13, value: 0x41acd0
+<720> Writing to reg 13, value: 0x41accf
 <720> Executed ins 0x24060000
 <720> Fetched ins 0x8fa50114 from PC 0x40d380
-<720> Accessing memory at address 0x41acd0 for ins 0x91b80000
+<720> Accessing memory at address 0x41accf for ins 0x91b80000
 <720> Decoded ins 0xa2f80000
-<721> Writing to reg 24, value: 0x43
+<721> Writing to reg 24, value: 0x42
 <721> Executed ins 0xa2f80000
 <721> Decoded ins 0x8fa50114
 <721> Fetched ins 0x8fa40110 from PC 0x40d384
@@ -3355,7 +3355,7 @@
 <723> Fetched ins 0xc1047de from PC 0x40d38c
 <723> Accessing memory at address 0x7fffaa8c for ins 0x8fa50114
 <724> Executed ins 0xafa8044c
-<724> Writing to reg 5, value: 0xaabbcc
+<724> Writing to reg 5, value: 0xaaaabb
 <724> Accessing memory at address 0x7fffaa88 for ins 0x8fa40110
 <724> Decoded ins 0xc1047de
 <724> Fetched ins 0x24070001 from PC 0x40d390
@@ -3457,7 +3457,7 @@
 <746> Fetched ins 0x8faa000c from PC 0x411fec
 <746> Accessing memory at address 0x7fffa974 for ins 0x8fae0014
 <747> Executed ins 0x8fab0010
-<747> Writing to reg 14, value: 0xaabbcc
+<747> Writing to reg 14, value: 0xaaaabb
 <747> Accessing memory at address 0x7fffa970 for ins 0x8fb80010
 <747> Decoded ins 0x8faa000c
 <747> Fetched ins 0x1ae7806 from PC 0x411ff0
@@ -3476,7 +3476,7 @@
 <750> Fetched ins 0x14b6007 from PC 0x411ffc
 <750> Memory has nothing to do for ins 0x1ae7806
 <750> Decoded ins 0x1e84825
-<751> Writing to reg 15, value: 0x555de6
+<751> Writing to reg 15, value: 0x55555d
 <751> Executed ins 0x1e84825
 <751> Decoded ins 0x14b6007
 <751> Fetched ins 0xafa90004 from PC 0x412000
@@ -3486,7 +3486,7 @@
 <752> Memory has nothing to do for ins 0x1e84825
 <752> Decoded ins 0xafa90004
 <752> Fetched ins 0x10000004 from PC 0x412004
-<753> Writing to reg 9, value: 0x555de6
+<753> Writing to reg 9, value: 0x55555d
 <753> Executed ins 0xafa90004
 <753> Decoded ins 0x10000004
 <753> Fetched ins 0xafac0000 from PC 0x412008
@@ -3514,7 +3514,7 @@
 <758> Fetched ins 0x27bd0018 from PC 0x412028
 <758> Accessing memory at address 0x7fffa964 for ins 0x8fa30004
 <759> Executed ins 0x3e00008
-<759> Writing to reg 3, value: 0x555de6
+<759> Writing to reg 3, value: 0x55555d
 <759> Memory has nothing to do for ins 0
 <759> Decoded ins 0x27bd0018
 <759> Fetched ins 0x3c017fff from PC 0x40d394
@@ -3567,7 +3567,7 @@
 <769> Memory has nothing to do for ins 0x612824
 <769> Decoded ins 0x30e9003f
 <769> Fetched ins 0xafa60008 from PC 0x411f80
-<770> Writing to reg 5, value: 0x555de6
+<770> Writing to reg 5, value: 0x55555d
 <770> Executed ins 0x30e9003f
 <770> Fetched ins 0xafa7000c from PC 0x411f84
 <770> Memory has nothing to do for ins 0x27bdffe8
@@ -3651,7 +3651,7 @@
 <788> Fetched ins 0x8faa000c from PC 0x411fec
 <788> Accessing memory at address 0x7fffa974 for ins 0x8fae0014
 <789> Executed ins 0x8fab0010
-<789> Writing to reg 14, value: 0x555de6
+<789> Writing to reg 14, value: 0x55555d
 <789> Accessing memory at address 0x7fffa970 for ins 0x8fb80010
 <789> Decoded ins 0x8faa000c
 <789> Fetched ins 0x1ae7806 from PC 0x411ff0
@@ -3670,7 +3670,7 @@
 <792> Memory has nothing to do for ins 0x1ae7806
 <792> Decoded ins 0x1e84825
 <792> Fetched ins 0x14b6007 from PC 0x411ffc
-<793> Writing to reg 15, value: 0xaabbc
+<793> Writing to reg 15, value: 0xaaaab
 <793> Executed ins 0x1e84825
 <793> Decoded ins 0x14b6007
 <793> Fetched ins 0xafa90004 from PC 0x412000
@@ -3680,7 +3680,7 @@
 <794> Memory has nothing to do for ins 0x1e84825
 <794> Decoded ins 0xafa90004
 <794> Fetched ins 0x10000004 from PC 0x412004
-<795> Writing to reg 9, value: 0xaabbc
+<795> Writing to reg 9, value: 0xaaaab
 <795> Executed ins 0xafa90004
 <795> Fetched ins 0xafac0000 from PC 0x412008
 <795> Memory has nothing to do for ins 0x14b6007
@@ -3707,7 +3707,7 @@
 <800> Fetched ins 0x27bd0018 from PC 0x412028
 <800> Accessing memory at address 0x7fffa964 for ins 0x8fa30004
 <800> Decoded ins 0x3e00008
-<801> Writing to reg 3, value: 0xaabbc
+<801> Writing to reg 3, value: 0xaaaab
 <801> Executed ins 0x3e00008
 <801> Decoded ins 0x27bd0018
 <801> Fetched ins 0x8fa8044c from PC 0x40d3b4
@@ -3758,7 +3758,7 @@
 <811> Fetched ins 0x1726821 from PC 0x40d370
 <811> Accessing memory at address 0x7fffaa8c for ins 0x8faf0114
 <812> Executed ins 0x32f5824
-<812> Writing to reg 15, value: 0xaabbc
+<812> Writing to reg 15, value: 0xaaaab
 <812> Memory has nothing to do for ins 0x26f7ffff
 <812> Decoded ins 0x1726821
 <812> Fetched ins 0x91b80000 from PC 0x40d374
@@ -3768,16 +3768,16 @@
 <813> Fetched ins 0x24060000 from PC 0x40d378
 <813> Memory has nothing to do for ins 0x32f5824
 <814> Executed ins 0x91b80000
-<814> Writing to reg 11, value: 0xc
+<814> Writing to reg 11, value: 0xb
 <814> Memory has nothing to do for ins 0x1726821
 <814> Decoded ins 0x24060000
 <814> Fetched ins 0xa2f80000 from PC 0x40d37c
-<815> Writing to reg 13, value: 0x41acd0
+<815> Writing to reg 13, value: 0x41accf
 <815> Executed ins 0x24060000
 <815> Fetched ins 0x8fa50114 from PC 0x40d380
-<815> Accessing memory at address 0x41acd0 for ins 0x91b80000
+<815> Accessing memory at address 0x41accf for ins 0x91b80000
 <815> Decoded ins 0xa2f80000
-<816> Writing to reg 24, value: 0x43
+<816> Writing to reg 24, value: 0x42
 <816> Executed ins 0xa2f80000
 <816> Decoded ins 0x8fa50114
 <816> Fetched ins 0x8fa40110 from PC 0x40d384
@@ -3792,7 +3792,7 @@
 <818> Fetched ins 0xc1047de from PC 0x40d38c
 <818> Accessing memory at address 0x7fffaa8c for ins 0x8fa50114
 <819> Executed ins 0xafa8044c
-<819> Writing to reg 5, value: 0xaabbc
+<819> Writing to reg 5, value: 0xaaaab
 <819> Accessing memory at address 0x7fffaa88 for ins 0x8fa40110
 <819> Decoded ins 0xc1047de
 <819> Fetched ins 0x24070001 from PC 0x40d390
@@ -3894,7 +3894,7 @@
 <841> Fetched ins 0x8faa000c from PC 0x411fec
 <841> Accessing memory at address 0x7fffa974 for ins 0x8fae0014
 <842> Executed ins 0x8fab0010
-<842> Writing to reg 14, value: 0xaabbc
+<842> Writing to reg 14, value: 0xaaaab
 <842> Accessing memory at address 0x7fffa970 for ins 0x8fb80010
 <842> Decoded ins 0x8faa000c
 <842> Fetched ins 0x1ae7806 from PC 0x411ff0
@@ -3913,7 +3913,7 @@
 <845> Fetched ins 0x14b6007 from PC 0x411ffc
 <845> Memory has nothing to do for ins 0x1ae7806
 <845> Decoded ins 0x1e84825
-<846> Writing to reg 15, value: 0x555de
+<846> Writing to reg 15, value: 0x55555
 <846> Executed ins 0x1e84825
 <846> Decoded ins 0x14b6007
 <846> Fetched ins 0xafa90004 from PC 0x412000
@@ -3923,7 +3923,7 @@
 <847> Memory has nothing to do for ins 0x1e84825
 <847> Decoded ins 0xafa90004
 <847> Fetched ins 0x10000004 from PC 0x412004
-<848> Writing to reg 9, value: 0x555de
+<848> Writing to reg 9, value: 0x55555
 <848> Executed ins 0xafa90004
 <848> Decoded ins 0x10000004
 <848> Fetched ins 0xafac0000 from PC 0x412008
@@ -3951,7 +3951,7 @@
 <853> Fetched ins 0x27bd0018 from PC 0x412028
 <853> Accessing memory at address 0x7fffa964 for ins 0x8fa30004
 <854> Executed ins 0x3e00008
-<854> Writing to reg 3, value: 0x555de
+<854> Writing to reg 3, value: 0x55555
 <854> Memory has nothing to do for ins 0
 <854> Decoded ins 0x27bd0018
 <854> Fetched ins 0x3c017fff from PC 0x40d394
@@ -4004,7 +4004,7 @@
 <864> Memory has nothing to do for ins 0x612824
 <864> Decoded ins 0x30e9003f
 <864> Fetched ins 0xafa60008 from PC 0x411f80
-<865> Writing to reg 5, value: 0x555de
+<865> Writing to reg 5, value: 0x55555
 <865> Executed ins 0x30e9003f
 <865> Fetched ins 0xafa7000c from PC 0x411f84
 <865> Memory has nothing to do for ins 0x27bdffe8
@@ -4088,7 +4088,7 @@
 <883> Fetched ins 0x8faa000c from PC 0x411fec
 <883> Accessing memory at address 0x7fffa974 for ins 0x8fae0014
 <884> Executed ins 0x8fab0010
-<884> Writing to reg 14, value: 0x555de
+<884> Writing to reg 14, value: 0x55555
 <884> Accessing memory at address 0x7fffa970 for ins 0x8fb80010
 <884> Decoded ins 0x8faa000c
 <884> Fetched ins 0x1ae7806 from PC 0x411ff0
@@ -4107,7 +4107,7 @@
 <887> Memory has nothing to do for ins 0x1ae7806
 <887> Decoded ins 0x1e84825
 <887> Fetched ins 0x14b6007 from PC 0x411ffc
-<888> Writing to reg 15, value: 0xaabb
+<888> Writing to reg 15, value: 0xaaaa
 <888> Executed ins 0x1e84825
 <888> Decoded ins 0x14b6007
 <888> Fetched ins 0xafa90004 from PC 0x412000
@@ -4117,7 +4117,7 @@
 <889> Memory has nothing to do for ins 0x1e84825
 <889> Decoded ins 0xafa90004
 <889> Fetched ins 0x10000004 from PC 0x412004
-<890> Writing to reg 9, value: 0xaabb
+<890> Writing to reg 9, value: 0xaaaa
 <890> Executed ins 0xafa90004
 <890> Fetched ins 0xafac0000 from PC 0x412008
 <890> Memory has nothing to do for ins 0x14b6007
@@ -4144,7 +4144,7 @@
 <895> Fetched ins 0x27bd0018 from PC 0x412028
 <895> Accessing memory at address 0x7fffa964 for ins 0x8fa30004
 <895> Decoded ins 0x3e00008
-<896> Writing to reg 3, value: 0xaabb
+<896> Writing to reg 3, value: 0xaaaa
 <896> Executed ins 0x3e00008
 <896> Decoded ins 0x27bd0018
 <896> Fetched ins 0x8fa8044c from PC 0x40d3b4
@@ -4195,7 +4195,7 @@
 <906> Fetched ins 0x1726821 from PC 0x40d370
 <906> Accessing memory at address 0x7fffaa8c for ins 0x8faf0114
 <907> Executed ins 0x32f5824
-<907> Writing to reg 15, value: 0xaabb
+<907> Writing to reg 15, value: 0xaaaa
 <907> Memory has nothing to do for ins 0x26f7ffff
 <907> Decoded ins 0x1726821
 <907> Fetched ins 0x91b80000 from PC 0x40d374
@@ -4205,16 +4205,16 @@
 <908> Fetched ins 0x24060000 from PC 0x40d378
 <908> Memory has nothing to do for ins 0x32f5824
 <909> Executed ins 0x91b80000
-<909> Writing to reg 11, value: 0xb
+<909> Writing to reg 11, value: 0xa
 <909> Memory has nothing to do for ins 0x1726821
 <909> Decoded ins 0x24060000
 <909> Fetched ins 0xa2f80000 from PC 0x40d37c
-<910> Writing to reg 13, value: 0x41accf
+<910> Writing to reg 13, value: 0x41acce
 <910> Executed ins 0x24060000
 <910> Fetched ins 0x8fa50114 from PC 0x40d380
-<910> Accessing memory at address 0x41accf for ins 0x91b80000
+<910> Accessing memory at address 0x41acce for ins 0x91b80000
 <910> Decoded ins 0xa2f80000
-<911> Writing to reg 24, value: 0x42
+<911> Writing to reg 24, value: 0x41
 <911> Executed ins 0xa2f80000
 <911> Decoded ins 0x8fa50114
 <911> Fetched ins 0x8fa40110 from PC 0x40d384
@@ -4229,7 +4229,7 @@
 <913> Fetched ins 0xc1047de from PC 0x40d38c
 <913> Accessing memory at address 0x7fffaa8c for ins 0x8fa50114
 <914> Executed ins 0xafa8044c
-<914> Writing to reg 5, value: 0xaabb
+<914> Writing to reg 5, value: 0xaaaa
 <914> Accessing memory at address 0x7fffaa88 for ins 0x8fa40110
 <914> Decoded ins 0xc1047de
 <914> Fetched ins 0x24070001 from PC 0x40d390
@@ -4331,7 +4331,7 @@
 <936> Fetched ins 0x8faa000c from PC 0x411fec
 <936> Accessing memory at address 0x7fffa974 for ins 0x8fae0014
 <937> Executed ins 0x8fab0010
-<937> Writing to reg 14, value: 0xaabb
+<937> Writing to reg 14, value: 0xaaaa
 <937> Accessing memory at address 0x7fffa970 for ins 0x8fb80010
 <937> Decoded ins 0x8faa000c
 <937> Fetched ins 0x1ae7806 from PC 0x411ff0
@@ -4350,7 +4350,7 @@
 <940> Fetched ins 0x14b6007 from PC 0x411ffc
 <940> Memory has nothing to do for ins 0x1ae7806
 <940> Decoded ins 0x1e84825
-<941> Writing to reg 15, value: 0x555d
+<941> Writing to reg 15, value: 0x5555
 <941> Executed ins 0x1e84825
 <941> Decoded ins 0x14b6007
 <941> Fetched ins 0xafa90004 from PC 0x412000
@@ -4360,7 +4360,7 @@
 <942> Memory has nothing to do for ins 0x1e84825
 <942> Decoded ins 0xafa90004
 <942> Fetched ins 0x10000004 from PC 0x412004
-<943> Writing to reg 9, value: 0x555d
+<943> Writing to reg 9, value: 0x5555
 <943> Executed ins 0xafa90004
 <943> Decoded ins 0x10000004
 <943> Fetched ins 0xafac0000 from PC 0x412008
@@ -4388,7 +4388,7 @@
 <948> Fetched ins 0x27bd0018 from PC 0x412028
 <948> Accessing memory at address 0x7fffa964 for ins 0x8fa30004
 <949> Executed ins 0x3e00008
-<949> Writing to reg 3, value: 0x555d
+<949> Writing to reg 3, value: 0x5555
 <949> Memory has nothing to do for ins 0
 <949> Decoded ins 0x27bd0018
 <949> Fetched ins 0x3c017fff from PC 0x40d394
@@ -4441,7 +4441,7 @@
 <959> Memory has nothing to do for ins 0x612824
 <959> Decoded ins 0x30e9003f
 <959> Fetched ins 0xafa60008 from PC 0x411f80
-<960> Writing to reg 5, value: 0x555d
+<960> Writing to reg 5, value: 0x5555
 <960> Executed ins 0x30e9003f
 <960> Fetched ins 0xafa7000c from PC 0x411f84
 <960> Memory has nothing to do for ins 0x27bdffe8
@@ -4525,7 +4525,7 @@
 <978> Fetched ins 0x8faa000c from PC 0x411fec
 <978> Accessing memory at address 0x7fffa974 for ins 0x8fae0014
 <979> Executed ins 0x8fab0010
-<979> Writing to reg 14, value: 0x555d
+<979> Writing to reg 14, value: 0x5555
 <979> Accessing memory at address 0x7fffa970 for ins 0x8fb80010
 <979> Decoded ins 0x8faa000c
 <979> Fetched ins 0x1ae7806 from PC 0x411ff0
@@ -4544,7 +4544,7 @@
 <982> Memory has nothing to do for ins 0x1ae7806
 <982> Decoded ins 0x1e84825
 <982> Fetched ins 0x14b6007 from PC 0x411ffc
-<983> Writing to reg 15, value: 0xaab
+<983> Writing to reg 15, value: 0xaaa
 <983> Executed ins 0x1e84825
 <983> Decoded ins 0x14b6007
 <983> Fetched ins 0xafa90004 from PC 0x412000
@@ -4554,7 +4554,7 @@
 <984> Memory has nothing to do for ins 0x1e84825
 <984> Decoded ins 0xafa90004
 <984> Fetched ins 0x10000004 from PC 0x412004
-<985> Writing to reg 9, value: 0xaab
+<985> Writing to reg 9, value: 0xaaa
 <985> Executed ins 0xafa90004
 <985> Fetched ins 0xafac0000 from PC 0x412008
 <985> Memory has nothing to do for ins 0x14b6007
@@ -4581,7 +4581,7 @@
 <990> Fetched ins 0x27bd0018 from PC 0x412028
 <990> Accessing memory at address 0x7fffa964 for ins 0x8fa30004
 <990> Decoded ins 0x3e00008
-<991> Writing to reg 3, value: 0xaab
+<991> Writing to reg 3, value: 0xaaa
 <991> Executed ins 0x3e00008
 <991> Decoded ins 0x27bd0018
 <991> Fetched ins 0x8fa8044c from PC 0x40d3b4
@@ -4632,7 +4632,7 @@
 <1001> Fetched ins 0x1726821 from PC 0x40d370
 <1001> Accessing memory at address 0x7fffaa8c for ins 0x8faf0114
 <1002> Executed ins 0x32f5824
-<1002> Writing to reg 15, value: 0xaab
+<1002> Writing to reg 15, value: 0xaaa
 <1002> Memory has nothing to do for ins 0x26f7ffff
 <1002> Decoded ins 0x1726821
 <1002> Fetched ins 0x91b80000 from PC 0x40d374
@@ -4642,16 +4642,16 @@
 <1003> Fetched ins 0x24060000 from PC 0x40d378
 <1003> Memory has nothing to do for ins 0x32f5824
 <1004> Executed ins 0x91b80000
-<1004> Writing to reg 11, value: 0xb
+<1004> Writing to reg 11, value: 0xa
 <1004> Memory has nothing to do for ins 0x1726821
 <1004> Decoded ins 0x24060000
 <1004> Fetched ins 0xa2f80000 from PC 0x40d37c
-<1005> Writing to reg 13, value: 0x41accf
+<1005> Writing to reg 13, value: 0x41acce
 <1005> Executed ins 0x24060000
 <1005> Fetched ins 0x8fa50114 from PC 0x40d380
-<1005> Accessing memory at address 0x41accf for ins 0x91b80000
+<1005> Accessing memory at address 0x41acce for ins 0x91b80000
 <1005> Decoded ins 0xa2f80000
-<1006> Writing to reg 24, value: 0x42
+<1006> Writing to reg 24, value: 0x41
 <1006> Executed ins 0xa2f80000
 <1006> Decoded ins 0x8fa50114
 <1006> Fetched ins 0x8fa40110 from PC 0x40d384
@@ -4666,7 +4666,7 @@
 <1008> Fetched ins 0xc1047de from PC 0x40d38c
 <1008> Accessing memory at address 0x7fffaa8c for ins 0x8fa50114
 <1009> Executed ins 0xafa8044c
-<1009> Writing to reg 5, value: 0xaab
+<1009> Writing to reg 5, value: 0xaaa
 <1009> Accessing memory at address 0x7fffaa88 for ins 0x8fa40110
 <1009> Decoded ins 0xc1047de
 <1009> Fetched ins 0x24070001 from PC 0x40d390
@@ -4768,7 +4768,7 @@
 <1031> Fetched ins 0x8faa000c from PC 0x411fec
 <1031> Accessing memory at address 0x7fffa974 for ins 0x8fae0014
 <1032> Executed ins 0x8fab0010
-<1032> Writing to reg 14, value: 0xaab
+<1032> Writing to reg 14, value: 0xaaa
 <1032> Accessing memory at address 0x7fffa970 for ins 0x8fb80010
 <1032> Decoded ins 0x8faa000c
 <1032> Fetched ins 0x1ae7806 from PC 0x411ff0
@@ -6237,7 +6237,7 @@
 <1349> Accessing memory at address 0x7fffac38 for ins 0x80a20000
 <1349> Decoded ins 0x24840001
 <1349> Fetched ins 0x14a3fffc from PC 0x406744
-<1350> Writing to reg 2, value: 0x42
+<1350> Writing to reg 2, value: 0x41
 <1350> Executed ins 0x24840001
 <1350> Fetched ins 0xa082ffff from PC 0x406748
 <1350> Memory has nothing to do for ins 0x24a50001
@@ -6260,7 +6260,7 @@
 <1354> Accessing memory at address 0x7fffac39 for ins 0x80a20000
 <1354> Decoded ins 0x24840001
 <1354> Fetched ins 0x14a3fffc from PC 0x406744
-<1355> Writing to reg 2, value: 0x42
+<1355> Writing to reg 2, value: 0x41
 <1355> Executed ins 0x24840001
 <1355> Fetched ins 0xa082ffff from PC 0x406748
 <1355> Memory has nothing to do for ins 0x24a50001
@@ -6283,7 +6283,7 @@
 <1359> Accessing memory at address 0x7fffac3a for ins 0x80a20000
 <1359> Decoded ins 0x24840001
 <1359> Fetched ins 0x14a3fffc from PC 0x406744
-<1360> Writing to reg 2, value: 0x43
+<1360> Writing to reg 2, value: 0x42
 <1360> Executed ins 0x24840001
 <1360> Fetched ins 0xa082ffff from PC 0x406748
 <1360> Memory has nothing to do for ins 0x24a50001
@@ -6306,7 +6306,7 @@
 <1364> Accessing memory at address 0x7fffac3b for ins 0x80a20000
 <1364> Decoded ins 0x24840001
 <1364> Fetched ins 0x14a3fffc from PC 0x406744
-<1365> Writing to reg 2, value: 0x43
+<1365> Writing to reg 2, value: 0x42
 <1365> Executed ins 0x24840001
 <1365> Fetched ins 0xa082ffff from PC 0x406748
 <1365> Memory has nothing to do for ins 0x24a50001
@@ -6329,7 +6329,7 @@
 <1369> Accessing memory at address 0x7fffac3c for ins 0x80a20000
 <1369> Decoded ins 0x24840001
 <1369> Fetched ins 0x14a3fffc from PC 0x406744
-<1370> Writing to reg 2, value: 0x44
+<1370> Writing to reg 2, value: 0x43
 <1370> Executed ins 0x24840001
 <1370> Fetched ins 0xa082ffff from PC 0x406748
 <1370> Memory has nothing to do for ins 0x24a50001
@@ -6352,7 +6352,7 @@
 <1374> Accessing memory at address 0x7fffac3d for ins 0x80a20000
 <1374> Decoded ins 0x24840001
 <1374> Fetched ins 0x14a3fffc from PC 0x406744
-<1375> Writing to reg 2, value: 0x44
+<1375> Writing to reg 2, value: 0x43
 <1375> Executed ins 0x24840001
 <1375> Fetched ins 0xa082ffff from PC 0x406748
 <1375> Memory has nothing to do for ins 0x24a50001
@@ -7151,7 +7151,7 @@
 <1543> Fetched ins 0 from PC 0x40ff64
 <1543> Accessing memory at address 0x41e97e for ins 0x90790001
 <1544> Executed ins 0x15190003
-<1544> Writing to reg 25, value: 0x42
+<1544> Writing to reg 25, value: 0x41
 <1544> Memory has nothing to do for ins 0
 <1544> Decoded ins 0
 <1544> Fetched ins 0x906a0002 from PC 0x40ff70
@@ -7169,7 +7169,7 @@
 <1547> Accessing memory at address 0x41e97f for ins 0x906a0002
 <1547> Decoded ins 0x150a0003
 <1547> Fetched ins 0 from PC 0x40ff7c
-<1548> Writing to reg 10, value: 0x42
+<1548> Writing to reg 10, value: 0x41
 <1548> Executed ins 0x150a0003
 <1548> Decoded ins 0
 <1548> Fetched ins 0x906b0003 from PC 0x40ff88
@@ -7189,7 +7189,7 @@
 <1551> Fetched ins 0 from PC 0x40ff94
 <1551> Accessing memory at address 0x41e980 for ins 0x906b0003
 <1552> Executed ins 0x150b0003
-<1552> Writing to reg 11, value: 0x43
+<1552> Writing to reg 11, value: 0x42
 <1552> Memory has nothing to do for ins 0
 <1552> Decoded ins 0
 <1552> Fetched ins 0x24630004 from PC 0x40ffa0
@@ -7222,7 +7222,7 @@
 <1558> Fetched ins 0 from PC 0x40ff4c
 <1558> Accessing memory at address 0x41e981 for ins 0x90780000
 <1559> Executed ins 0x15180003
-<1559> Writing to reg 24, value: 0x43
+<1559> Writing to reg 24, value: 0x42
 <1559> Memory has nothing to do for ins 0
 <1559> Decoded ins 0
 <1559> Fetched ins 0x90790001 from PC 0x40ff58
@@ -7240,7 +7240,7 @@
 <1562> Accessing memory at address 0x41e982 for ins 0x90790001
 <1562> Decoded ins 0x15190003
 <1562> Fetched ins 0 from PC 0x40ff64
-<1563> Writing to reg 25, value: 0x44
+<1563> Writing to reg 25, value: 0x43
 <1563> Executed ins 0x15190003
 <1563> Decoded ins 0
 <1563> Fetched ins 0x906a0002 from PC 0x40ff70
@@ -7260,7 +7260,7 @@
 <1566> Fetched ins 0 from PC 0x40ff7c
 <1566> Accessing memory at address 0x41e983 for ins 0x906a0002
 <1567> Executed ins 0x150a0003
-<1567> Writing to reg 10, value: 0x44
+<1567> Writing to reg 10, value: 0x43
 <1567> Memory has nothing to do for ins 0
 <1567> Decoded ins 0
 <1567> Fetched ins 0x906b0003 from PC 0x40ff88
@@ -7729,7 +7729,7 @@
 <1666> Fetched ins 0x8fb20030 from PC 0x40e7f0
 <1666> Accessing memory at address 0x7fffa99c for ins 0xc7b40024
 <1667> Executed ins 0x8fb1002c
-<1667> Writing to freg 10, value: 0x8140b70
+<1667> Writing to freg 10, value: 0x8d45b70
 <1667> Accessing memory at address 0x7fffa9a0 for ins 0x8fb00028
 <1667> Decoded ins 0x8fb20030
 <1667> Fetched ins 0x8fb30034 from PC 0x40e7f4
@@ -14857,7 +14857,7 @@
 <3202> Accessing memory at address 0x7fffa99c for ins 0xc7b40024
 <3202> Decoded ins 0x8fb1002c
 <3202> Fetched ins 0x8fb20030 from PC 0x40e7f0
-<3203> Writing to freg 10, value: 0x8140b70
+<3203> Writing to freg 10, value: 0x8d45b70
 <3203> Executed ins 0x8fb1002c
 <3203> Decoded ins 0x8fb20030
 <3203> Fetched ins 0x8fb30034 from PC 0x40e7f4

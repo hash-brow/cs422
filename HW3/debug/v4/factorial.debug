@@ -6509,11 +6509,11 @@
 <1383> Fetched ins 0x8fb1002c from PC 0x40e4dc
 <1383> Accessing memory at address 0x7fffa9a8 for ins 0xc7b50020
 <1384> Executed ins 0x8fb00028
-<1384> Writing to freg 10, value: 0x9541b70
+<1384> Writing to freg 10, value: 0x931eb70
 <1384> Accessing memory at address 0x7fffa9ac for ins 0xc7b40024
 <1384> Decoded ins 0x8fb1002c
 <1384> Fetched ins 0x8fb20030 from PC 0x40e4e0
-<1385> Writing to freg 10, value: 0x9541968
+<1385> Writing to freg 10, value: 0x931e968
 <1385> Executed ins 0x8fb1002c
 <1385> Fetched ins 0x8fb30034 from PC 0x40e4e4
 <1385> Accessing memory at address 0x7fffa9b0 for ins 0x8fb00028

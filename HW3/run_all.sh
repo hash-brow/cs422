@@ -3,7 +3,7 @@ set -euo pipefail
 
 #### CONFIGURE HERE ############################################################
 # Add or remove version names as needed:
-VERSIONS=(v6)
+VERSIONS=(v0 v1 v2 v3a v4 v5 v6)
 # Relative path from version root to your run.sh:
 RUN_PATH="Ksim/cpus/sync/mips-fast/run.sh"
 ###############################################################################

@@ -4545,7 +4545,7 @@
 <972> Accessing memory at address 0x7fffa9ac for ins 0xc7b40024
 <972> Decoded ins 0x8fb1002c
 <972> Fetched ins 0x8fb20030 from PC 0x40e4e0
-<973> Writing to freg 10, value: 0x82f2b70
+<973> Writing to freg 10, value: 0x861bb70
 <973> Executed ins 0x8fb1002c
 <973> Decoded ins 0x8fb20030
 <973> Fetched ins 0x8fb30034 from PC 0x40e4e4

@@ -1,0 +1,15 @@
+23290 1:<FETCH> 
+23290 1:<FETCH> ************************************************************
+23290 1:<FETCH> 
+23290 1:<FETCH> Number of instructions: 14520
+23290 1:<FETCH> Number of simulated cycles: 23290
+23290 1:<FETCH> CPI: 1.60
+23290 1:<FETCH> Int Conditional Branches: 2863
+23290 1:<FETCH> Jump and Link: 214
+23290 1:<FETCH> Jump Register: 232
+23290 1:<FETCH> Number of fp instructions: 76
+23290 1:<FETCH> Number of loads: 2675
+23290 1:<FETCH> Number of syscall emulated loads: 334
+23290 1:<FETCH> Number of stores: 1422
+23290 1:<FETCH> Number of syscall emulated stores: 71
+23290 1:<FETCH> 

@@ -1,0 +1,15 @@
+4207 1:<FETCH> 
+4207 1:<FETCH> ************************************************************
+4207 1:<FETCH> 
+4207 1:<FETCH> Number of instructions: 2294
+4207 1:<FETCH> Number of simulated cycles: 4207
+4207 1:<FETCH> CPI: 1.83
+4207 1:<FETCH> Int Conditional Branches: 466
+4207 1:<FETCH> Jump and Link: 29
+4207 1:<FETCH> Jump Register: 27
+4207 1:<FETCH> Number of fp instructions: 4
+4207 1:<FETCH> Number of loads: 329
+4207 1:<FETCH> Number of syscall emulated loads: 85
+4207 1:<FETCH> Number of stores: 133
+4207 1:<FETCH> Number of syscall emulated stores: 72
+4207 1:<FETCH> 

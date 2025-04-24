@@ -1,0 +1,15 @@
+14132 1:<FETCH> 
+14132 1:<FETCH> ************************************************************
+14132 1:<FETCH> 
+14132 1:<FETCH> Number of instructions: 7130
+14132 1:<FETCH> Number of simulated cycles: 14132
+14132 1:<FETCH> CPI: 1.98
+14132 1:<FETCH> Int Conditional Branches: 768
+14132 1:<FETCH> Jump and Link: 27
+14132 1:<FETCH> Jump Register: 25
+14132 1:<FETCH> Number of fp instructions: 4
+14132 1:<FETCH> Number of loads: 361
+14132 1:<FETCH> Number of syscall emulated loads: 100
+14132 1:<FETCH> Number of stores: 1142
+14132 1:<FETCH> Number of syscall emulated stores: 60
+14132 1:<FETCH> 
