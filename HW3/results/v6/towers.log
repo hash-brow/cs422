@@ -1,0 +1,21 @@
+80919 1:<FETCH> 
+80919 1:<FETCH> ************************************************************
+80919 1:<FETCH> 
+80919 1:<FETCH> Number of instructions: 80652
+80919 1:<FETCH> Number of simulated cycles: 80919
+80919 1:<FETCH> CPI: 1.00
+80919 1:<FETCH> Int Conditional Branches: 17002
+80919 1:<FETCH> Jump and Link: 1025
+80919 1:<FETCH> Jump Register: 1211
+80919 1:<FETCH> Number of fp instructions: 126
+80919 1:<FETCH> Number of loads: 14537
+80919 1:<FETCH> Number of syscall emulated loads: 2078
+80919 1:<FETCH> Number of stores: 6976
+80919 1:<FETCH> Number of syscall emulated stores: 64
+80919 1:<FETCH> 
+80919 1:<FETCH> Additional counters
+80919 1:<FETCH> Number of ex-ex bypasses: 10793
+80919 1:<FETCH> Number of mem-ex bypasses: 13528
+80919 1:<FETCH> Number of mem-mem bypasses: 0
+80919 1:<FETCH> Number of syscalls: 67
+80919 1:<FETCH> Number of stalls due to load interlock: 0

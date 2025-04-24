@@ -1,0 +1,21 @@
+1845 1:<FETCH> 
+1845 1:<FETCH> ************************************************************
+1845 1:<FETCH> 
+1845 1:<FETCH> Number of instructions: 1826
+1845 1:<FETCH> Number of simulated cycles: 1845
+1845 1:<FETCH> CPI: 1.01
+1845 1:<FETCH> Int Conditional Branches: 372
+1845 1:<FETCH> Jump and Link: 26
+1845 1:<FETCH> Jump Register: 24
+1845 1:<FETCH> Number of fp instructions: 2
+1845 1:<FETCH> Number of loads: 282
+1845 1:<FETCH> Number of syscall emulated loads: 69
+1845 1:<FETCH> Number of stores: 109
+1845 1:<FETCH> Number of syscall emulated stores: 64
+1845 1:<FETCH> 
+1845 1:<FETCH> Additional counters
+1845 1:<FETCH> Number of ex-ex bypasses: 474
+1845 1:<FETCH> Number of mem-ex bypasses: 227
+1845 1:<FETCH> Number of mem-mem bypasses: 0
+1845 1:<FETCH> Number of syscalls: 5
+1845 1:<FETCH> Number of stalls due to load interlock: 0

@@ -673,7 +673,7 @@ Mipc::Dec (pipe_reg_t* fd, pipe_reg_t* de)
       break;
 
    case 0x11:			// floating-point
-      _fpinst++;
+      //_fpinst++;
       switch (i.freg.fmt) {
       case 4:			// mtc1
          de->_opControl = func_mtc1;
@@ -1247,13 +1247,15 @@ Mipc::func_swr (Mipc *mc, unsigned ins, pipe_reg_t* de, pipe_reg_t* em)
 void
 Mipc::func_mtc1 (Mipc *mc, unsigned ins, pipe_reg_t* de, pipe_reg_t* em)
 {
-   em->_opResultLo = de->_decodedSRC1;
+    mc->_fpinst++;
+    em->_opResultLo = de->_decodedSRC1;
 }
 
 void
 Mipc::func_mfc1 (Mipc *mc, unsigned ins, pipe_reg_t* de, pipe_reg_t* em)
 {
-   em->_opResultLo = de->_decodedSRC1;
+    mc->_fpinst++;
+    em->_opResultLo = de->_decodedSRC1;
 }
 
 void

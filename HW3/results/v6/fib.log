@@ -1,0 +1,21 @@
+44799 1:<FETCH> 
+44799 1:<FETCH> ************************************************************
+44799 1:<FETCH> 
+44799 1:<FETCH> Number of instructions: 44780
+44799 1:<FETCH> Number of simulated cycles: 44799
+44799 1:<FETCH> CPI: 1.00
+44799 1:<FETCH> Int Conditional Branches: 3747
+44799 1:<FETCH> Jump and Link: 2513
+44799 1:<FETCH> Jump Register: 2522
+44799 1:<FETCH> Number of fp instructions: 28
+44799 1:<FETCH> Number of loads: 6022
+44799 1:<FETCH> Number of syscall emulated loads: 96
+44799 1:<FETCH> Number of stores: 7939
+44799 1:<FETCH> Number of syscall emulated stores: 58
+44799 1:<FETCH> 
+44799 1:<FETCH> Additional counters
+44799 1:<FETCH> Number of ex-ex bypasses: 6346
+44799 1:<FETCH> Number of mem-ex bypasses: 5778
+44799 1:<FETCH> Number of mem-mem bypasses: 0
+44799 1:<FETCH> Number of syscalls: 5
+44799 1:<FETCH> Number of stalls due to load interlock: 0

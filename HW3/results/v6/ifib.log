@@ -1,0 +1,21 @@
+7472 1:<FETCH> 
+7472 1:<FETCH> ************************************************************
+7472 1:<FETCH> 
+7472 1:<FETCH> Number of instructions: 7453
+7472 1:<FETCH> Number of simulated cycles: 7472
+7472 1:<FETCH> CPI: 1.00
+7472 1:<FETCH> Int Conditional Branches: 1327
+7472 1:<FETCH> Jump and Link: 105
+7472 1:<FETCH> Jump Register: 114
+7472 1:<FETCH> Number of fp instructions: 28
+7472 1:<FETCH> Number of loads: 1205
+7472 1:<FETCH> Number of syscall emulated loads: 98
+7472 1:<FETCH> Number of stores: 714
+7472 1:<FETCH> Number of syscall emulated stores: 60
+7472 1:<FETCH> 
+7472 1:<FETCH> Additional counters
+7472 1:<FETCH> Number of ex-ex bypasses: 1518
+7472 1:<FETCH> Number of mem-ex bypasses: 962
+7472 1:<FETCH> Number of mem-mem bypasses: 0
+7472 1:<FETCH> Number of syscalls: 5
+7472 1:<FETCH> Number of stalls due to load interlock: 0
