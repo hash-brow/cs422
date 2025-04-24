@@ -117,7 +117,4 @@ The Load-Interlock stall cycles and syscalls with respect to total no. of instru
 
 In the above table effective CPI is calculated as :
 
-CPI = 
-\[
-\frac{\text{No. of Simulated Cycles}}{\text{No. of Instructions} - \text{Load-Store Stalls}}
-\]
+**CPI** = **(No. of Simulated Cycles)** / **(No. of Instructions − Load-Store Stalls)**
