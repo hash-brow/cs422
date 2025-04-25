@@ -45,9 +45,15 @@ All bypasses are implemented for gprs, fprs, `_hi` and `_lo`. Interlock logic fo
 
 CPI gradually reduced till it becomes ~1 as expected. Each syscall uses up a total of 5 cycles, which causes the CPI to be greater than 1, particularly in programs with a lot of system calls.
 
-One thing to note is that the MEM-MEM bypass is never triggered (and also the load delay interlock). This is because it seems like the compiler is ensuring that the instruction in the load-delay slot is independent of the load.
+One thing to note is that the MEM-MEM bypass is never triggered (and also the load delay interlock) for the 14 given programs. This is because it seems like the compiler is ensuring that the instruction in the load-delay slot is independent of the load.
 
 We tried to trigger the MEM-MEM bypass by adding a load followed by a store in example.S in asm-sim - however the compiler added a nop after the load, confirming our hypothesis. Nevertheless, we have left our MEM-MEM bypass logic as the assignment states that we are not to assume that the instruction is independent. 
+
+The load interlock is triggered only by Subreg - this is also due to an unusual sequence of instructions:
+
+![image](https://github.com/user-attachments/assets/3adc9c33-a8e5-4c12-a038-5d2ad8878602)
+
+As `$v0` is both a source and destination for both `lwl`, `lwr`, this triggers the load interlock. 
 
 #### Part A Results
 
@@ -93,20 +99,14 @@ CPI of all the design stages is given in the table below:
 | towers     | 1.55 | 1.41 | 1.15 | 1.00 | 1.00 | 0 |
 | vadd       | 1.98 | 1.88 | 1.15 | 1.00 | 1.00 | 0 |
 
-While we assumed that the compiler did not insert independent instructions in the load delay slot, we noticed via some testing using handwritten assembly that it inserted NOPs in the load delay slot. This effectively meant that MEM-MEM bypass or load interlock stalls would never be called. However, a close approximate to the number of load interlock stalls can be found using the number of NOPs immediately following a load instruction. This has been reported in the column `Load Interlock Stalls`.
+While we assumed that the compiler did not insert independent instructions in the load delay slot, we noticed via some testing using handwritten assembly that it inserted NOPs in the load delay slot. This can be seen in the above table from the last column being all zeroes, except for Subreg. This effectively meant that MEM-MEM bypass or load interlock stalls would never be called. However, a close approximate to the number of load interlock stalls can be found using the number of NOPs immediately following a load instruction. This has been reported in the column `Load Interlock Stalls Estimate`.
 
-Handwritten Assembly:
+Handwritten Assembly section:
 ```
 .data
 my_var: .word 0
-
-       .section .text
-       .globl main
-       .ent main
+        ...
 main:
-#
-# print something
-#
         la $7, my_var
         li $4, 1      # parameter passed to printf in $a0
         la $5, lab    # load the address of the string to be printed in $a1
@@ -115,41 +115,16 @@ main:
         lw $7, 0($7)
         sw $7, 0($7)
         li $2, 1004   # load the system call number in $v0
-        syscall
-        nop
-
-#
-# exit
-#
-        li $4,10      # pass exit parameter in $a0
-        li $2,1001    # select an exist sycall
-        syscall
-        nop
-
-lab:    .ascii "hi there\n"
-        .end main
-
+        ...
 ```
 Corresponding section of `<main>` from the disassembly
 ```
 00401020 <main>:
-  401020:	3c070042 	lui	$a3,0x42
-  401024:	24e78f90 	addiu	$a3,$a3,-28784
-  401028:	24040001 	li	$a0,1
-  40102c:	3c050040 	lui	$a1,0x40
-  401030:	24a51064 	addiu	$a1,$a1,4196
-  401034:	24060009 	li	$a2,9
-  401038:	ace60000 	sw	$a2,0($a3)
+  ...
   40103c:	8ce70000 	lw	$a3,0($a3)
   401040:	00000000 	nop
   401044:	ace70000 	sw	$a3,0($a3)
-  401048:	240203ec 	li	$v0,1004
-  40104c:	0000000c 	syscall
-  401050:	00000000 	nop
-  401054:	2404000a 	li	$a0,10
-  401058:	240203e9 	li	$v0,1001
-  40105c:	0000000c 	syscall
-  401060:	00000000 	nop
+  ...
 
 ```
 
@@ -157,9 +132,9 @@ Under the assumption that the compiler does not insert independent instructions 
 
 Thus in the final column, we have included an effective CPI which is calculated using `(No. of simulated cycles) / (No. of instructions - No. of load interlock stalls)`, and as can be seen these are slightly higher than 1 due to the introduction of load interlock stalls.
 
-The Load-Interlock stall cycles and syscalls with respect to total no. of instructions in the final design are given below:
+This estimated count of (not observed) Load-Interlock stall cycles and syscalls with respect to total no. of instructions in the final design are given below:
 
-| Test Case  | No. of Instructions | Syscalls(%) | Load Interlock Stalls (%) | Effective CPI |
+| Test Case  | No. of Instructions | Syscalls(%) | Load Interlock Stalls Estimate (%) | Effective CPI |
 |------------|---------------------|-------------|-------------|------------|
 | asm-sim    | 50    | 6.00%    | 0.00%    | 1.22 |
 | c-sim      | 1826  | 0.27383% | 7.77656% | 1.10 |
