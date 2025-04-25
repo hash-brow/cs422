@@ -125,7 +125,7 @@ Decode::MainLoop (void)
        * no ex-ex bypass if there is a load in EX, and the current instruction is not a store
        */
       if (ex_ex.is_bypass() == TRUE && _mc->_de->_memControl && _mc->_de->_writeREG) {
-         if (de->_memControl && ((de->_writeREG && ex_ex.src_dst) || (de->_writeFREG && ex_ex.src_fdst))) {
+         if (de->_memControl && ((!de->_writeREG && ex_ex.src_dst) || (!de->_writeFREG && ex_ex.src_fdst))) {
             // store with dst coming from load, we need to trigger the mem-mem bypass
             mem_mem_bypass = TRUE;
          } else stall = TRUE;
