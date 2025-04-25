@@ -75,23 +75,23 @@ All the fractions have been listed as percentages.
 
 CPI of all the design stages is given in the table below:
 
-| Test Case  | Design-1 | Design-2 | Design-3 | Design-4 | Final Design |
-|------------|----------|----------|----------|----------|--------------|
-| asm-sim    | 1.57 | 1.47 | 1.30 | 1.22 | 1.22 |
-| c-sim      | 1.85 | 1.65 | 1.14 | 1.01 | 1.01 |
-| endian     | 1.78 | 1.58 | 1.14 | 1.01 | 1.01 |
-| factorial  | 1.82 | 1.63 | 1.14 | 1.01 | 1.01 |
-| fib        | 1.52 | 1.41 | 1.18 | 1.00 | 1.00 |
-| hello      | 1.81 | 1.62 | 1.15 | 1.01 | 1.01 |
-| host       | 1.60 | 1.45 | 1.15 | 1.01 | 1.01 |
-| ifactorial | 1.83 | 1.65 | 1.14 | 1.01 | 1.01 |
-| ifib       | 1.71 | 1.54 | 1.14 | 1.00 | 1.00 |
-| log2       | 1.78 | 1.59 | 1.14 | 1.01 | 1.01 |
-| msort      | 1.92 | 1.72 | 1.05 | 1.00 | 1.00 |
-| rfib       | 1.54 | 1.43 | 1.18 | 1.00 | 1.00 |
-| subreg     | 1.58 | 1.43 | 1.14 | 1.01 | 1.01 |
-| towers     | 1.55 | 1.41 | 1.15 | 1.00 | 1.00 |
-| vadd       | 1.98 | 1.88 | 1.15 | 1.00 | 1.00 |
+| Test Case  | Design-1 | Design-2 | Design-3 | Design-4 | Final Design | Load Delay Stalls |
+|------------|----------|----------|----------|----------|--------------|------------|
+| asm-sim    | 1.57 | 1.47 | 1.30 | 1.22 | 1.22 | 0 | 
+| c-sim      | 1.85 | 1.65 | 1.14 | 1.01 | 1.01 | 0 |
+| endian     | 1.78 | 1.58 | 1.14 | 1.01 | 1.01 | 0 |
+| factorial  | 1.82 | 1.63 | 1.14 | 1.01 | 1.01 | 0 | 
+| fib        | 1.52 | 1.41 | 1.18 | 1.00 | 1.00 | 0 |
+| hello      | 1.81 | 1.62 | 1.15 | 1.01 | 1.01 | 0 |
+| host       | 1.60 | 1.45 | 1.15 | 1.01 | 1.01 | 0 |
+| ifactorial | 1.83 | 1.65 | 1.14 | 1.01 | 1.01 | 0 |
+| ifib       | 1.71 | 1.54 | 1.14 | 1.00 | 1.00 | 0 |
+| log2       | 1.78 | 1.59 | 1.14 | 1.01 | 1.01 | 0 |
+| msort      | 1.92 | 1.72 | 1.05 | 1.00 | 1.00 | 0 |
+| rfib       | 1.54 | 1.43 | 1.18 | 1.00 | 1.00 | 0 |
+| subreg     | 1.58 | 1.43 | 1.14 | 1.01 | 1.01 | 3 |
+| towers     | 1.55 | 1.41 | 1.15 | 1.00 | 1.00 | 0 |
+| vadd       | 1.98 | 1.88 | 1.15 | 1.00 | 1.00 | 0 |
 
 While we assumed that the compiler did not insert independent instructions in the load delay slot, we noticed via some testing that it inserted NOPs in the load delay slot. This effectively meant that MEM-MEM bypass or load interlock stalls would never be called. However, a close approximate to the number of load interlock stalls can be found using the number of NOPs immediately following a load instruction. This has been reported in the column `Load Interlock Stalls`.
 
