@@ -19,3 +19,4 @@
 61 1:<FETCH> Number of mem-mem bypasses: 0
 61 1:<FETCH> Number of syscalls: 3
 61 1:<FETCH> Number of stalls due to load interlock: 0
+61 1:<FETCH> Number of lwl: 0, lwr: 0, swl: 0, swr: 0

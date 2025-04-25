@@ -1155,7 +1155,7 @@ Mipc::func_lwl (Mipc *mc, unsigned ins, pipe_reg_t* de, pipe_reg_t* em)
 {
    signed int a1;
    unsigned s1;
-                                                                                
+   mc->_lwl_count++;                                                                             
    mc->_num_load++;
    SIGN_EXTEND_IMM(de->_decodedSRC2);
    em->_memory_addr_reg = (unsigned)(de->_decodedSRC1+de->_decodedSRC2);
@@ -1178,7 +1178,7 @@ void
 Mipc::func_lwr (Mipc *mc, unsigned ins, pipe_reg_t* de, pipe_reg_t* em)
 {
    unsigned ar1, s1;
-                                                                                
+   mc->_lwr_count++;                                                                     
    mc->_num_load++;
    SIGN_EXTEND_IMM(de->_decodedSRC2);
    em->_memory_addr_reg = (unsigned)(de->_decodedSRC1+de->_decodedSRC2);
@@ -1220,7 +1220,7 @@ void
 Mipc::func_swl (Mipc *mc, unsigned ins, pipe_reg_t* de, pipe_reg_t* em)
 {
    unsigned ar1, s1;
-                                                                                
+   mc->_swl_count++;                                                                     
    mc->_num_store++;
    SIGN_EXTEND_IMM(de->_decodedSRC2);
    em->_memory_addr_reg = (unsigned)(de->_decodedSRC1+de->_decodedSRC2);
@@ -1238,7 +1238,7 @@ void
 Mipc::func_swr (Mipc *mc, unsigned ins, pipe_reg_t* de, pipe_reg_t* em)
 {
    unsigned ar1, s1;
-                                                                                
+   mc->_swr_count++;                                                            
    mc->_num_store++;
    SIGN_EXTEND_IMM(de->_decodedSRC2);
    em->_memory_addr_reg = (unsigned)(de->_decodedSRC1+de->_decodedSRC2);

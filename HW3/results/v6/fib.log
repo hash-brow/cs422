@@ -19,3 +19,4 @@
 44799 1:<FETCH> Number of mem-mem bypasses: 0
 44799 1:<FETCH> Number of syscalls: 5
 44799 1:<FETCH> Number of stalls due to load interlock: 443
+44799 1:<FETCH> Number of lwl: 0, lwr: 0, swl: 0, swr: 0

@@ -19,3 +19,4 @@
 4250 1:<FETCH> Number of mem-mem bypasses: 0
 4250 1:<FETCH> Number of syscalls: 6
 4250 1:<FETCH> Number of stalls due to load interlock: 233
+4250 1:<FETCH> Number of lwl: 3, lwr: 3, swl: 3, swr: 3

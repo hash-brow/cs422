@@ -207,7 +207,11 @@ public:
    LL   _num_mem_mem;
    LL   _num_syscall;
    LL   _num_stalls;
-
+   
+   LL   _lwl_count;
+   LL   _lwr_count;
+   LL   _swl_count;
+   LL   _swr_count; 
    Mem	*_mem;	// attached memory (not a cache)
 
    Log	_l;

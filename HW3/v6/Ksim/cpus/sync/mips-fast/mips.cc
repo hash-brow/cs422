@@ -98,6 +98,8 @@ Mipc::MipcDumpstats()
   l.print("Number of mem-mem bypasses: %llu", _num_mem_mem);
   l.print("Number of syscalls: %llu", _num_syscall);
   l.print("Number of stalls due to load interlock: %llu", _num_stalls);
+  
+  l.print("Number of lwl: %llu, lwr: %llu, swl: %llu, swr: %llu", _lwl_count, _lwr_count, _swl_count, _swr_count);
 }
 
 void 
@@ -148,7 +150,12 @@ Mipc::Reboot (char *image)
       _num_mem_mem = 0;
       _num_syscall = 0;
       _num_stalls = 0;
-
+          
+      _lwl_count = 0;
+      _lwr_count = 0;
+      _swl_count = 0;
+      _swr_count = 0;
+      
       _sim_exit = 0;
       _fetch_pc = ParamGetInt ("Mipc.BootPC");	// Boom! GO
    }

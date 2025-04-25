@@ -19,3 +19,4 @@
 1845 1:<FETCH> Number of mem-mem bypasses: 0
 1845 1:<FETCH> Number of syscalls: 5
 1845 1:<FETCH> Number of stalls due to load interlock: 142
+1845 1:<FETCH> Number of lwl: 0, lwr: 0, swl: 0, swr: 0
