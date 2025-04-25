@@ -101,7 +101,7 @@ Thus in the final column, we have included an effective CPI which is calculated 
 
 The Load-Interlock stall cycles and syscalls with respect to total no. of instructions in the final design are given below:
 
-| Test Case  | No. of Instructions | Syscalls(%) | Load-Store Stalls(%) | Effective CPI |
+| Test Case  | No. of Instructions | Syscalls(%) | Load Interlock Stalls (%) | Effective CPI |
 |------------|---------------------|-------------|-------------|------------|
 | asm-sim    | 50    | 6.00%    | 0.00%    | 1.22 |
 | c-sim      | 1826  | 0.27383% | 7.77656% | 1.10 |
