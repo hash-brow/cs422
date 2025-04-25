@@ -9,7 +9,7 @@
 14615 1:<FETCH> Jump Register: 232
 14615 1:<FETCH> Number of fp instructions: 76
 14615 1:<FETCH> Number of loads: 2675
-14615 1:<FETCH> Number of syscall emulated loads: 334
+14615 1:<FETCH> Number of syscall emulated loads: 319
 14615 1:<FETCH> Number of stores: 1422
-14615 1:<FETCH> Number of syscall emulated stores: 71
+14615 1:<FETCH> Number of syscall emulated stores: 56
 14615 1:<FETCH> 

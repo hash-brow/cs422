@@ -41,9 +41,9 @@ for test in Subreg asm c endian factorial fib hello host ifactorial ifib log2 ms
       ;;
   esac
 
-  FULL_BENCH="$ROOT_DIR/$VERSION_NUMBER/$benchRel"
+  FULL_BENCH="$HOME/$benchRel"
   echo "=== Running $test on $FULL_BENCH ==="
-  ./mipc "$FULL_BENCH" > "$OUTPUT_DIR/${test}.out"
+  $(./mipc "$FULL_BENCH" > "$OUTPUT_DIR/${test}.out")
 
   # copy the main log
   mv mipc.log "$RESULTS_DIR/${test}.log"

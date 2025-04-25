@@ -9,7 +9,7 @@
 21029 1:<FETCH> Jump Register: 232
 21029 1:<FETCH> Number of fp instructions: 76
 21029 1:<FETCH> Number of loads: 2675
-21029 1:<FETCH> Number of syscall emulated loads: 334
+21029 1:<FETCH> Number of syscall emulated loads: 319
 21029 1:<FETCH> Number of stores: 1422
-21029 1:<FETCH> Number of syscall emulated stores: 71
+21029 1:<FETCH> Number of syscall emulated stores: 56
 21029 1:<FETCH> 

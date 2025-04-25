@@ -9,9 +9,9 @@
 7472 1:<FETCH> Jump Register: 114
 7472 1:<FETCH> Number of fp instructions: 28
 7472 1:<FETCH> Number of loads: 1205
-7472 1:<FETCH> Number of syscall emulated loads: 98
+7472 1:<FETCH> Number of syscall emulated loads: 83
 7472 1:<FETCH> Number of stores: 714
-7472 1:<FETCH> Number of syscall emulated stores: 60
+7472 1:<FETCH> Number of syscall emulated stores: 45
 7472 1:<FETCH> 
 7472 1:<FETCH> Additional counters
 7472 1:<FETCH> Number of ex-ex bypasses: 1518

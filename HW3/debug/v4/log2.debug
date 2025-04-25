@@ -4541,11 +4541,11 @@
 <971> Fetched ins 0x8fb1002c from PC 0x40e4dc
 <971> Accessing memory at address 0x7fffa9a8 for ins 0xc7b50020
 <972> Executed ins 0x8fb00028
-<972> Writing to freg 10, value: 0x8874b70
+<972> Writing to freg 10, value: 0x84fab70
 <972> Accessing memory at address 0x7fffa9ac for ins 0xc7b40024
 <972> Decoded ins 0x8fb1002c
 <972> Fetched ins 0x8fb20030 from PC 0x40e4e0
-<973> Writing to freg 10, value: 0x8874968
+<973> Writing to freg 10, value: 0x84fa968
 <973> Executed ins 0x8fb1002c
 <973> Decoded ins 0x8fb20030
 <973> Fetched ins 0x8fb30034 from PC 0x40e4e4

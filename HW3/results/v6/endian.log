@@ -9,9 +9,9 @@
 1884 1:<FETCH> Jump Register: 28
 1884 1:<FETCH> Number of fp instructions: 2
 1884 1:<FETCH> Number of loads: 324
-1884 1:<FETCH> Number of syscall emulated loads: 67
+1884 1:<FETCH> Number of syscall emulated loads: 52
 1884 1:<FETCH> Number of stores: 168
-1884 1:<FETCH> Number of syscall emulated stores: 64
+1884 1:<FETCH> Number of syscall emulated stores: 49
 1884 1:<FETCH> 
 1884 1:<FETCH> Additional counters
 1884 1:<FETCH> Number of ex-ex bypasses: 426

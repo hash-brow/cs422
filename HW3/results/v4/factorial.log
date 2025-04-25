@@ -9,7 +9,7 @@
 2427 1:<FETCH> Jump Register: 36
 2427 1:<FETCH> Number of fp instructions: 4
 2427 1:<FETCH> Number of loads: 349
-2427 1:<FETCH> Number of syscall emulated loads: 83
+2427 1:<FETCH> Number of syscall emulated loads: 68
 2427 1:<FETCH> Number of stores: 163
-2427 1:<FETCH> Number of syscall emulated stores: 70
+2427 1:<FETCH> Number of syscall emulated stores: 55
 2427 1:<FETCH> 

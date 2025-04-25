@@ -9,7 +9,7 @@
 4207 1:<FETCH> Jump Register: 27
 4207 1:<FETCH> Number of fp instructions: 4
 4207 1:<FETCH> Number of loads: 329
-4207 1:<FETCH> Number of syscall emulated loads: 85
+4207 1:<FETCH> Number of syscall emulated loads: 70
 4207 1:<FETCH> Number of stores: 133
-4207 1:<FETCH> Number of syscall emulated stores: 72
+4207 1:<FETCH> Number of syscall emulated stores: 57
 4207 1:<FETCH> 

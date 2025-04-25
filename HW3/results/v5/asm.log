@@ -9,7 +9,7 @@
 61 1:<FETCH> Jump Register: 2
 61 1:<FETCH> Number of fp instructions: 0
 61 1:<FETCH> Number of loads: 4
-61 1:<FETCH> Number of syscall emulated loads: 73
+61 1:<FETCH> Number of syscall emulated loads: 58
 61 1:<FETCH> Number of stores: 4
-61 1:<FETCH> Number of syscall emulated stores: 66
+61 1:<FETCH> Number of syscall emulated stores: 51
 61 1:<FETCH> 

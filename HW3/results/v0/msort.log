@@ -9,7 +9,7 @@
 85515 0:<FETCH> Jump Register: 23
 85515 0:<FETCH> Number of fp instructions: 2
 85515 0:<FETCH> Number of loads: 1754
-85515 0:<FETCH> Number of syscall emulated loads: 84
+85515 0:<FETCH> Number of syscall emulated loads: 69
 85515 0:<FETCH> Number of stores: 890
-85515 0:<FETCH> Number of syscall emulated stores: 62
+85515 0:<FETCH> Number of syscall emulated stores: 47
 85515 0:<FETCH> 

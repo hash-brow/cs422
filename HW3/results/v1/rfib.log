@@ -9,7 +9,7 @@
 39337 1:<FETCH> Jump Register: 1306
 39337 1:<FETCH> Number of fp instructions: 56
 39337 1:<FETCH> Number of loads: 3613
-39337 1:<FETCH> Number of syscall emulated loads: 98
+39337 1:<FETCH> Number of syscall emulated loads: 83
 39337 1:<FETCH> Number of stores: 4326
-39337 1:<FETCH> Number of syscall emulated stores: 60
+39337 1:<FETCH> Number of syscall emulated stores: 45
 39337 1:<FETCH> 

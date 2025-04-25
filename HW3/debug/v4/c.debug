@@ -3735,11 +3735,11 @@
 <796> Fetched ins 0x8fb1002c from PC 0x40e49c
 <796> Accessing memory at address 0x7fffa9a8 for ins 0xc7b50020
 <797> Executed ins 0x8fb00028
-<797> Writing to freg 10, value: 0x9d18b70
+<797> Writing to freg 10, value: 0x9956b70
 <797> Accessing memory at address 0x7fffa9ac for ins 0xc7b40024
 <797> Decoded ins 0x8fb1002c
 <797> Fetched ins 0x8fb20030 from PC 0x40e4a0
-<798> Writing to freg 10, value: 0x9d18968
+<798> Writing to freg 10, value: 0x9956968
 <798> Executed ins 0x8fb1002c
 <798> Decoded ins 0x8fb20030
 <798> Fetched ins 0x8fb30034 from PC 0x40e4a4

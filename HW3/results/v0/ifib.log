@@ -9,7 +9,7 @@
 37265 0:<FETCH> Jump Register: 114
 37265 0:<FETCH> Number of fp instructions: 28
 37265 0:<FETCH> Number of loads: 1205
-37265 0:<FETCH> Number of syscall emulated loads: 98
+37265 0:<FETCH> Number of syscall emulated loads: 83
 37265 0:<FETCH> Number of stores: 714
-37265 0:<FETCH> Number of syscall emulated stores: 60
+37265 0:<FETCH> Number of syscall emulated stores: 45
 37265 0:<FETCH> 

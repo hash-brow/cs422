@@ -3739,7 +3739,7 @@
 <797> Accessing memory at address 0x7fffa9ac for ins 0xc7b40024
 <797> Decoded ins 0x8fb1002c
 <797> Fetched ins 0x8fb20030 from PC 0x40e4a0
-<798> Writing to freg 10, value: 0x933bb70
+<798> Writing to freg 10, value: 0x8e87b70
 <798> Executed ins 0x8fb1002c
 <798> Decoded ins 0x8fb20030
 <798> Fetched ins 0x8fb30034 from PC 0x40e4a4

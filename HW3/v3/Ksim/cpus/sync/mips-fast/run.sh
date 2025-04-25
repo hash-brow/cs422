@@ -1,36 +1,59 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-mkdir -p ~/v3/results/b/c
-RESULT_DIR=~/v3/results/b/c
+# 1) Compute ROOT_DIR as the absolute path of "../../../../../" from $PWD
+ROOT_DIR="$(cd ../../../../../ && pwd)"
 
-./mipc ~/v3/Ksim/Bench/testcode/Subreg/subreg
-cp mipc.log $RESULT_DIR/subreg.log
-./mipc ~/v3/Ksim/Bench/testcode/asm-sim/example
-cp mipc.log $RESULT_DIR/asm.log
-./mipc ~/v3/Ksim/Bench/testcode/c-sim/example
-cp mipc.log $RESULT_DIR/c.log
-./mipc ~/v3/Ksim/Bench/testcode/endian/endian
-cp mipc.log $RESULT_DIR/endian.log
-./mipc ~/v3/Ksim/Bench/testcode/factorial/factorial
-cp mipc.log $RESULT_DIR/factorial.log
-./mipc ~/v3/Ksim/Bench/testcode/fib/fib
-cp mipc.log $RESULT_DIR/fib.log
-./mipc ~/v3/Ksim/Bench/testcode/hello/hello
-cp mipc.log $RESULT_DIR/hello.log
-./mipc ~/v3/Ksim/Bench/testcode/host/host
-cp mipc.log $RESULT_DIR/host.log
-./mipc ~/v3/Ksim/Bench/testcode/ifactorial/ifactorial
-cp mipc.log $RESULT_DIR/ifactorial.log
-./mipc ~/v3/Ksim/Bench/testcode/ifib/ifib
-cp mipc.log $RESULT_DIR/ifib.log
-./mipc ~/v3/Ksim/Bench/testcode/log2/log2
-cp mipc.log $RESULT_DIR/log2.log
-./mipc ~/v3/Ksim/Bench/testcode/msort/msort
-cp mipc.log $RESULT_DIR/msort.log
-./mipc ~/v3/Ksim/Bench/testcode/rfib/rfib
-cp mipc.log $RESULT_DIR/rfib.log
-./mipc ~/v3/Ksim/Bench/testcode/towers/towers
-cp mipc.log $RESULT_DIR/towers.log
-./mipc ~/v3/Ksim/Bench/testcode/vadd/vadd
-cp mipc.log $RESULT_DIR/vadd.log
+# 2) Compute VERSION_NUMBER = name of the directory at "../../../../"
+VERSION_NUMBER="$(basename "$(cd ../../../../ && pwd)")"
+
+# 4) Define RESULTS_DIR, OUTPUT_DIR, DEBUG_DIR, and make sure they exist
+RESULTS_DIR="$ROOT_DIR/results/$VERSION_NUMBER"
+OUTPUT_DIR="$ROOT_DIR/outputs/$VERSION_NUMBER"
+DEBUG_DIR="$ROOT_DIR/debug/$VERSION_NUMBER"
+mkdir -p "$RESULTS_DIR" "$OUTPUT_DIR" "$DEBUG_DIR"
+
+# Clean & build
+gmake clobber clean
+gmake
+
+# 3) 5) 6) + debug copy
+for test in Subreg asm c endian factorial fib hello host ifactorial ifib log2 msort rfib towers vadd; do
+  case "$test" in
+    Subreg)     benchRel="Ksim/Bench/testcode/Subreg/subreg";;
+    asm)        benchRel="Ksim/Bench/testcode/asm-sim/example";;
+    c)          benchRel="Ksim/Bench/testcode/c-sim/example";;
+    endian)     benchRel="Ksim/Bench/testcode/endian/endian";;
+    factorial)  benchRel="Ksim/Bench/testcode/factorial/factorial";;
+    fib)        benchRel="Ksim/Bench/testcode/fib/fib";;
+    hello)      benchRel="Ksim/Bench/testcode/hello/hello";;
+    host)       benchRel="Ksim/Bench/testcode/host/host";;
+    ifactorial) benchRel="Ksim/Bench/testcode/ifactorial/ifactorial";;
+    ifib)       benchRel="Ksim/Bench/testcode/ifib/ifib";;
+    log2)       benchRel="Ksim/Bench/testcode/log2/log2";;
+    msort)      benchRel="Ksim/Bench/testcode/msort/msort";;
+    rfib)       benchRel="Ksim/Bench/testcode/rfib/rfib";;
+    towers)     benchRel="Ksim/Bench/testcode/towers/towers";;
+    vadd)       benchRel="Ksim/Bench/testcode/vadd/vadd";;
+    *)
+      echo "Unknown test: $test" >&2
+      exit 1
+      ;;
+  esac
+
+  FULL_BENCH="$HOME/$benchRel"
+  echo "=== Running $test on $FULL_BENCH ==="
+  $(./mipc "$FULL_BENCH" > "$OUTPUT_DIR/${test}.out")
+
+  # copy the main log
+  mv mipc.log "$RESULTS_DIR/${test}.log"
+
+  # if a debug log was created, copy it too
+  if [ -f mipc.debug ]; then
+    mv mipc.debug "$DEBUG_DIR/${test}.debug"
+  fi
+done
+
+# Final cleanup
+gmake clobber clean
 

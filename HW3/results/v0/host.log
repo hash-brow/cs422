@@ -9,7 +9,7 @@
 72595 0:<FETCH> Jump Register: 232
 72595 0:<FETCH> Number of fp instructions: 38
 72595 0:<FETCH> Number of loads: 2675
-72595 0:<FETCH> Number of syscall emulated loads: 334
+72595 0:<FETCH> Number of syscall emulated loads: 319
 72595 0:<FETCH> Number of stores: 1422
-72595 0:<FETCH> Number of syscall emulated stores: 71
+72595 0:<FETCH> Number of syscall emulated stores: 56
 72595 0:<FETCH> 

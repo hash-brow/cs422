@@ -2869,7 +2869,7 @@
 <615> Fetched ins 0x8fb20030 from PC 0x40e480
 <615> Accessing memory at address 0x7fffa9ac for ins 0xc7b40024
 <615> Decoded ins 0x8fb1002c
-<616> Writing to freg 10, value: 0x9156b70
+<616> Writing to freg 10, value: 0x8467b70
 <616> Executed ins 0x8fb1002c
 <616> Decoded ins 0x8fb20030
 <616> Fetched ins 0x8fb30034 from PC 0x40e484

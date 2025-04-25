@@ -76090,7 +76090,7 @@
 <16068> Fetched ins 0x8fb20030 from PC 0x40e740
 <16068> Accessing memory at address 0x7fffa97c for ins 0xc7b40024
 <16069> Executed ins 0x8fb1002c
-<16069> Writing to freg 10, value: 0x8999b70
+<16069> Writing to freg 10, value: 0x8752b70
 <16069> Accessing memory at address 0x7fffa980 for ins 0x8fb00028
 <16069> Decoded ins 0x8fb20030
 <16069> Fetched ins 0x8fb30034 from PC 0x40e744

@@ -2864,12 +2864,12 @@
 <614> Accessing memory at address 0x7fffa9a8 for ins 0xc7b50020
 <614> Decoded ins 0x8fb00028
 <614> Fetched ins 0x8fb1002c from PC 0x40e47c
-<615> Writing to freg 10, value: 0x9653b70
+<615> Writing to freg 10, value: 0x93f8b70
 <615> Executed ins 0x8fb00028
 <615> Fetched ins 0x8fb20030 from PC 0x40e480
 <615> Accessing memory at address 0x7fffa9ac for ins 0xc7b40024
 <615> Decoded ins 0x8fb1002c
-<616> Writing to freg 10, value: 0x9653968
+<616> Writing to freg 10, value: 0x93f8968
 <616> Executed ins 0x8fb1002c
 <616> Decoded ins 0x8fb20030
 <616> Fetched ins 0x8fb30034 from PC 0x40e484
