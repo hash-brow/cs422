@@ -41,8 +41,6 @@ All bypasses are implemented for gprs, fprs, `_hi` and `_lo`. Interlock logic fo
 
 <div style="page-break-after: always;"></div>
 
-## Results Explanation - Part A
-
 ## Results Explanation - Part B
 
 CPI gradually reduced till it becomes ~1 as expected. Each syscall uses up a total of 5 cycles, which causes the CPI to be greater than 1, particularly in programs with a lot of system calls.
@@ -95,6 +93,12 @@ CPI of all the design stages is given in the table below:
 | towers     | 1.55 | 1.41 | 1.15 | 1.00 | 1.00 |
 | vadd       | 1.98 | 1.88 | 1.15 | 1.00 | 1.00 |
 
+While we assumed that the compiler did not insert independent instructions in the load delay slot, we noticed via some testing that it inserted NOPs in the load delay slot. This effectively meant that MEM-MEM bypass or load interlock stalls would never be called. However, a close approximate to the number of load interlock stalls can be found using the number of NOPs immediately following a load instruction. This has been reported in the column `Load Interlock Stalls`.
+
+Under the assumption that the compiler does not insert independent instructions in the load delay slot, the total number of instructions that have been executed by the processor can be given by `(total instructions - load interlock stalls)`, since each load interlock stall corresponds to 1 extra NOP. 
+
+Thus in the final column, we have included an effective CPI which is calculated using `(No. of simulated cycles) / (No. of instructions - No. of load interlock stalls)`, and as can be seen these are slightly higher than 1 due to the introduction of load interlock stalls.
+
 The Load-Interlock stall cycles and syscalls with respect to total no. of instructions in the final design are given below:
 
 | Test Case  | No. of Instructions | Syscalls(%) | Load-Store Stalls(%) | Effective CPI |
@@ -114,7 +118,8 @@ The Load-Interlock stall cycles and syscalls with respect to total no. of instru
 | subreg     | 4224  | 0.0014204% | 0.055161%  | 1.06 |
 | towers     | 80652 | 0.0008307% | 0.0583866% | 1.06 |
 | vadd       | 7130  | 0.0007013% | 0.0248247% | 1.03 |
-
+<!-- 
 In the above table effective CPI is calculated as :
 
-**CPI** = **(No. of Simulated Cycles)** / **(No. of Instructions − Load-Store Stalls)**
+**CPI** = **(No. of Simulated Cycles)** / **(No. of Instructions − Load-Store Stalls)** -->
+
