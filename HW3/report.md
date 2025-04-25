@@ -51,7 +51,7 @@ We tried to trigger the MEM-MEM bypass by adding a load followed by a store in e
 
 The load interlock is triggered only by Subreg - this is also due to an unusual sequence of instructions:
 
-![image](https://github.com/user-attachments/assets/3adc9c33-a8e5-4c12-a038-5d2ad8878602)
+![image](lwl_lwr.png)
 
 As `$v0` is both a source and destination for both `lwl`, `lwr`, this triggers the load interlock. 
 
